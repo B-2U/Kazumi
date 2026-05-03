@@ -27,8 +27,7 @@ class _CharacterPageState extends State<CharacterPage> {
     setState(() {
       loadingCharacter = true;
     });
-    await BangumiHTTP.getCharacterByCharacterID(widget.characterID)
-        .then((character) {
+    await BangumiHTTP.getCharacterByCharacterID(widget.characterID).then((character) {
       characterFullItem = character;
     });
     if (mounted) {
@@ -44,8 +43,7 @@ class _CharacterPageState extends State<CharacterPage> {
       commentsError = false;
     });
     try {
-      final value =
-          await BangumiHTTP.getCharacterCommentsByCharacterID(widget.characterID);
+      final value = await BangumiHTTP.getCharacterCommentsByCharacterID(widget.characterID);
       commentsList = value.commentList;
     } catch (e) {
       if (mounted) {
@@ -139,76 +137,54 @@ class _CharacterPageState extends State<CharacterPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           characterFullItem.name,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall
-                                              ?.copyWith(
+                                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                                 fontWeight: FontWeight.bold,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .tertiary,
+                                                color: Theme.of(context).colorScheme.tertiary,
                                               ),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 4.0, bottom: 12.0),
+                                          padding: const EdgeInsets.only(top: 4.0, bottom: 12.0),
                                           child: Text(
                                             characterFullItem.nameCN,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
+                                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                                   color: Colors.grey[700],
                                                 ),
                                           ),
                                         ),
                                         const Divider(),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
+                                          padding: const EdgeInsets.symmetric(vertical: 8.0),
                                           child: Text(
                                             '基本信息',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall
-                                                ?.copyWith(
+                                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                         ),
                                         Text(
                                           characterFullItem.info,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
+                                          style: Theme.of(context).textTheme.bodyMedium,
                                           textAlign: TextAlign.justify,
                                         ),
                                         const SizedBox(height: 16.0),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
+                                          padding: const EdgeInsets.symmetric(vertical: 8.0),
                                           child: Text(
                                             '角色简介',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall
-                                                ?.copyWith(
+                                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
                                         ),
                                         Text(
                                           characterFullItem.summary,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
+                                          style: Theme.of(context).textTheme.bodyMedium,
                                           textAlign: TextAlign.justify,
                                         ),
                                       ],

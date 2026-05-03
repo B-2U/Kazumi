@@ -12,11 +12,7 @@ class PluginModule extends Module {
   void routes(r) {
     r.child("/", child: (_) => const PluginViewPage());
     r.child("/shop", child: (_) => const PluginShopPage());
-    r.child("/test",
-        child: (_) => const PluginTestPage(),
-        transition: TransitionType.defaultTransition);
-    r.child("/editor",
-        child: (_) => const PluginEditorPage(),
-        transition: TransitionType.defaultTransition);
+    r.child("/test", child: (_) => const PluginTestPage(), transition: TransitionType.defaultTransition);
+    r.child("/editor", child: (_) => const PluginEditorPage(), transition: TransitionType.defaultTransition);
   }
 }

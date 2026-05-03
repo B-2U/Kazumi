@@ -26,8 +26,7 @@ import 'package:kazumi/utils/logger.dart';
 class CaptchaProvider {
   CaptchaWebviewController? _controller;
 
-  final StreamController<String?> _captchaImageStreamController =
-      StreamController<String?>.broadcast();
+  final StreamController<String?> _captchaImageStreamController = StreamController<String?>.broadcast();
 
   Stream<String?> get onCaptchaImageUrl => _captchaImageStreamController.stream;
 
@@ -42,8 +41,8 @@ class CaptchaProvider {
   Future<void> _ensureInitialized() async {
     if (_isInitialized || _disposed) return;
     _controller = CaptchaWebviewControllerFactory.getController();
-    final initializedFuture = _controller!.onInitialized.first
-        .timeout(const Duration(seconds: 10), onTimeout: () => false);
+    final initializedFuture =
+        _controller!.onInitialized.first.timeout(const Duration(seconds: 10), onTimeout: () => false);
 
     await _controller!.init();
     if (_disposed) return;
@@ -109,14 +108,13 @@ class CaptchaProvider {
       final cookieString = await _controller!.getCookieString(_pageUrl);
       KazumiLogger().i('[CaptchaProvider] Captured cookies: $cookieString');
       if (cookieString.isNotEmpty) {
-        await PluginCookieManager.instance
-            .saveFromWebView(pluginName, _pageUrl, cookieString);
-        KazumiLogger()
-            .i('[CaptchaProvider] Cookies saved for plugin: $pluginName');
+        await PluginCookieManager.instance.saveFromWebView(pluginName, _pageUrl, cookieString);
+        KazumiLogger().i('[CaptchaProvider] Cookies saved for plugin: $pluginName');
       }
       await _controller!.unloadPage();
       onVerified();
     }
+
     _disappearedSub?.cancel();
     _disappearedSub = _controller!.onCaptchaDisappeared.listen((_) {
       onDisappeared();
@@ -149,10 +147,8 @@ class CaptchaProvider {
       final cookieString = await _controller!.getCookieString(_pageUrl);
       KazumiLogger().i('[CaptchaProvider] (type2) Captured cookies: $cookieString');
       if (cookieString.isNotEmpty) {
-        await PluginCookieManager.instance
-            .saveFromWebView(pluginName, _pageUrl, cookieString);
-        KazumiLogger()
-            .i('[CaptchaProvider] (type2) Cookies saved for plugin: $pluginName');
+        await PluginCookieManager.instance.saveFromWebView(pluginName, _pageUrl, cookieString);
+        KazumiLogger().i('[CaptchaProvider] (type2) Cookies saved for plugin: $pluginName');
       }
       await _controller!.unloadPage();
       onVerified();
@@ -175,13 +171,10 @@ class CaptchaProvider {
     final controller = _controller;
     if (controller == null || _pageUrl.isEmpty) return;
     final cookieString = await controller.getCookieString(_pageUrl);
-    KazumiLogger()
-        .i('[CaptchaProvider] Captured cookies on cancel: $cookieString');
+    KazumiLogger().i('[CaptchaProvider] Captured cookies on cancel: $cookieString');
     if (cookieString.isNotEmpty) {
-      await PluginCookieManager.instance
-          .saveFromWebView(pluginName, _pageUrl, cookieString);
-      KazumiLogger()
-          .i('[CaptchaProvider] Cookies saved on cancel for plugin: $pluginName');
+      await PluginCookieManager.instance.saveFromWebView(pluginName, _pageUrl, cookieString);
+      KazumiLogger().i('[CaptchaProvider] Cookies saved on cancel for plugin: $pluginName');
     }
     await controller.unloadPage();
   }

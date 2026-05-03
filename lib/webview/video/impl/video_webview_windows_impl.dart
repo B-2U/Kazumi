@@ -5,8 +5,7 @@ import 'package:kazumi/utils/storage.dart';
 import 'package:kazumi/utils/proxy_utils.dart';
 import 'package:kazumi/utils/logger.dart';
 
-class VideoWebviewWindowsImpl
-    extends VideoWebviewController<WebviewController> {
+class VideoWebviewWindowsImpl extends VideoWebviewController<WebviewController> {
   final List<StreamSubscription> subscriptions = [];
 
   HeadlessWebview? headlessWebview;
@@ -22,14 +21,12 @@ class VideoWebviewWindowsImpl
 
   Future<void> _setupProxy() async {
     final setting = GStorage.setting;
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (!proxyEnable) {
       return;
     }
 
-    final String proxyUrl =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    final String proxyUrl = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
     final formattedProxy = ProxyUtils.getFormattedProxyUrl(proxyUrl);
     if (formattedProxy == null) {
       return;
@@ -46,8 +43,7 @@ class VideoWebviewWindowsImpl
   }
 
   @override
-  Future<void> loadUrl(String url, bool useLegacyParser,
-      {int offset = 0}) async {
+  Future<void> loadUrl(String url, bool useLegacyParser, {int offset = 0}) async {
     await unloadPage();
     count = 0;
     this.offset = offset;

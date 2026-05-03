@@ -41,8 +41,7 @@ abstract class _PopularController with Store {
       trendList.clear();
     }
     isLoadingMore = true;
-    var result =
-        await BangumiHTTP.getBangumiTrendsList(offset: trendList.length);
+    var result = await BangumiHTTP.getBangumiTrendsList(offset: trendList.length);
     trendList.addAll(result);
     isLoadingMore = false;
     isTimeOut = trendList.isEmpty;

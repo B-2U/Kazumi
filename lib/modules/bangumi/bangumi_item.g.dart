@@ -77,7 +77,5 @@ class BangumiItemAdapter extends TypeAdapter<BangumiItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is BangumiItemAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is BangumiItemAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

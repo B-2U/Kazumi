@@ -77,8 +77,7 @@ class _SetDisplayModeState extends State<SetDisplayMode> {
                             radioValue: e,
                             groupValue: preferred,
                             onChanged: (DisplayMode? newMode) async {
-                              await FlutterDisplayMode.setPreferredMode(
-                                  newMode!);
+                              await FlutterDisplayMode.setPreferredMode(newMode!);
                               await Future<dynamic>.delayed(
                                 const Duration(milliseconds: 100),
                               );

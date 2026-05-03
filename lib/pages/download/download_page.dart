@@ -17,8 +17,7 @@ class DownloadPage extends StatefulWidget {
 }
 
 class _DownloadPageState extends State<DownloadPage> {
-  final DownloadController downloadController =
-      Modular.get<DownloadController>();
+  final DownloadController downloadController = Modular.get<DownloadController>();
 
   @override
   void initState() {
@@ -65,8 +64,7 @@ class _DownloadPageState extends State<DownloadPage> {
   }
 
   Widget _buildRecordCard(DownloadRecord record) {
-    final episodes = record.episodes.values.toList()
-      ..sort((a, b) => a.episodeNumber.compareTo(b.episodeNumber));
+    final episodes = record.episodes.values.toList()..sort((a, b) => a.episodeNumber.compareTo(b.episodeNumber));
     final completedCount = downloadController.completedCount(record);
 
     return Card(
@@ -150,9 +148,7 @@ class _DownloadPageState extends State<DownloadPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  episode.episodeName.isNotEmpty
-                      ? episode.episodeName
-                      : '第${episode.episodeNumber}集',
+                  episode.episodeName.isNotEmpty ? episode.episodeName : '第${episode.episodeNumber}集',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 14),
@@ -189,8 +185,7 @@ class _DownloadPageState extends State<DownloadPage> {
   Widget _getStatusIcon(DownloadEpisode episode) {
     switch (episode.status) {
       case DownloadStatus.completed:
-        return Icon(Icons.offline_pin,
-            size: 20, color: Theme.of(context).colorScheme.primary);
+        return Icon(Icons.offline_pin, size: 20, color: Theme.of(context).colorScheme.primary);
       case DownloadStatus.downloading:
         return SizedBox(
           width: 20,
@@ -201,14 +196,11 @@ class _DownloadPageState extends State<DownloadPage> {
           ),
         );
       case DownloadStatus.failed:
-        return Icon(Icons.error_outline,
-            size: 20, color: Theme.of(context).colorScheme.error);
+        return Icon(Icons.error_outline, size: 20, color: Theme.of(context).colorScheme.error);
       case DownloadStatus.paused:
-        return Icon(Icons.pause_circle_outline,
-            size: 20, color: Theme.of(context).colorScheme.outline);
+        return Icon(Icons.pause_circle_outline, size: 20, color: Theme.of(context).colorScheme.outline);
       case DownloadStatus.pending:
-        return Icon(Icons.hourglass_empty,
-            size: 20, color: Theme.of(context).colorScheme.outline);
+        return Icon(Icons.hourglass_empty, size: 20, color: Theme.of(context).colorScheme.outline);
       case DownloadStatus.resolving:
         return const SizedBox(
           width: 20,
@@ -246,15 +238,13 @@ class _DownloadPageState extends State<DownloadPage> {
     }
   }
 
-  List<Widget> _getActionButtons(
-      DownloadRecord record, DownloadEpisode episode) {
+  List<Widget> _getActionButtons(DownloadRecord record, DownloadEpisode episode) {
     final buttons = <Widget>[];
 
     switch (episode.status) {
       case DownloadStatus.completed:
         buttons.add(IconButton(
-          icon: Icon(Icons.play_circle_outline,
-              size: 20, color: Theme.of(context).colorScheme.primary),
+          icon: Icon(Icons.play_circle_outline, size: 20, color: Theme.of(context).colorScheme.primary),
           onPressed: () => _playEpisode(record, episode),
           tooltip: '播放',
           visualDensity: VisualDensity.compact,
@@ -298,8 +288,7 @@ class _DownloadPageState extends State<DownloadPage> {
         break;
       case DownloadStatus.pending:
         buttons.add(IconButton(
-          icon: Icon(Icons.priority_high,
-              size: 20, color: Theme.of(context).colorScheme.primary),
+          icon: Icon(Icons.priority_high, size: 20, color: Theme.of(context).colorScheme.primary),
           onPressed: () {
             downloadController.priorityDownload(
               bangumiId: record.bangumiId,
@@ -382,7 +371,8 @@ class _DownloadPageState extends State<DownloadPage> {
     KazumiDialog.show(
       builder: (context) => AlertDialog(
         title: const Text('删除下载'),
-        content: Text('确定要删除「${episode.episodeName.isNotEmpty ? episode.episodeName : '第${episode.episodeNumber}集'}」的下载文件吗？'),
+        content: Text(
+            '确定要删除「${episode.episodeName.isNotEmpty ? episode.episodeName : '第${episode.episodeNumber}集'}」的下载文件吗？'),
         actions: [
           TextButton(
             onPressed: () => KazumiDialog.dismiss(),

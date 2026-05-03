@@ -41,7 +41,5 @@ class CollectedBangumiAdapter extends TypeAdapter<CollectedBangumi> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CollectedBangumiAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is CollectedBangumiAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

@@ -28,9 +28,7 @@ class Danmaku {
   /// 序列化为 JSON 格式 (与 fromJson 格式一致)
   Map<String, dynamic> toJson() {
     // 只存储 RGB 部分 (与 DanDanPlay API 格式一致)
-    final colorValue = ((color.r * 255).toInt() << 16) |
-                       ((color.g * 255).toInt() << 8) |
-                       (color.b * 255).toInt();
+    final colorValue = ((color.r * 255).toInt() << 16) | ((color.g * 255).toInt() << 8) | (color.b * 255).toInt();
     return {
       'm': message,
       'p': '$time,$type,$colorValue,$source',

@@ -14,8 +14,7 @@ abstract class _TimelineController with Store {
   final _collectRepository = Modular.get<ICollectRepository>();
 
   @observable
-  ObservableList<List<BangumiItem>> bangumiCalendar =
-      ObservableList<List<BangumiItem>>();
+  ObservableList<List<BangumiItem>> bangumiCalendar = ObservableList<List<BangumiItem>>();
 
   @observable
   String seasonString = '';
@@ -68,8 +67,8 @@ abstract class _TimelineController with Store {
     var resBangumiCalendar = List.generate(7, (_) => <BangumiItem>[]);
     for (time = 0; time < maxTime; time++) {
       final offset = time * limit;
-      var newList = await BangumiHTTP.getCalendarBySearch(
-          AnimeSeason(selectedDate).toSeasonStartAndEnd(), limit, offset);
+      var newList =
+          await BangumiHTTP.getCalendarBySearch(AnimeSeason(selectedDate).toSeasonStartAndEnd(), limit, offset);
       for (int i = 0; i < resBangumiCalendar.length; ++i) {
         resBangumiCalendar[i].addAll(newList[i]);
       }

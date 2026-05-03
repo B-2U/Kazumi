@@ -18,14 +18,10 @@ abstract class CaptchaWebviewController<T> {
   /// we can confirm verification success without relying solely on captcha disappearance.
   bool buttonWasClicked = false;
 
-  final StreamController<String> captchaImageFoundController =
-      StreamController<String>.broadcast();
-  final StreamController<void> captchaDisappearedController =
-      StreamController<void>.broadcast();
-  final StreamController<bool> initEventController =
-      StreamController<bool>.broadcast();
-  final StreamController<String> logEventController =
-      StreamController<String>.broadcast();
+  final StreamController<String> captchaImageFoundController = StreamController<String>.broadcast();
+  final StreamController<void> captchaDisappearedController = StreamController<void>.broadcast();
+  final StreamController<bool> initEventController = StreamController<bool>.broadcast();
+  final StreamController<String> logEventController = StreamController<String>.broadcast();
 
   /// WebView 初始化完成事件
   Stream<bool> get onInitialized => initEventController.stream;
@@ -61,8 +57,7 @@ abstract class CaptchaWebviewController<T> {
   /// [captchaCode] 用户输入的验证码文本
   /// [inputXpath]  验证码输入框元素的 XPath
   /// [buttonXpath] 提交按钮元素的 XPath
-  Future<void> submitCaptchaInteract(
-      String captchaCode, String inputXpath, String buttonXpath);
+  Future<void> submitCaptchaInteract(String captchaCode, String inputXpath, String buttonXpath);
 
   /// 获取当前页面的 Cookie 字符串（"key1=val1; key2=val2"）
   ///

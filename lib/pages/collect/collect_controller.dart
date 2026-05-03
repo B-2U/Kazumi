@@ -34,8 +34,7 @@ abstract class _CollectController with Store {
   List<BangumiItem> get favorites => _collectCrudRepository.getFavorites();
 
   @observable
-  ObservableList<CollectedBangumi> collectibles =
-      ObservableList<CollectedBangumi>();
+  ObservableList<CollectedBangumi> collectibles = ObservableList<CollectedBangumi>();
 
   void loadCollectibles() {
     collectibles.clear();
@@ -112,10 +111,8 @@ abstract class _CollectController with Store {
     loadCollectibles();
   }
 
-  Future<_BangumiDeleteSyncAction?> _resolveBangumiDeleteSyncAction(
-      BangumiItem bangumiItem) async {
-    final bool syncEnable =
-        setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+  Future<_BangumiDeleteSyncAction?> _resolveBangumiDeleteSyncAction(BangumiItem bangumiItem) async {
+    final bool syncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
     if (!syncEnable) {
       return _BangumiDeleteSyncAction.deleteLocalOnly;
     }
@@ -165,10 +162,8 @@ abstract class _CollectController with Store {
     KazumiDialog.showToast(message: '无法打开 Bangumi 网页');
   }
 
-  Future<bool> _syncBangumiCollectIfEnabled(
-      int bangumiId, int localType) async {
-    final bool syncEnable =
-        setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+  Future<bool> _syncBangumiCollectIfEnabled(int bangumiId, int localType) async {
+    final bool syncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
     final bool showImmediateSyncToast = setting.get(
       SettingBoxKey.bangumiImmediateSyncToastEnable,
       defaultValue: true,
@@ -191,8 +186,7 @@ abstract class _CollectController with Store {
       if (showImmediateSyncToast) {
         KazumiDialog.showToast(message: '正在同步到 Bangumi...');
       }
-      final bool synced =
-          await bangumi.syncCollectibleWhenIdle(bangumiId, localType);
+      final bool synced = await bangumi.syncCollectibleWhenIdle(bangumiId, localType);
       if (synced && showImmediateSyncToast) {
         KazumiDialog.showToast(message: '已同步到 Bangumi');
         return true;
@@ -313,21 +307,15 @@ abstract class _CollectController with Store {
   /// [bangumiList] 原始番剧列表
   /// [excludeType] 要排除的收藏类型
   /// 返回过滤后的番剧列表
-  List<BangumiItem> filterBangumiByType(
-      List<BangumiItem> bangumiList, CollectType excludeType) {
+  List<BangumiItem> filterBangumiByType(List<BangumiItem> bangumiList, CollectType excludeType) {
     final excludeIds = getBangumiIdsByType(excludeType);
-    return bangumiList
-        .where((item) => !excludeIds.contains(item.id))
-        .toList();
+    return bangumiList.where((item) => !excludeIds.contains(item.id)).toList();
   }
 
   /// Sync Bangumi collectibles.
   Future<bool> syncCollectiblesBangumi(
-      {void Function(String message, int current, int total)?
-          onProgress,
-      bool showSuccessToast = true}) async {
-    final bool syncEnable =
-        setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+      {void Function(String message, int current, int total)? onProgress, bool showSuccessToast = true}) async {
+    final bool syncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
     if (!syncEnable) {
       KazumiDialog.showToast(message: '未开启Bangumi同步，请先在设置中启用');
       return false;
@@ -340,8 +328,7 @@ abstract class _CollectController with Store {
     try {
       await BangumiSyncService().ping();
       try {
-        final hasChanges =
-            await BangumiSyncService().syncCollectibles(onProgress: onProgress);
+        final hasChanges = await BangumiSyncService().syncCollectibles(onProgress: onProgress);
         if (showSuccessToast) {
           KazumiDialog.showToast(
             message: hasChanges ? 'Bangumi同步完成' : '未发现状态差异，无需同步',

@@ -53,23 +53,16 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                         touchedIndex = -1;
                         return;
                       }
-                      touchedIndex =
-                          barTouchResponse.spot!.touchedBarGroupIndex;
+                      touchedIndex = barTouchResponse.spot!.touchedBarGroupIndex;
                     });
                   },
                   touchTooltipData: BarTouchTooltipData(
-                    getTooltipColor: (_) =>
-                        Theme.of(context).colorScheme.inverseSurface,
+                    getTooltipColor: (_) => Theme.of(context).colorScheme.inverseSurface,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      var percentage =
-                          widget.bangumiItem.votesCount[groupIndex] /
-                              widget.bangumiItem.votes *
-                              100;
+                      var percentage = widget.bangumiItem.votesCount[groupIndex] / widget.bangumiItem.votes * 100;
                       return BarTooltipItem(
                         '${percentage.toStringAsFixed(2)}% (${widget.bangumiItem.votesCount[groupIndex]}人)',
-                        TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.onInverseSurface),
+                        TextStyle(color: Theme.of(context).colorScheme.onInverseSurface),
                       );
                     },
                   ),
@@ -81,12 +74,10 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                     barRods: [
                       BarChartRodData(
                         toY: widget.bangumiItem.votesCount[i].toDouble(),
-                        color: touchedIndex == i
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).disabledColor,
+                        color:
+                            touchedIndex == i ? Theme.of(context).colorScheme.primary : Theme.of(context).disabledColor,
                         width: 20,
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(5)),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(5)),
                       )
                     ],
                     // showingTooltipIndicators: [0],
@@ -125,9 +116,7 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.bangumiItem.nameCn == ''
-                ? widget.bangumiItem.name
-                : (widget.bangumiItem.nameCn),
+            widget.bangumiItem.nameCn == '' ? widget.bangumiItem.name : (widget.bangumiItem.nameCn),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headlineSmall,
@@ -183,9 +172,7 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              widget.showRating
-                                  ? '${widget.bangumiItem.votes} 人评分:'
-                                  : '*** 人评分:',
+                              widget.showRating ? '${widget.bangumiItem.votes} 人评分:' : '*** 人评分:',
                             ),
                             if (widget.isLoading)
                               // Skeleton Loader 占位符
@@ -201,28 +188,20 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                               Row(
                                 children: [
                                   Text(
-                                    widget.showRating
-                                        ? '${widget.bangumiItem.ratingScore}'
-                                        : '***',
+                                    widget.showRating ? '${widget.bangumiItem.ratingScore}' : '***',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   RatingBarIndicator(
                                     itemCount: 5,
-                                    rating: widget.showRating
-                                        ? widget.bangumiItem.ratingScore
-                                                .toDouble() /
-                                            2
-                                        : 0,
+                                    rating: widget.showRating ? widget.bangumiItem.ratingScore.toDouble() / 2 : 0,
                                     itemBuilder: (context, index) => Icon(
                                       Icons.star_rounded,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
                                     itemSize: 20.0,
                                   ),
@@ -233,9 +212,7 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                               'Bangumi Ranked:',
                             ),
                             Text(
-                              widget.showRating
-                                  ? '#${widget.bangumiItem.rank}'
-                                  : '***',
+                              widget.showRating ? '#${widget.bangumiItem.rank}' : '***',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -256,8 +233,7 @@ class _BangumiInfoCardVState extends State<BangumiInfoCardV> {
                   ),
                 ),
                 if (widget.showRating &&
-                    MediaQuery.sizeOf(context).width >=
-                        LayoutBreakpoint.compact['width']! &&
+                    MediaQuery.sizeOf(context).width >= LayoutBreakpoint.compact['width']! &&
                     !widget.isLoading)
                   voteBarChart,
               ],

@@ -143,17 +143,13 @@ class _CollectButtonState extends State<CollectButton> {
                 children: [
                   Icon(
                     getIconByInt(index),
-                    color: index == collectType
-                        ? Theme.of(context).colorScheme.primary
-                        : null,
+                    color: index == collectType ? Theme.of(context).colorScheme.primary : null,
                   ),
                   SizedBox(width: 4),
                   Text(
                     ' ${getTypeStringByInt(index)}',
                     style: TextStyle(
-                      color: index == collectType
-                          ? Theme.of(context).colorScheme.primary
-                          : null,
+                      color: index == collectType ? Theme.of(context).colorScheme.primary : null,
                     ),
                   ),
                 ],

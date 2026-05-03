@@ -82,9 +82,7 @@ class HistoryRepository implements IHistoryRepository {
     try {
       var histories = _historiesBox.values.toList();
       histories.sort(
-        (a, b) =>
-            b.lastWatchTime.millisecondsSinceEpoch -
-            a.lastWatchTime.millisecondsSinceEpoch,
+        (a, b) => b.lastWatchTime.millisecondsSinceEpoch - a.lastWatchTime.millisecondsSinceEpoch,
       );
       return histories;
     } catch (e, stackTrace) {
@@ -144,8 +142,7 @@ class HistoryRepository implements IHistoryRepository {
       // 更新观看进度
       var prog = history.progresses[episode];
       if (prog == null) {
-        history.progresses[episode] =
-            Progress(episode, road, progress.inMilliseconds);
+        history.progresses[episode] = Progress(episode, road, progress.inMilliseconds);
       } else {
         prog.progress = progress;
       }

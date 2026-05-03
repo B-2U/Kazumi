@@ -24,9 +24,7 @@ class PluginSearchResponse {
   factory PluginSearchResponse.fromJson(Map<String, dynamic> json) {
     return PluginSearchResponse(
       pluginName: json['pluginName'],
-      data: (json['data'] as List)
-          .map((itemJson) => SearchItem.fromJson(itemJson))
-          .toList(),
+      data: (json['data'] as List).map((itemJson) => SearchItem.fromJson(itemJson)).toList(),
     );
   }
 }

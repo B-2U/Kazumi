@@ -29,8 +29,7 @@ class EpisodeCommentsCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(commentItem.comment.user.avatar.large),
+                  backgroundImage: NetworkImage(commentItem.comment.user.avatar.large),
                 ),
                 const SizedBox(width: 8),
                 Column(
@@ -64,8 +63,7 @@ class EpisodeCommentsCard extends StatelessWidget {
                         Row(
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  commentItem.replies[index].user.avatar.large),
+                              backgroundImage: NetworkImage(commentItem.replies[index].user.avatar.large),
                             ),
                             const SizedBox(width: 8),
                             Column(
@@ -73,16 +71,14 @@ class EpisodeCommentsCard extends StatelessWidget {
                               children: [
                                 Text(commentItem.replies[index].user.nickname),
                                 Text(
-                                  Utils.dateFormat(
-                                      commentItem.replies[index].createdAt),
+                                  Utils.dateFormat(commentItem.replies[index].createdAt),
                                 ),
                               ],
                             ),
                           ],
                         ),
                         const SizedBox(height: 8),
-                        BBCodeWidget(
-                            bbcode: commentItem.replies[index].comment),
+                        BBCodeWidget(bbcode: commentItem.replies[index].comment),
                       ],
                     ),
                   );

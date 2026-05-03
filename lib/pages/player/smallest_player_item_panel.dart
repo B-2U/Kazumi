@@ -65,8 +65,7 @@ class SmallestPlayerItemPanel extends StatefulWidget {
   final bool disableAnimations;
 
   @override
-  State<SmallestPlayerItemPanel> createState() =>
-      _SmallestPlayerItemPanelState();
+  State<SmallestPlayerItemPanel> createState() => _SmallestPlayerItemPanelState();
 }
 
 class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
@@ -75,11 +74,10 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
   late Animation<Offset> topOffsetAnimation;
   late Animation<Offset> bottomOffsetAnimation;
   late Animation<Offset> leftOffsetAnimation;
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final PlayerController playerController = Modular.get<PlayerController>();
   final TextEditingController textController = TextEditingController();
-  
+
   // SVG Caches
   String? cachedSvgString;
   Widget? cachedDanmakuOnIcon;
@@ -93,15 +91,13 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
       String input = "";
       return AlertDialog(
         title: const Text('跳过秒数'),
-        content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
           return TextField(
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly, // 只允许输入数字
             ],
             decoration: InputDecoration(
-              floatingLabelBehavior:
-                  FloatingLabelBehavior.never, // 控制label的显示方式
+              floatingLabelBehavior: FloatingLabelBehavior.never, // 控制label的显示方式
               labelText: playerController.buttonSkipTime.toString(),
             ),
             onChanged: (value) {
@@ -160,7 +156,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
     haEnable = setting.get(SettingBoxKey.hAenable, defaultValue: true);
     cacheSvgIcons();
   }
-  
+
   void cacheSvgIcons() {
     cachedDanmakuOffIcon = RepaintBoundary(
       child: SvgPicture.asset(
@@ -169,14 +165,9 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
       ),
     );
   }
-  
+
   Widget danmakuOnIcon(BuildContext context) {
-    final colorHex = Theme.of(context)
-        .colorScheme
-        .primary
-        .toARGB32()
-        .toRadixString(16)
-        .substring(2);
+    final colorHex = Theme.of(context).colorScheme.primary.toARGB32().toRadixString(16).substring(2);
 
     if (cachedSvgString != colorHex) {
       cachedSvgString = colorHex;
@@ -203,19 +194,13 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                 strokeWidth: _loadingIndicatorStrokeWidth,
               ),
             )
-          : (playerController.danmakuOn
-              ? danmakuOnIcon(context)
-              : cachedDanmakuOffIcon!),
+          : (playerController.danmakuOn ? danmakuOnIcon(context) : cachedDanmakuOffIcon!),
       onPressed: playerController.danmakuLoading
           ? null
           : () {
               widget.handleDanmaku();
             },
-      tooltip: playerController.danmakuLoading
-          ? '弹幕加载中...'
-          : (playerController.danmakuOn
-              ? '关闭弹幕'
-              : '打开弹幕'),
+      tooltip: playerController.danmakuLoading ? '弹幕加载中...' : (playerController.danmakuOn ? '关闭弹幕' : '打开弹幕'),
     );
   }
 
@@ -252,9 +237,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
             right: 0,
             child: Visibility(
               visible: !playerController.lockPanel &&
-                  (widget.disableAnimations
-                      ? playerController.showVideoController
-                      : true),
+                  (widget.disableAnimations ? playerController.showVideoController : true),
               child: widget.disableAnimations
                   ? Container(
                       height: 50,
@@ -296,9 +279,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
             right: 0,
             child: Visibility(
               visible: !playerController.lockPanel &&
-                  (widget.disableAnimations
-                      ? playerController.showVideoController
-                      : true),
+                  (widget.disableAnimations ? playerController.showVideoController : true),
               child: widget.disableAnimations
                   ? Container(
                       height: 100,
@@ -345,9 +326,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                             borderRadius: BorderRadius.circular(8.0), // 圆角
                           ),
                           child: Text(
-                            playerController.currentPosition.compareTo(
-                                        playerController.playerPosition) >
-                                    0
+                            playerController.currentPosition.compareTo(playerController.playerPosition) > 0
                                 ? '快进 ${playerController.currentPosition.inSeconds - playerController.playerPosition.inSeconds} 秒'
                                 : '快退 ${playerController.playerPosition.inSeconds - playerController.currentPosition.inSeconds} 秒',
                             style: const TextStyle(
@@ -401,8 +380,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                             ),
                             child: Row(
                               children: <Widget>[
-                                const Icon(Icons.brightness_7,
-                                    color: Colors.white),
+                                const Icon(Icons.brightness_7, color: Colors.white),
                                 Text(
                                   ' ${(playerController.brightness * 100).toInt()} %',
                                   style: const TextStyle(
@@ -429,8 +407,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                             ),
                             child: Row(
                               children: <Widget>[
-                                const Icon(Icons.volume_down,
-                                    color: Colors.white),
+                                const Icon(Icons.volume_down, color: Colors.white),
                                 Text(
                                   ' ${playerController.volume.toInt()}%',
                                   style: const TextStyle(
@@ -449,13 +426,10 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
             right: 0,
             child: Visibility(
               visible: !playerController.lockPanel &&
-                  (widget.disableAnimations
-                      ? playerController.showVideoController
-                      : true),
+                  (widget.disableAnimations ? playerController.showVideoController : true),
               child: widget.disableAnimations
                   ? topControlWidget
-                  : SlideTransition(
-                      position: topOffsetAnimation, child: topControlWidget),
+                  : SlideTransition(position: topOffsetAnimation, child: topControlWidget),
             ),
           ),
           // 自定义播放器底部组件
@@ -465,14 +439,10 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
             right: 0,
             child: Visibility(
               visible: !playerController.lockPanel &&
-                  (widget.disableAnimations
-                      ? playerController.showVideoController
-                      : true),
+                  (widget.disableAnimations ? playerController.showVideoController : true),
               child: widget.disableAnimations
                   ? bottomControlWidget
-                  : SlideTransition(
-                      position: bottomOffsetAnimation,
-                      child: bottomControlWidget),
+                  : SlideTransition(position: bottomOffsetAnimation, child: bottomControlWidget),
             ),
           ),
         ],
@@ -486,9 +456,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
         children: [
           IconButton(
             color: Colors.white,
-            icon: Icon(playerController.playing
-                ? Icons.pause_rounded
-                : Icons.play_arrow_rounded),
+            icon: Icon(playerController.playing ? Icons.pause_rounded : Icons.play_arrow_rounded),
             tooltip: playerController.playing ? '暂停' : '播放',
             onPressed: () {
               playerController.playOrPause();
@@ -508,8 +476,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
               onDragStart: (details) {
                 widget.handleProgressBarDragStart(details);
               },
-              onDragUpdate: (details) =>
-                  {playerController.currentPosition = details.timeStamp},
+              onDragUpdate: (details) => {playerController.currentPosition = details.timeStamp},
               onDragEnd: () {
                 widget.handleProgressBarDragEnd();
               },
@@ -528,12 +495,9 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
           (!videoPageController.isPip)
               ? IconButton(
                   color: Colors.white,
-                  icon: Icon(videoPageController.isFullscreen
-                      ? Icons.fullscreen_exit_rounded
-                      : Icons.fullscreen_rounded),
-                  tooltip: videoPageController.isFullscreen
-                      ? '退出全屏'
-                      : '全屏',
+                  icon:
+                      Icon(videoPageController.isFullscreen ? Icons.fullscreen_exit_rounded : Icons.fullscreen_rounded),
+                  tooltip: videoPageController.isFullscreen ? '退出全屏' : '全屏',
                   onPressed: () {
                     widget.handleFullscreen();
                   },
@@ -599,8 +563,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                     }
                   },
                   tooltip: '画中画',
-                  icon: const Icon(Icons.picture_in_picture,
-                      color: Colors.white)),
+                  icon: const Icon(Icons.picture_in_picture, color: Colors.white)),
             // 弹幕开关
             _buildDanmakuToggleButton(context),
             // 追番
@@ -627,8 +590,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                 widget.startHideTimer();
                 playerController.canHidePlayerPanel = true;
               },
-              builder: (BuildContext context, MenuController controller,
-                  Widget? child) {
+              builder: (BuildContext context, MenuController controller, Widget? child) {
                 return IconButton(
                   onPressed: () {
                     if (controller.isOpen) {
@@ -649,8 +611,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                   menuChildren: List<MenuItemButton>.generate(
                     3,
                     (int index) => MenuItemButton(
-                      onPressed: () =>
-                          playerController.aspectRatioType = index + 1,
+                      onPressed: () => playerController.aspectRatioType = index + 1,
                       child: Container(
                         height: 48,
                         constraints: BoxConstraints(minWidth: 112),
@@ -663,8 +624,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                                     ? '裁切填充'
                                     : '拉伸填充',
                             style: TextStyle(
-                                color: index + 1 ==
-                                        playerController.aspectRatioType
+                                color: index + 1 == playerController.aspectRatioType
                                     ? Theme.of(context).colorScheme.primary
                                     : null),
                           ),
@@ -683,8 +643,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                 ),
                 SubmenuButton(
                   menuChildren: [
-                    for (final double i
-                        in defaultPlaySpeedList) ...<MenuItemButton>[
+                    for (final double i in defaultPlaySpeedList) ...<MenuItemButton>[
                       MenuItemButton(
                         onPressed: () async {
                           await widget.setPlaybackSpeed(i);
@@ -697,9 +656,8 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                             child: Text(
                               '${i}x',
                               style: TextStyle(
-                                  color: i == playerController.playerSpeed
-                                      ? Theme.of(context).colorScheme.primary
-                                      : null),
+                                  color:
+                                      i == playerController.playerSpeed ? Theme.of(context).colorScheme.primary : null),
                             ),
                           ),
                         ),
@@ -719,8 +677,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                   menuChildren: List<MenuItemButton>.generate(
                     3,
                     (int index) => MenuItemButton(
-                      onPressed: () =>
-                          widget.handleSuperResolutionChange(index + 1),
+                      onPressed: () => widget.handleSuperResolutionChange(index + 1),
                       child: Container(
                         height: 48,
                         constraints: BoxConstraints(minWidth: 112),
@@ -733,8 +690,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                                     ? '效率档'
                                     : '质量档',
                             style: TextStyle(
-                              color: playerController.superResolutionType ==
-                                      index + 1
+                              color: playerController.superResolutionType == index + 1
                                   ? Theme.of(context).colorScheme.primary
                                   : null,
                             ),
@@ -771,8 +727,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                         constraints: BoxConstraints(minWidth: 112),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                              "网络延时: ${playerController.syncplayClientRtt}ms"),
+                          child: Text("网络延时: ${playerController.syncplayClientRtt}ms"),
                         ),
                       ),
                     ),
@@ -851,10 +806,8 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                       context: context,
                       builder: (context) {
                         return DanmakuSettingsSheet(
-                          danmakuController:
-                              playerController.danmakuController,
-                          onUpdateDanmakuSpeed:
-                              playerController.updateDanmakuSpeed,
+                          danmakuController: playerController.danmakuController,
+                          onUpdateDanmakuSpeed: playerController.updateDanmakuSpeed,
                         );
                       },
                     );
@@ -886,8 +839,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                     bool needRestart = playerController.playing;
                     playerController.pause();
                     RemotePlay()
-                        .castVideo(playerController.videoUrl,
-                            videoPageController.currentPlugin.referer)
+                        .castVideo(playerController.videoUrl, videoPageController.currentPlugin.referer)
                         .whenComplete(() {
                       if (needRestart) {
                         playerController.play();
@@ -931,9 +883,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                           child: Text(
                             "不开启",
                             style: TextStyle(
-                              color: !TimedShutdownService().isActive
-                                  ? Theme.of(context).colorScheme.primary
-                                  : null,
+                              color: !TimedShutdownService().isActive ? Theme.of(context).colorScheme.primary : null,
                             ),
                           ),
                         ),
@@ -943,7 +893,8 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                       MenuItemButton(
                         onPressed: () {
                           TimedShutdownService().start(minutes, onExpired: widget.pauseForTimedShutdown);
-                          KazumiDialog.showToast(message: '已设置 ${TimedShutdownService().formatMinutesToDisplay(minutes)} 后定时关闭');
+                          KazumiDialog.showToast(
+                              message: '已设置 ${TimedShutdownService().formatMinutesToDisplay(minutes)} 后定时关闭');
                         },
                         child: Container(
                           height: 48,
@@ -986,9 +937,7 @@ class _SmallestPlayerItemPanelState extends State<SmallestPlayerItemPanel> {
                         valueListenable: TimedShutdownService().remainingSecondsNotifier,
                         builder: (context, remainingSeconds, child) {
                           return Text(
-                            remainingSeconds > 0
-                                ? "定时关闭 (${TimedShutdownService().formatRemainingTime()})"
-                                : "定时关闭",
+                            remainingSeconds > 0 ? "定时关闭 (${TimedShutdownService().formatRemainingTime()})" : "定时关闭",
                           );
                         },
                       ),

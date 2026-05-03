@@ -17,18 +17,9 @@ class VideoWebviewLinuxImpl extends VideoWebviewController<Webview> {
         headless: true,
         proxy: proxyConfig,
         userScripts: const [
-          UserScript(
-              source: blobScript,
-              injectionTime: UserScriptInjectionTime.documentStart,
-              forAllFrames: true),
-          UserScript(
-              source: iframeScript,
-              injectionTime: UserScriptInjectionTime.documentEnd,
-              forAllFrames: true),
-          UserScript(
-              source: videoScript,
-              injectionTime: UserScriptInjectionTime.documentEnd,
-              forAllFrames: true)
+          UserScript(source: blobScript, injectionTime: UserScriptInjectionTime.documentStart, forAllFrames: true),
+          UserScript(source: iframeScript, injectionTime: UserScriptInjectionTime.documentEnd, forAllFrames: true),
+          UserScript(source: videoScript, injectionTime: UserScriptInjectionTime.documentEnd, forAllFrames: true)
         ],
       ),
     );
@@ -38,14 +29,12 @@ class VideoWebviewLinuxImpl extends VideoWebviewController<Webview> {
 
   ProxyConfiguration? _getProxyConfiguration() {
     final setting = GStorage.setting;
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (!proxyEnable) {
       return null;
     }
 
-    final String proxyUrl =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    final String proxyUrl = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
     final parsed = ProxyUtils.parseProxyUrl(proxyUrl);
     if (parsed == null) {
       return null;
@@ -62,8 +51,7 @@ class VideoWebviewLinuxImpl extends VideoWebviewController<Webview> {
   }
 
   @override
-  Future<void> loadUrl(String url, bool useLegacyParser,
-      {int offset = 0}) async {
+  Future<void> loadUrl(String url, bool useLegacyParser, {int offset = 0}) async {
     await unloadPage();
     if (!bridgeInited) {
       await initBridge(useLegacyParser);
@@ -90,36 +78,28 @@ class VideoWebviewLinuxImpl extends VideoWebviewController<Webview> {
   Future<void> initJSBridge(bool useLegacyParser) async {
     webviewController!.addOnWebMessageReceivedCallback((message) async {
       if (message.contains('iframeMessage:')) {
-        String messageItem =
-            Uri.encodeFull(message.replaceFirst('iframeMessage:', ''));
-        logEventController
-            .add('Callback received: [iframe] ${Uri.decodeFull(messageItem)}');
+        String messageItem = Uri.encodeFull(message.replaceFirst('iframeMessage:', ''));
+        logEventController.add('Callback received: [iframe] ${Uri.decodeFull(messageItem)}');
         if ((messageItem.contains('http') || messageItem.startsWith('//')) &&
             !messageItem.contains('googleads') &&
             !messageItem.contains('googlesyndication.com') &&
             !messageItem.contains('prestrain.html') &&
             !messageItem.contains('prestrain%2Ehtml') &&
             !messageItem.contains('adtrafficquality')) {
-          if (Utils.decodeVideoSource(messageItem) !=
-                  Uri.encodeFull(messageItem) &&
-              useLegacyParser) {
+          if (Utils.decodeVideoSource(messageItem) != Uri.encodeFull(messageItem) && useLegacyParser) {
             logEventController.add('Parsing video source $messageItem');
             isIframeLoaded = true;
             isVideoSourceLoaded = true;
             videoLoadingEventController.add(false);
-            logEventController.add(
-                'Loading video source ${Utils.decodeVideoSource(messageItem)}');
+            logEventController.add('Loading video source ${Utils.decodeVideoSource(messageItem)}');
             unloadPage();
-            videoParserEventController
-                .add((Utils.decodeVideoSource(messageItem), offset));
+            videoParserEventController.add((Utils.decodeVideoSource(messageItem), offset));
           }
         }
       }
       if (message.contains('videoMessage:')) {
-        String messageItem =
-            Uri.encodeFull(message.replaceFirst('videoMessage:', ''));
-        logEventController
-            .add('Callback received: [video] ${Uri.decodeFull(messageItem)}');
+        String messageItem = Uri.encodeFull(message.replaceFirst('videoMessage:', ''));
+        logEventController.add('Callback received: [video] ${Uri.decodeFull(messageItem)}');
         if (messageItem.contains('http')) {
           String videoUrl = Uri.decodeFull(messageItem);
           logEventController.add('Loading video source: $videoUrl');

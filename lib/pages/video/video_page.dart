@@ -31,15 +31,12 @@ class VideoPage extends StatefulWidget {
   State<VideoPage> createState() => _VideoPageState();
 }
 
-class _VideoPageState extends State<VideoPage>
-    with TickerProviderStateMixin, WindowListener {
+class _VideoPageState extends State<VideoPage> with TickerProviderStateMixin, WindowListener {
   Box setting = GStorage.setting;
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final PlayerController playerController = Modular.get<PlayerController>();
   final HistoryController historyController = Modular.get<HistoryController>();
-  final DownloadController downloadController =
-      Modular.get<DownloadController>();
+  final DownloadController downloadController = Modular.get<DownloadController>();
   late bool playResume;
   bool showDebugLog = false;
   List<String> webviewLogLines = [];
@@ -91,8 +88,7 @@ class _VideoPageState extends State<VideoPage>
     ));
 
     playResume = setting.get(SettingBoxKey.playResume, defaultValue: true);
-    disableAnimations =
-        setting.get(SettingBoxKey.playerDisableAnimations, defaultValue: false);
+    disableAnimations = setting.get(SettingBoxKey.playerDisableAnimations, defaultValue: false);
 
     if (videoPageController.isOfflineMode) {
       // 离线模式：跳过 WebView 订阅，直接初始化播放器
@@ -107,9 +103,7 @@ class _VideoPageState extends State<VideoPage>
       final String displayText = '${event.username}：${event.message}';
 
       // 只有在弹幕开启时渲染弹幕并确保是别人发送的弹幕
-      if (playerController.danmakuOn &&
-          event.username != localUsername &&
-          event.fromRemote) {
+      if (playerController.danmakuOn && event.username != localUsername && event.fromRemote) {
         playerController.danmakuController.addDanmaku(
           DanmakuContentItem(
             displayText,
@@ -140,8 +134,7 @@ class _VideoPageState extends State<VideoPage>
           httpHeaders: {},
           adBlockerEnabled: false,
           episodeTitle: videoPageController
-              .roadList[videoPageController.currentRoad]
-              .identifier[videoPageController.currentEpisode - 1],
+              .roadList[videoPageController.currentRoad].identifier[videoPageController.currentEpisode - 1],
           referer: '',
           currentRoad: videoPageController.currentRoad,
           coverUrl: videoPageController.bangumiItem.images['large'],
@@ -160,13 +153,11 @@ class _VideoPageState extends State<VideoPage>
     videoPageController.historyOffset = 0;
     videoPageController.showTabBody = true;
 
-    var progress = historyController.lastWatching(
-        videoPageController.bangumiItem,
-        videoPageController.currentPlugin.name);
+    var progress =
+        historyController.lastWatching(videoPageController.bangumiItem, videoPageController.currentPlugin.name);
     if (progress != null) {
       if (videoPageController.roadList.length > progress.road) {
-        if (videoPageController.roadList[progress.road].data.length >=
-            progress.episode) {
+        if (videoPageController.roadList[progress.road].data.length >= progress.episode) {
           videoPageController.currentEpisode = progress.episode;
           videoPageController.currentRoad = progress.road;
           if (playResume) {
@@ -191,8 +182,7 @@ class _VideoPageState extends State<VideoPage>
     // 使用 Provider 模式启动播放
     WidgetsBinding.instance.addPostFrameCallback((_) {
       changeEpisode(videoPageController.currentEpisode,
-          currentRoad: videoPageController.currentRoad,
-          offset: videoPageController.historyOffset);
+          currentRoad: videoPageController.currentRoad, offset: videoPageController.historyOffset);
     });
   }
 
@@ -216,9 +206,7 @@ class _VideoPageState extends State<VideoPage>
     try {
       playerController.dispose();
     } catch (e) {
-      KazumiLogger().e(
-          'VideoPageController: failed to dispose playerController',
-          error: e);
+      KazumiLogger().e('VideoPageController: failed to dispose playerController', error: e);
     }
     // 取消正在进行的视频源解析
     videoPageController.cancelVideoSourceResolution();
@@ -273,8 +261,7 @@ class _VideoPageState extends State<VideoPage>
     });
   }
 
-  Future<void> changeEpisode(int episode,
-      {int currentRoad = 0, int offset = 0}) async {
+  Future<void> changeEpisode(int episode, {int currentRoad = 0, int offset = 0}) async {
     clearWebviewLog();
     hideDebugConsole();
     videoPageController.loading = true;
@@ -282,8 +269,7 @@ class _VideoPageState extends State<VideoPage>
     videoPageController.episodeInfo.reset();
     videoPageController.episodeCommentsList.clear();
     await playerController.stop();
-    await videoPageController.changeEpisode(episode,
-        currentRoad: currentRoad, offset: offset);
+    await videoPageController.changeEpisode(episode, currentRoad: currentRoad, offset: offset);
   }
 
   void menuJumpToCurrentEpisode() {
@@ -391,8 +377,7 @@ class _VideoPageState extends State<VideoPage>
     } else {
       // Todo 接口方限制
 
-      playerController.danmakuController
-          .addDanmaku(DanmakuContentItem(msg, selfSend: true));
+      playerController.danmakuController.addDanmaku(DanmakuContentItem(msg, selfSend: true));
     }
   }
 
@@ -427,8 +412,7 @@ class _VideoPageState extends State<VideoPage>
                           hintText: '发个友善的弹幕见证当下',
                           hintStyle: TextStyle(fontSize: 14),
                           alignLabelWithHint: true,
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -469,8 +453,7 @@ class _VideoPageState extends State<VideoPage>
       return;
     }
 
-    final DanmakuDestination? result =
-        await showModalBottomSheet<DanmakuDestination>(
+    final DanmakuDestination? result = await showModalBottomSheet<DanmakuDestination>(
       context: context,
       shape: const BeveledRectangleBorder(),
       builder: (context) {
@@ -482,13 +465,11 @@ class _VideoPageState extends State<VideoPage>
             children: [
               ListTile(
                 title: const Text('发送到聊天室'),
-                onTap: () =>
-                    Navigator.of(context).pop(DanmakuDestination.chatRoom),
+                onTap: () => Navigator.of(context).pop(DanmakuDestination.chatRoom),
               ),
               ListTile(
                 title: const Text('发送到远程弹幕库'),
-                onTap: () =>
-                    Navigator.of(context).pop(DanmakuDestination.remoteDanmaku),
+                onTap: () => Navigator.of(context).pop(DanmakuDestination.remoteDanmaku),
               ),
               const SizedBox(height: 8),
             ],
@@ -506,8 +487,7 @@ class _VideoPageState extends State<VideoPage>
 
   @override
   Widget build(BuildContext context) {
-    final bool islandScape =
-        MediaQuery.sizeOf(context).width > MediaQuery.sizeOf(context).height;
+    final bool islandScape = MediaQuery.sizeOf(context).width > MediaQuery.sizeOf(context).height;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       openTabBodyAnimated();
     });
@@ -521,11 +501,9 @@ class _VideoPageState extends State<VideoPage>
       },
       child: OrientationBuilder(builder: (context, orientation) {
         if (!Utils.isDesktop()) {
-          if (orientation == Orientation.landscape &&
-              !videoPageController.isFullscreen) {
+          if (orientation == Orientation.landscape && !videoPageController.isFullscreen) {
             videoPageController.enterFullScreen();
-          } else if (orientation == Orientation.portrait &&
-              videoPageController.isFullscreen) {
+          } else if (orientation == Orientation.portrait && videoPageController.isFullscreen) {
             videoPageController.exitFullScreen();
             menuJumpToCurrentEpisode();
             videoPageController.showTabBody = true;
@@ -591,9 +569,7 @@ class _VideoPageState extends State<VideoPage>
       height: MediaQuery.sizeOf(context).height,
       width: (!Utils.isDesktop() && !Utils.isTablet())
           ? MediaQuery.sizeOf(context).height
-          : (MediaQuery.sizeOf(context).width / 3 > 420
-              ? 420
-              : MediaQuery.sizeOf(context).width / 3),
+          : (MediaQuery.sizeOf(context).width / 3 > 420 ? 420 : MediaQuery.sizeOf(context).width / 3),
       child: Container(
         color: Theme.of(context).canvasColor,
         child: GridViewObserver(
@@ -637,9 +613,7 @@ class _VideoPageState extends State<VideoPage>
         Positioned.fill(
           child: Stack(
             children: [
-              if (videoPageController.loading ||
-                  playerController.loading ||
-                  videoPageController.errorMessage != null)
+              if (videoPageController.loading || playerController.loading || videoPageController.errorMessage != null)
                 Container(
                   color: Colors.black,
                   child: Observer(builder: (context) {
@@ -648,17 +622,13 @@ class _VideoPageState extends State<VideoPage>
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.error_outline,
-                                    color: Theme.of(context).colorScheme.error,
-                                    size: 48),
+                                Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error, size: 48),
                                 const SizedBox(height: 16),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 32),
+                                  padding: const EdgeInsets.symmetric(horizontal: 32),
                                   child: Text(
                                     videoPageController.errorMessage!,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                                    style: const TextStyle(color: Colors.white, fontSize: 16),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -667,15 +637,10 @@ class _VideoPageState extends State<VideoPage>
                           : Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircularProgressIndicator(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .tertiaryContainer),
+                                CircularProgressIndicator(color: Theme.of(context).colorScheme.tertiaryContainer),
                                 const SizedBox(height: 10),
                                 Text(
-                                  videoPageController.loading
-                                      ? '视频资源解析中'
-                                      : '视频资源解析成功, 播放器加载中',
+                                  videoPageController.loading ? '视频资源解析中' : '视频资源解析成功, 播放器加载中',
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ],
@@ -684,9 +649,7 @@ class _VideoPageState extends State<VideoPage>
                   }),
                 ),
               Visibility(
-                visible:
-                    (videoPageController.loading || playerController.loading) &&
-                        showDebugLog,
+                visible: (videoPageController.loading || playerController.loading) && showDebugLog,
                 child: Container(
                   color: Colors.black,
                   child: Align(
@@ -718,44 +681,33 @@ class _VideoPageState extends State<VideoPage>
                       child: Row(
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.arrow_back,
-                                color: Colors.white),
+                            icon: const Icon(Icons.arrow_back, color: Colors.white),
                             onPressed: () => onBackPressed(context),
                           ),
-                          const Expanded(
-                              child: dtb.DragToMoveArea(
-                                  child: SizedBox(height: 40))),
+                          const Expanded(child: dtb.DragToMoveArea(child: SizedBox(height: 40))),
                           IconButton(
-                            icon: const Icon(Icons.refresh_outlined,
-                                color: Colors.white),
+                            icon: const Icon(Icons.refresh_outlined, color: Colors.white),
                             onPressed: () {
                               changeEpisode(videoPageController.currentEpisode,
                                   currentRoad: videoPageController.currentRoad);
                             },
                           ),
                           Visibility(
-                            visible: MediaQuery.sizeOf(context).width >
-                                MediaQuery.sizeOf(context).height,
+                            visible: MediaQuery.sizeOf(context).width > MediaQuery.sizeOf(context).height,
                             child: IconButton(
                               onPressed: () {
-                                videoPageController.showTabBody =
-                                    !videoPageController.showTabBody;
+                                videoPageController.showTabBody = !videoPageController.showTabBody;
                                 openTabBodyAnimated();
                               },
                               icon: Icon(
-                                videoPageController.showTabBody
-                                    ? Icons.menu_open
-                                    : Icons.menu_open_outlined,
+                                videoPageController.showTabBody ? Icons.menu_open : Icons.menu_open_outlined,
                                 color: Colors.white,
                               ),
                             ),
                           ),
                           IconButton(
-                            icon: Icon(
-                                showDebugLog
-                                    ? Icons.bug_report
-                                    : Icons.bug_report_outlined,
-                                color: Colors.white),
+                            icon:
+                                Icon(showDebugLog ? Icons.bug_report : Icons.bug_report_outlined, color: Colors.white),
                             onPressed: () {
                               switchDebugConsole();
                             },
@@ -780,8 +732,7 @@ class _VideoPageState extends State<VideoPage>
                   keyboardFocus: keyboardFocus,
                   sendDanmaku: sendDanmaku,
                   disableAnimations: disableAnimations,
-                  showDanmakuDestinationPickerAndSend:
-                      showDanmakuDestinationPickerAndSend,
+                  showDanmakuDestinationPickerAndSend: showDanmakuDestinationPickerAndSend,
                   pauseForTimedShutdown: pauseForTimedShutdown,
                 ),
         ),
@@ -846,9 +797,7 @@ class _VideoPageState extends State<VideoPage>
                     child: Text(
                       '播放列表${i + 1}',
                       style: TextStyle(
-                        color: i == currentRoad
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
+                        color: i == currentRoad ? Theme.of(context).colorScheme.primary : null,
                       ),
                     ),
                   ),
@@ -861,8 +810,7 @@ class _VideoPageState extends State<VideoPage>
     );
   }
 
-  DownloadEpisode? _getEpisodeFromRecords(
-      int episodeNumber, String episodePageUrl) {
+  DownloadEpisode? _getEpisodeFromRecords(int episodeNumber, String episodePageUrl) {
     final bangumiId = videoPageController.bangumiItem.id;
     final pluginName = videoPageController.currentPlugin.name;
 
@@ -888,8 +836,7 @@ class _VideoPageState extends State<VideoPage>
     if (episode == null) return const SizedBox.shrink();
     switch (episode.status) {
       case DownloadStatus.completed:
-        return Icon(Icons.offline_pin,
-            size: 16, color: Theme.of(context).colorScheme.primary);
+        return Icon(Icons.offline_pin, size: 16, color: Theme.of(context).colorScheme.primary);
       case DownloadStatus.downloading:
         return SizedBox(
           width: 16,
@@ -900,11 +847,9 @@ class _VideoPageState extends State<VideoPage>
           ),
         );
       case DownloadStatus.failed:
-        return Icon(Icons.error_outline,
-            size: 16, color: Theme.of(context).colorScheme.error);
+        return Icon(Icons.error_outline, size: 16, color: Theme.of(context).colorScheme.error);
       case DownloadStatus.paused:
-        return Icon(Icons.pause_circle_outline,
-            size: 16, color: Theme.of(context).colorScheme.outline);
+        return Icon(Icons.pause_circle_outline, size: 16, color: Theme.of(context).colorScheme.outline);
       case DownloadStatus.pending:
       case DownloadStatus.resolving:
         return SizedBox(
@@ -938,24 +883,19 @@ class _VideoPageState extends State<VideoPage>
                           videoPageController.currentRoad == currentRoad) {
                         return;
                       }
-                      KazumiLogger()
-                          .i('VideoPageController: video URL is $urlItem');
+                      KazumiLogger().i('VideoPageController: video URL is $urlItem');
                       closeTabBodyAnimated();
                       changeEpisode(count0, currentRoad: currentRoad);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             children: [
-                              if (count0 ==
-                                      (videoPageController.currentEpisode) &&
-                                  currentRoad ==
-                                      videoPageController
-                                          .currentRoad) ...<Widget>[
+                              if (count0 == (videoPageController.currentEpisode) &&
+                                  currentRoad == videoPageController.currentRoad) ...<Widget>[
                                 Image.asset(
                                   'assets/images/playing.gif',
                                   color: Theme.of(context).colorScheme.primary,
@@ -970,15 +910,10 @@ class _VideoPageState extends State<VideoPage>
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 13,
-                                    color: (count0 ==
-                                                videoPageController
-                                                    .currentEpisode &&
-                                            currentRoad ==
-                                                videoPageController.currentRoad)
+                                    color: (count0 == videoPageController.currentEpisode &&
+                                            currentRoad == videoPageController.currentRoad)
                                         ? Theme.of(context).colorScheme.primary
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                        : Theme.of(context).colorScheme.onSurface),
                               )),
                               _buildDownloadStatusIcon(count0, urlItem),
                               const SizedBox(width: 2),
@@ -1021,13 +956,10 @@ class _VideoPageState extends State<VideoPage>
   Widget get tabBody {
     int episodeNum = 0;
     episodeNum = Utils.extractEpisodeNumber(videoPageController
-        .roadList[videoPageController.currentRoad]
-        .identifier[videoPageController.currentEpisode - 1]);
+        .roadList[videoPageController.currentRoad].identifier[videoPageController.currentEpisode - 1]);
     if (episodeNum == 0 ||
         (!videoPageController.isOfflineMode &&
-            episodeNum >
-                videoPageController.roadList[videoPageController.currentRoad]
-                    .identifier.length)) {
+            episodeNum > videoPageController.roadList[videoPageController.currentRoad].identifier.length)) {
       episodeNum = videoPageController.isOfflineMode
           ? videoPageController.actualEpisodeNumber
           : videoPageController.currentEpisode;
@@ -1047,8 +979,7 @@ class _VideoPageState extends State<VideoPage>
                   dividerHeight: 0,
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,
-                  labelPadding:
-                      const EdgeInsetsDirectional.only(start: 30, end: 30),
+                  labelPadding: const EdgeInsetsDirectional.only(start: 30, end: 30),
                   onTap: (index) {
                     if (index == 0) {
                       menuJumpToCurrentEpisode();
@@ -1059,16 +990,14 @@ class _VideoPageState extends State<VideoPage>
                     Tab(text: '评论'),
                   ],
                 ),
-                if (MediaQuery.sizeOf(context).width <=
-                    MediaQuery.sizeOf(context).height) ...[
+                if (MediaQuery.sizeOf(context).width <= MediaQuery.sizeOf(context).height) ...[
                   const Spacer(),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       border: Border.all(
-                        color: playerController.danmakuOn
-                            ? Theme.of(context).hintColor
-                            : Theme.of(context).disabledColor,
+                        color:
+                            playerController.danmakuOn ? Theme.of(context).hintColor : Theme.of(context).disabledColor,
                         width: 0.5,
                       ),
                     ),
@@ -1076,8 +1005,7 @@ class _VideoPageState extends State<VideoPage>
                     height: 31,
                     child: GestureDetector(
                       onTap: () {
-                        if (playerController.danmakuOn &&
-                            !videoPageController.loading) {
+                        if (playerController.danmakuOn && !videoPageController.loading) {
                           showMobileDanmakuInput();
                         } else if (videoPageController.loading) {
                           KazumiDialog.showToast(message: '请等待视频加载完成');
@@ -1088,9 +1016,7 @@ class _VideoPageState extends State<VideoPage>
                       child: Row(
                         children: [
                           Text(
-                            playerController.danmakuOn
-                                ? '  点我发弹幕  '
-                                : '  已关闭弹幕  ',
+                            playerController.danmakuOn ? '  点我发弹幕  ' : '  已关闭弹幕  ',
                             softWrap: false,
                             overflow: TextOverflow.clip,
                             style: TextStyle(
@@ -1140,8 +1066,7 @@ class _VideoPageState extends State<VideoPage>
                               showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
-                                builder: (context) =>
-                                    DownloadEpisodeSheet(road: currentRoad),
+                                builder: (context) => DownloadEpisodeSheet(road: currentRoad),
                               );
                             },
                           ),

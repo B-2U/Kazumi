@@ -24,13 +24,14 @@ class _KeyboardSettingsPageState extends State<KeyboardSettingsPage> {
 
   @override
   void initState() {
-    super.initState();    
+    super.initState();
     // 根据默认快捷键生成可用快捷键列表，并读取已设置值
     shortcuts = {
       for (var key in defaultShortcuts.keys)
-        key: (setting.get('shortcut_$key', 
-                defaultValue: defaultShortcuts[key]?.toList() ?? <String>[]) 
-              ?.cast<String>() ?? [])
+        key: (setting
+                .get('shortcut_$key', defaultValue: defaultShortcuts[key]?.toList() ?? <String>[])
+                ?.cast<String>() ??
+            [])
     };
   }
 
@@ -46,6 +47,7 @@ class _KeyboardSettingsPageState extends State<KeyboardSettingsPage> {
     focusNode.dispose();
     super.dispose();
   }
+
   bool handleShortcutInput(String rawKey) {
     if (listeningFunction == null || listeningIndex == null) return false;
 
@@ -120,20 +122,18 @@ class _KeyboardSettingsPageState extends State<KeyboardSettingsPage> {
             if (event is! KeyDownEvent) return KeyEventResult.ignored;
             if (listeningFunction == null) return KeyEventResult.ignored;
 
-            final rawKey = event.logicalKey.keyLabel.isNotEmpty
-                ? event.logicalKey.keyLabel
-                : event.logicalKey.debugName ?? '';
+            final rawKey =
+                event.logicalKey.keyLabel.isNotEmpty ? event.logicalKey.keyLabel : event.logicalKey.debugName ?? '';
 
             final handled = handleShortcutInput(rawKey);
             return handled ? KeyEventResult.handled : KeyEventResult.ignored;
           },
           child: ListView(
             padding: const EdgeInsets.all(16),
-            children:
-              shortcuts.entries.map((entry) {
-                final func = entry.key;
-                final keys = entry.value;
-                return Card(
+            children: shortcuts.entries.map((entry) {
+              final func = entry.key;
+              final keys = entry.value;
+              return Card(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: Padding(
                   padding: const EdgeInsets.all(12),
@@ -142,10 +142,8 @@ class _KeyboardSettingsPageState extends State<KeyboardSettingsPage> {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            shortcutsChineseName[func] ?? func,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
-                          ),
+                          Text(shortcutsChineseName[func] ?? func,
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           Spacer(),
                           IconButton(
                             icon: Icon(Icons.add),
@@ -167,23 +165,25 @@ class _KeyboardSettingsPageState extends State<KeyboardSettingsPage> {
                         runSpacing: 8,
                         children: [
                           for (int i = 0; i < keys.length; i++)
-                          ActionChip(
-                            label: Text(keyAliases[keys[i]] ?? keys[i],),
-                            avatar: keys.length >=2 ?Icon(Icons.cancel) :Icon(Icons.edit),
-                            onPressed: (keys.length >=2)
-                              ?() {
-                                setState(() {
-                                  keys.removeAt(i);
-                                  listeningIndex = null;
-                                  if (keys.length >1){
-                                    keys.removeWhere((key) => key.isEmpty || key == '...');
-                                  }
-                                  setting.put('shortcut_$func', keys);
-                                });
-                              }
-                              :() => startListening(func, 0),
-                            focusNode: FocusNode(canRequestFocus: false),
-                          ),
+                            ActionChip(
+                              label: Text(
+                                keyAliases[keys[i]] ?? keys[i],
+                              ),
+                              avatar: keys.length >= 2 ? Icon(Icons.cancel) : Icon(Icons.edit),
+                              onPressed: (keys.length >= 2)
+                                  ? () {
+                                      setState(() {
+                                        keys.removeAt(i);
+                                        listeningIndex = null;
+                                        if (keys.length > 1) {
+                                          keys.removeWhere((key) => key.isEmpty || key == '...');
+                                        }
+                                        setting.put('shortcut_$func', keys);
+                                      });
+                                    }
+                                  : () => startListening(func, 0),
+                              focusNode: FocusNode(canRequestFocus: false),
+                            ),
                         ],
                       ),
                     ],

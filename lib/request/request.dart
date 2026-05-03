@@ -19,8 +19,7 @@ class Request {
   static Future<void> setCookie() async {
     setOptionsHeaders();
     // 初始化时检查并设置代理
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (proxyEnable) {
       setProxy();
     }
@@ -34,15 +33,13 @@ class Request {
 
   // 设置代理（仅支持 HTTP 代理）
   static void setProxy() {
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (!proxyEnable) {
       disableProxy();
       return;
     }
 
-    final String proxyUrl =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    final String proxyUrl = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
 
     final parsed = ProxyUtils.parseProxyUrl(proxyUrl);
     if (parsed == null) {
@@ -59,8 +56,7 @@ class Request {
           return 'PROXY $proxyHost:$proxyPort';
         };
         // 忽略证书验证
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
+        client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
         return client;
       },
     );
@@ -70,11 +66,11 @@ class Request {
   // 禁用代理
   static void disableProxy() {
     dio.httpClientAdapter = IOHttpClientAdapter(
-        createHttpClient: () {
-          final HttpClient client = HttpClient();
-          return client;
-        },
-      );
+      createHttpClient: () {
+        final HttpClient client = HttpClient();
+        return client;
+      },
+    );
     KazumiLogger().i('Proxy: 代理已禁用');
   }
 
@@ -96,7 +92,7 @@ class Request {
 
     dio = Dio(options);
     // debugPrint('Dio 初始化完成');
-    
+
     // if (enableSystemProxy) {
     //   setProxy();
     //   debugPrint('系统代理启用');
@@ -168,9 +164,7 @@ class Request {
         rethrow;
       }
       Response errResponse = Response(
-        data: {
-          'message': await ApiInterceptor.dioError(e)
-        }, // 将自定义 Map 数据赋值给 Response 的 data 属性
+        data: {'message': await ApiInterceptor.dioError(e)}, // 将自定义 Map 数据赋值给 Response 的 data 属性
         statusCode: 200,
         requestOptions: RequestOptions(),
       );
@@ -203,9 +197,7 @@ class Request {
         rethrow;
       }
       Response errResponse = Response(
-        data: {
-          'message': await ApiInterceptor.dioError(e)
-        }, // 将自定义 Map 数据赋值给 Response 的 data 属性
+        data: {'message': await ApiInterceptor.dioError(e)}, // 将自定义 Map 数据赋值给 Response 的 data 属性
         statusCode: 200,
         requestOptions: RequestOptions(),
       );

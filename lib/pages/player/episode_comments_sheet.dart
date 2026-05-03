@@ -12,8 +12,7 @@ import 'package:kazumi/request/bangumi.dart';
 class EpisodeInfoWidget extends InheritedWidget {
   /// This widget receives changes of episode and notify it's child,
   /// trigger [didChangeDependencies] of it's child.
-  const EpisodeInfoWidget(
-      {super.key, required this.episode, required super.child});
+  const EpisodeInfoWidget({super.key, required this.episode, required super.child});
 
   final int episode;
 
@@ -33,12 +32,10 @@ class EpisodeCommentsSheet extends StatefulWidget {
 }
 
 class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   bool commentsQueryTimeout = false;
   bool commentsIsEmpty = false;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   /// episode input by [showEpisodeSelection]
   int ep = 0;
@@ -52,8 +49,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
     commentsQueryTimeout = false;
     commentsIsEmpty = false;
     try {
-      await videoPageController.queryBangumiEpisodeCommentsByID(
-          videoPageController.bangumiItem.id, episode);
+      await videoPageController.queryBangumiEpisodeCommentsByID(videoPageController.bangumiItem.id, episode);
       if (videoPageController.episodeCommentsList.isEmpty && mounted) {
         setState(() {
           commentsIsEmpty = true;
@@ -99,11 +95,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
         // Scrollbars' movement is not linear so hide it.
         scrollbars: false,
         // Enable mouse drag to refresh
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.trackpad
-        },
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.trackpad},
       ),
       slivers: [
         SliverPadding(
@@ -141,8 +133,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
                     child: IndexedSemantics(
                       index: index,
                       child: EpisodeCommentsCard(
-                        commentItem:
-                            videoPageController.episodeCommentsList[index],
+                        commentItem: videoPageController.episodeCommentsList[index],
                       ),
                     ),
                   );
@@ -173,17 +164,13 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
                 Text(
                     '${videoPageController.episodeInfo.readType()}.${videoPageController.episodeInfo.episode} ${videoPageController.episodeInfo.name}',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.outline)),
+                    style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.outline)),
                 Text(
                     (videoPageController.episodeInfo.nameCn != '')
                         ? '${videoPageController.episodeInfo.readType()}.${videoPageController.episodeInfo.episode} ${videoPageController.episodeInfo.nameCn}'
                         : '${videoPageController.episodeInfo.readType()}.${videoPageController.episodeInfo.episode} ${videoPageController.episodeInfo.name}',
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.outline)),
+                    style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.outline)),
               ],
             ),
           ),
@@ -192,8 +179,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
             height: 34,
             child: TextButton(
               style: ButtonStyle(
-                padding: WidgetStateProperty.all(
-                    const EdgeInsets.only(left: 4.0, right: 4.0)),
+                padding: WidgetStateProperty.all(const EdgeInsets.only(left: 4.0, right: 4.0)),
               ),
               onPressed: () {
                 showEpisodeSelection();
@@ -208,8 +194,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
             height: 34,
             child: TextButton(
               style: ButtonStyle(
-                padding: WidgetStateProperty.all(
-                    const EdgeInsets.symmetric(horizontal: 4.0)),
+                padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 4.0)),
               ),
               onPressed: toggleSortOrder,
               child: Observer(builder: (context) {
@@ -227,12 +212,9 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
 
   // 选择要查看评论的集数
   void showEpisodeSelection() async {
-    final int selectedEpisode =
-        ep == 0 ? EpisodeInfoWidget.of(context)!.episode : ep;
+    final int selectedEpisode = ep == 0 ? EpisodeInfoWidget.of(context)!.episode : ep;
     KazumiDialog.showLoading(msg: '分集列表加载中');
-    final List<EpisodeInfo> episodeList =
-        await BangumiHTTP.getBangumiEpisodesByID(
-            videoPageController.bangumiItem.id);
+    final List<EpisodeInfo> episodeList = await BangumiHTTP.getBangumiEpisodesByID(videoPageController.bangumiItem.id);
     KazumiDialog.dismiss();
     if (episodeList.isEmpty) {
       KazumiDialog.showToast(message: '未找到分集列表');
@@ -257,18 +239,13 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
                     itemCount: episodeList.length,
                     itemBuilder: (context, index) {
                       final episode = episodeList[index];
-                      final episodeTitle = episode.nameCn.isNotEmpty
-                          ? episode.nameCn
-                          : episode.name;
-                      final episodeText =
-                          '${episode.readType()}.${episode.episode}';
+                      final episodeTitle = episode.nameCn.isNotEmpty ? episode.nameCn : episode.name;
+                      final episodeText = '${episode.readType()}.${episode.episode}';
                       final bool selected = index + 1 == selectedEpisode;
                       return ListTile(
                         selected: selected,
                         title: Text(
-                          episodeTitle.isEmpty
-                              ? episodeText
-                              : '$episodeText $episodeTitle',
+                          episodeTitle.isEmpty ? episodeText : '$episodeText $episodeTitle',
                           overflow: TextOverflow.ellipsis,
                         ),
                         onTap: () {
@@ -288,8 +265,7 @@ class _EpisodeCommentsSheetState extends State<EpisodeCommentsSheet> {
                       onPressed: () => KazumiDialog.dismiss(),
                       child: Text(
                         '取消',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline),
+                        style: TextStyle(color: Theme.of(context).colorScheme.outline),
                       ),
                     ),
                   ),

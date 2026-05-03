@@ -17,8 +17,7 @@ class QueryManager {
   bool _isCancelled = false;
 
   Future<void> querySource(String keyword, String pluginName) async {
-    for (PluginSearchResponse pluginSearchResponse
-        in infoController.pluginSearchResponseList) {
+    for (PluginSearchResponse pluginSearchResponse in infoController.pluginSearchResponseList) {
       if (pluginSearchResponse.pluginName == pluginName) {
         infoController.pluginSearchResponseList.remove(pluginSearchResponse);
         break;

@@ -65,8 +65,7 @@ class BangumiItem {
             if (value is List) {
               return value
                   .map<String>((element) {
-                    if (element is Map<String, dynamic> &&
-                        element.containsKey('v')) {
+                    if (element is Map<String, dynamic> && element.containsKey('v')) {
                       return element['v'].toString();
                     }
                     return '';
@@ -87,7 +86,7 @@ class BangumiItem {
       final json = jsonData['rating']['count'];
       // For api.bgm.tv
       if (json is Map<String, dynamic>) {
-        return List<int>.generate(10, (i) => json['${i+1}'] as int);
+        return List<int>.generate(10, (i) => json['${i + 1}'] as int);
       }
       // For next.bgm.tv
       if (json is List<dynamic>) {
@@ -112,19 +111,11 @@ class BangumiItem {
       airWeekday: Utils.dateStringToWeekday(json['date'] ?? '2000-11-11'),
       rank: json['rating']['rank'] ?? 0,
       images: Map<String, String>.from(
-        json['images'] ??
-            {
-              "large": json['image'],
-              "common": "",
-              "medium": "",
-              "small": "",
-              "grid": ""
-            },
+        json['images'] ?? {"large": json['image'], "common": "", "medium": "", "small": "", "grid": ""},
       ),
       tags: tagList,
       alias: bangumiAlias,
-      ratingScore: double.parse(
-          (json['rating']['score'] ?? 0.0).toDouble().toStringAsFixed(1)),
+      ratingScore: double.parse((json['rating']['score'] ?? 0.0).toDouble().toStringAsFixed(1)),
       votes: json['rating']['total'] ?? 0,
       votesCount: voteList,
       info: json['info'] ?? '',

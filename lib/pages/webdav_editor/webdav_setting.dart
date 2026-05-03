@@ -26,12 +26,9 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
   void initState() {
     super.initState();
     webDavEnable = setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
-    webDavEnableHistory =
-        setting.get(SettingBoxKey.webDavEnableHistory, defaultValue: false);
-    enableGitProxy =
-        setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
-    bangumiSyncEnable =
-        setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+    webDavEnableHistory = setting.get(SettingBoxKey.webDavEnableHistory, defaultValue: false);
+    enableGitProxy = setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
+    bangumiSyncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
   }
 
   void onBackPressed(BuildContext context) {
@@ -42,8 +39,7 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
   }
 
   Future<void> checkWebDav() async {
-    var webDavURL =
-        await setting.get(SettingBoxKey.webDavURL, defaultValue: '');
+    var webDavURL = await setting.get(SettingBoxKey.webDavURL, defaultValue: '');
     if (webDavURL == '') {
       await setting.put(SettingBoxKey.webDavEnable, false);
       KazumiDialog.showToast(message: '未找到有效的webdav配置');
@@ -64,8 +60,7 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
   }
 
   Future<void> updateWebdav() async {
-    var webDavEnable =
-        await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
+    var webDavEnable = await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
     if (webDavEnable) {
       KazumiDialog.showToast(message: '尝试上传到WebDav');
       var webDav = WebDav();
@@ -86,8 +81,7 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
   }
 
   Future<void> downloadWebdav() async {
-    var webDavEnable =
-        await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
+    var webDavEnable = await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
     if (webDavEnable) {
       KazumiDialog.showToast(message: '尝试从WebDav同步');
       var webDav = WebDav();
@@ -126,14 +120,11 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     enableGitProxy = value ?? !enableGitProxy;
-                    await setting.put(
-                        SettingBoxKey.enableGitProxy, enableGitProxy);
+                    await setting.put(SettingBoxKey.enableGitProxy, enableGitProxy);
                     setState(() {});
                   },
-                  title: Text('Github镜像',
-                      style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('使用镜像访问规则托管仓库',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('Github镜像', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('使用镜像访问规则托管仓库', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: enableGitProxy,
                 ),
               ],
@@ -146,51 +137,39 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
                     final tBangumiEnableSync = value ?? !bangumiSyncEnable;
                     final bangumi = BangumiSyncService();
                     if (tBangumiEnableSync == true) {
-                      final token = setting
-                          .get(SettingBoxKey.bangumiAccessToken,
-                              defaultValue: '')
-                          .toString()
-                          .trim();
+                      final token = setting.get(SettingBoxKey.bangumiAccessToken, defaultValue: '').toString().trim();
                       if (token.isEmpty) {
-                        KazumiDialog.showToast(
-                            message: '请先配置 Bangumi 的 Access Token');
+                        KazumiDialog.showToast(message: '请先配置 Bangumi 的 Access Token');
                         return;
                       } else {
                         if (!bangumi.initialized) {
                           try {
                             await bangumi.init();
                           } catch (e) {
-                            KazumiDialog.showToast(
-                                message: "Bangumi 初始化失败，请稍后再试");
+                            KazumiDialog.showToast(message: "Bangumi 初始化失败，请稍后再试");
                             return;
                           }
                         }
                       }
                     }
                     bangumiSyncEnable = tBangumiEnableSync;
-                    await setting.put(
-                        SettingBoxKey.bangumiSyncEnable, bangumiSyncEnable);
+                    await setting.put(SettingBoxKey.bangumiSyncEnable, bangumiSyncEnable);
                     if (!mounted) {
                       return;
                     }
                     setState(() {});
                   },
-                  title: Text('Bangumi 同步',
-                      style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('允许与Bangumi自动同步收藏/追番状态',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('Bangumi 同步', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('允许与Bangumi自动同步收藏/追番状态', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: bangumiSyncEnable,
                 ),
                 SettingsTile.navigation(
                   onPressed: (_) async {
                     await Modular.to.pushNamed('/settings/bangumi/');
-                    bangumiSyncEnable = setting.get(
-                        SettingBoxKey.bangumiSyncEnable,
-                        defaultValue: false);
+                    bangumiSyncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
                     setState(() {});
                   },
-                  title: Text('Bangumi 配置',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('Bangumi 配置', style: TextStyle(fontFamily: fontFamily)),
                 ),
               ],
             ),
@@ -210,16 +189,14 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
                     }
                     if (!webDavEnable) {
                       webDavEnableHistory = false;
-                      await setting.put(
-                          SettingBoxKey.webDavEnableHistory, false);
+                      await setting.put(SettingBoxKey.webDavEnableHistory, false);
                     }
                     await setting.put(SettingBoxKey.webDavEnable, webDavEnable);
                     if (mounted) {
                       setState(() {});
                     }
                   },
-                  title: Text('WEBDAV同步',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('WEBDAV同步', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: webDavEnable,
                 ),
                 SettingsTile.switchTile(
@@ -229,22 +206,18 @@ class _PlayerSettingsPageState extends State<WebDavSettingsPage> {
                       return;
                     }
                     webDavEnableHistory = value ?? !webDavEnableHistory;
-                    await setting.put(
-                        SettingBoxKey.webDavEnableHistory, webDavEnableHistory);
+                    await setting.put(SettingBoxKey.webDavEnableHistory, webDavEnableHistory);
                     setState(() {});
                   },
-                  title:
-                      Text('观看记录同步', style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('允许自动同步观看记录',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('观看记录同步', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('允许自动同步观看记录', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: webDavEnableHistory,
                 ),
                 SettingsTile.navigation(
                   onPressed: (_) async {
                     Modular.to.pushNamed('/settings/webdav/editor');
                   },
-                  title: Text('WEBDAV配置',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('WEBDAV配置', style: TextStyle(fontFamily: fontFamily)),
                 ),
                 SettingsTile(
                   trailing: const Icon(Icons.cloud_upload_rounded),

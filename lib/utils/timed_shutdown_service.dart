@@ -12,15 +12,16 @@ class TimedShutdownService {
   Timer? _shutdownTimer;
   int _remainingSeconds = 0;
   bool _isDialogShowing = false;
+
   /// Last set minutes, used for repeat functionality
   int _lastSetMinutes = 0;
 
   /// Callback to invoke when timer expires (e.g., pause video)
   VoidCallback? _onExpiredCallback;
-  
+
   /// Remaining time in seconds notifier
   final ValueNotifier<int> remainingSecondsNotifier = ValueNotifier<int>(0);
-  
+
   /// Currently set minutes notifier (for UI display)
   final ValueNotifier<int> setMinutesNotifier = ValueNotifier<int>(0);
 
@@ -29,7 +30,7 @@ class TimedShutdownService {
 
   /// Currently set minutes (0 = disabled)
   int get setMinutes => setMinutesNotifier.value;
-  
+
   /// Remaining time in seconds
   int get remainingSeconds => remainingSecondsNotifier.value;
 
@@ -44,14 +45,14 @@ class TimedShutdownService {
     remainingSecondsNotifier.value = _remainingSeconds;
     setMinutesNotifier.value = minutes;
     _onExpiredCallback = onExpired;
-    
+
     // Update remaining time every second (runs globally, not tied to playback)
     _shutdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingSeconds > 0) {
         _remainingSeconds--;
         remainingSecondsNotifier.value = _remainingSeconds;
       }
-      
+
       if (_remainingSeconds <= 0) {
         timer.cancel();
         _shutdownTimer = null;
@@ -79,7 +80,7 @@ class TimedShutdownService {
     if (setMinutesNotifier.value != 0) {
       setMinutesNotifier.value = 0;
     }
-    
+
     // If dialog is showing, dismiss it
     if (_isDialogShowing) {
       KazumiDialog.dismiss();
@@ -91,14 +92,14 @@ class TimedShutdownService {
   void _onTimerExpired() {
     // Reset UI state so it doesn't show 00:00
     setMinutesNotifier.value = 0;
-    
+
     // Invoke the callback if set (e.g., pause video)
     try {
       _onExpiredCallback?.call();
     } catch (e) {
       KazumiLogger().e('TimedShutdownService: onExpired callback failed', error: e);
     }
-    
+
     _showTimerExpiredDialog();
   }
 
@@ -199,9 +200,12 @@ class TimedShutdownService {
                               onSelectedItemChanged: (index) {
                                 setState(() => selectedHours = index);
                               },
-                              children: List.generate(25, (index) => Center(
-                                child: Text(index.toString().padLeft(2, '0'), style: const TextStyle(fontSize: 20)),
-                              )),
+                              children: List.generate(
+                                  25,
+                                  (index) => Center(
+                                        child: Text(index.toString().padLeft(2, '0'),
+                                            style: const TextStyle(fontSize: 20)),
+                                      )),
                             ),
                           ),
                         ],
@@ -221,9 +225,12 @@ class TimedShutdownService {
                               onSelectedItemChanged: (index) {
                                 setState(() => selectedMinutes = index);
                               },
-                              children: List.generate(60, (index) => Center(
-                                child: Text(index.toString().padLeft(2, '0'), style: const TextStyle(fontSize: 20)),
-                              )),
+                              children: List.generate(
+                                  60,
+                                  (index) => Center(
+                                        child: Text(index.toString().padLeft(2, '0'),
+                                            style: const TextStyle(fontSize: 20)),
+                                      )),
                             ),
                           ),
                         ],

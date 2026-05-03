@@ -31,8 +31,7 @@ class _InitPageState extends State<InitPage> {
   final CollectController collectController = Modular.get<CollectController>();
   final ShadersController shadersController = Modular.get<ShadersController>();
   final MyController myController = Modular.get<MyController>();
-  final DownloadController downloadController =
-      Modular.get<DownloadController>();
+  final DownloadController downloadController = Modular.get<DownloadController>();
   Box setting = GStorage.setting;
   late final ThemeProvider themeProvider;
 
@@ -75,8 +74,7 @@ class _InitPageState extends State<InitPage> {
           if (Modular.to.path.contains('/download')) return;
           Modular.to.pushNamed('/settings/download/');
         } catch (e) {
-          KazumiLogger()
-              .w('InitPage: failed to navigate to download page', error: e);
+          KazumiLogger().w('InitPage: failed to navigate to download page', error: e);
         }
       });
     };
@@ -96,8 +94,7 @@ class _InitPageState extends State<InitPage> {
                 onPressed: () => KazumiDialog.dismiss(popWith: false),
                 child: Text(
                   '稍后再说',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                  style: TextStyle(color: Theme.of(context).colorScheme.outline),
                 ),
               ),
               TextButton(
@@ -119,8 +116,7 @@ class _InitPageState extends State<InitPage> {
     );
     // Workaround for dynamic_color. dynamic_color need PlatformChannel to get color, it takes time.
     // setDynamic here to avoid white screen flash when themeMode is dark.
-    themeProvider.setDynamic(
-        setting.get(SettingBoxKey.useDynamicColor, defaultValue: false));
+    themeProvider.setDynamic(setting.get(SettingBoxKey.useDynamicColor, defaultValue: false));
     Modular.to.navigate(defaultStartupPage);
   }
 
@@ -138,8 +134,7 @@ class _InitPageState extends State<InitPage> {
   }
 
   Future<void> _webDavInit() async {
-    bool webDavEnable =
-        await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
+    bool webDavEnable = await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
     if (webDavEnable) {
       var webDav = WebDav();
       KazumiLogger().i('WebDav: Starting WebDav initialization');
@@ -194,8 +189,8 @@ class _InitPageState extends State<InitPage> {
             canPop: false,
             child: AlertDialog(
               title: const Text('X11环境检测'),
-              content: const Text(
-                  '检测到您当前运行在X11环境下，Kazumi在X11环境下可能出现性能问题或界面异常，建议切换到Wayland以获得更好的体验。您是否希望在X11下继续使用Kazumi？'),
+              content:
+                  const Text('检测到您当前运行在X11环境下，Kazumi在X11环境下可能出现性能问题或界面异常，建议切换到Wayland以获得更好的体验。您是否希望在X11下继续使用Kazumi？'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -203,8 +198,7 @@ class _InitPageState extends State<InitPage> {
                   },
                   child: Text(
                     '退出',
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.outline),
+                    style: TextStyle(color: Theme.of(context).colorScheme.outline),
                   ),
                 ),
                 TextButton(
@@ -254,8 +248,7 @@ class _InitPageState extends State<InitPage> {
     String statementsText = '';
     try {
       await pluginsController.init();
-      statementsText =
-          await rootBundle.loadString("assets/statements/statements.txt");
+      statementsText = await rootBundle.loadString("assets/statements/statements.txt");
       _pluginUpdate();
     } catch (_) {}
     if (pluginsController.pluginList.isEmpty) {
@@ -275,8 +268,7 @@ class _InitPageState extends State<InitPage> {
                   },
                   child: Text(
                     '退出',
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.outline),
+                    style: TextStyle(color: Theme.of(context).colorScheme.outline),
                   ),
                 ),
                 TextButton(
@@ -349,8 +341,7 @@ class _InitPageState extends State<InitPage> {
                 },
                 child: Text(
                   'F-Droid',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                  style: TextStyle(color: Theme.of(context).colorScheme.outline),
                 ),
               ),
             ],
@@ -361,8 +352,7 @@ class _InitPageState extends State<InitPage> {
   }
 
   Future<void> _update() async {
-    bool autoUpdate =
-        await setting.get(SettingBoxKey.autoUpdate, defaultValue: true);
+    bool autoUpdate = await setting.get(SettingBoxKey.autoUpdate, defaultValue: true);
     if (autoUpdate) {
       Modular.get<MyController>().checkUpdate(type: 'auto');
     }

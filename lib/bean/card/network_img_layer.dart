@@ -74,18 +74,14 @@ class NetworkImgLayer extends StatelessWidget {
               memCacheWidth: memCacheWidth,
               memCacheHeight: memCacheHeight,
               fit: BoxFit.cover,
-              fadeOutDuration:
-                  fadeOutDuration ?? const Duration(milliseconds: 120),
-              fadeInDuration:
-                  fadeInDuration ?? const Duration(milliseconds: 120),
+              fadeOutDuration: fadeOutDuration ?? const Duration(milliseconds: 120),
+              fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 120),
               filterQuality: FilterQuality.high,
               errorListener: (e) {
                 KazumiLogger().w("NetworkImage: network image load error", error: e);
               },
-              errorWidget: (BuildContext context, String url, Object error) =>
-                  placeholder(context),
-              placeholder: (BuildContext context, String url) =>
-                  placeholder(context),
+              errorWidget: (BuildContext context, String url, Object error) => placeholder(context),
+              placeholder: (BuildContext context, String url) => placeholder(context),
             ))
         : placeholder(context);
   }
@@ -107,9 +103,7 @@ class NetworkImgLayer extends StatelessWidget {
           ? const SizedBox()
           : Center(
               child: Image.asset(
-                type == 'avatar'
-                    ? 'assets/images/noface.jpeg'
-                    : 'assets/images/loading.png',
+                type == 'avatar' ? 'assets/images/noface.jpeg' : 'assets/images/loading.png',
                 width: width,
                 height: height,
                 cacheWidth: width.cacheSize(context),

@@ -31,8 +31,7 @@ class BangumiHistoryCardV extends StatefulWidget {
 }
 
 class _BangumiHistoryCardVState extends State<BangumiHistoryCardV> {
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final PluginsController pluginsController = Modular.get<PluginsController>();
   final HistoryController historyController = Modular.get<HistoryController>();
   final CollectController collectController = Modular.get<CollectController>();
@@ -63,14 +62,12 @@ class _BangumiHistoryCardVState extends State<BangumiHistoryCardV> {
       return;
     }
     videoPageController.bangumiItem = widget.historyItem.bangumiItem;
-    videoPageController.title =
-        widget.historyItem.bangumiItem.nameCn == ''
-            ? widget.historyItem.bangumiItem.name
-            : widget.historyItem.bangumiItem.nameCn;
+    videoPageController.title = widget.historyItem.bangumiItem.nameCn == ''
+        ? widget.historyItem.bangumiItem.name
+        : widget.historyItem.bangumiItem.nameCn;
     videoPageController.src = widget.historyItem.lastSrc;
     try {
-      await videoPageController.queryRoads(widget.historyItem.lastSrc,
-          videoPageController.currentPlugin.name);
+      await videoPageController.queryRoads(widget.historyItem.lastSrc, videoPageController.currentPlugin.name);
       KazumiDialog.dismiss();
       Modular.to.pushNamed('/video/');
     } catch (_) {
@@ -88,10 +85,9 @@ class _BangumiHistoryCardVState extends State<BangumiHistoryCardV> {
     final String title = widget.historyItem.bangumiItem.nameCn == ''
         ? widget.historyItem.bangumiItem.name
         : widget.historyItem.bangumiItem.nameCn;
-    final String episodeText =
-        widget.historyItem.lastWatchEpisodeName.isEmpty
-            ? '第${widget.historyItem.lastWatchEpisode}话'
-            : widget.historyItem.lastWatchEpisodeName;
+    final String episodeText = widget.historyItem.lastWatchEpisodeName.isEmpty
+        ? '第${widget.historyItem.lastWatchEpisode}话'
+        : widget.historyItem.lastWatchEpisodeName;
 
     return Dismissible(
       key: ValueKey(widget.historyItem.key),

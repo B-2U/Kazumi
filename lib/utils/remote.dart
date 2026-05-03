@@ -44,8 +44,7 @@ class RemotePlay {
                           'RemotePlay: value: ${value.info.friendlyName} ${value.info.deviceType} ${value.info.URLBase}');
                       setState(() {
                         dlnaDevice.add(ListTile(
-                            leading: _deviceUPnPIcon(
-                                value.info.deviceType.split(':')[3]),
+                            leading: _deviceUPnPIcon(value.info.deviceType.split(':')[3]),
                             title: Text(value.info.friendlyName),
                             subtitle: Text(value.info.deviceType.split(':')[3]),
                             onTap: () {
@@ -56,8 +55,7 @@ class RemotePlay {
                                 DLNADevice(value.info).setUrl(video);
                                 DLNADevice(value.info).play();
                               } catch (e) {
-                                KazumiLogger()
-                                    .e('RemotePlay: failed to cast to device', error: e);
+                                KazumiLogger().e('RemotePlay: failed to cast to device', error: e);
                                 KazumiDialog.showToast(
                                   message: 'DLNA 异常: $e \n尝试重新进入 DLNA 投屏或切换设备',
                                 );
@@ -74,8 +72,7 @@ class RemotePlay {
                 },
                 child: Text(
                   '搜索',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                  style: TextStyle(color: Theme.of(context).colorScheme.outline),
                 )),
           ],
         );

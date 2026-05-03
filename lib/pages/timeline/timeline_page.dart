@@ -21,10 +21,8 @@ class TimelinePage extends StatefulWidget {
   State<TimelinePage> createState() => _TimelinePageState();
 }
 
-class _TimelinePageState extends State<TimelinePage>
-    with SingleTickerProviderStateMixin {
-  final TimelineController timelineController =
-      Modular.get<TimelineController>();
+class _TimelinePageState extends State<TimelinePage> with SingleTickerProviderStateMixin {
+  final TimelineController timelineController = Modular.get<TimelineController>();
   late NavigationBarState navigationBarState;
   TabController? tabController;
   late bool showRating;
@@ -34,12 +32,9 @@ class _TimelinePageState extends State<TimelinePage>
   void initState() {
     super.initState();
     int weekday = DateTime.now().weekday - 1;
-    tabController =
-        TabController(vsync: this, length: tabs.length, initialIndex: weekday);
-    navigationBarState =
-        Provider.of<NavigationBarState>(context, listen: false);
-    showRating =
-        GStorage.setting.get(SettingBoxKey.showRating, defaultValue: true);
+    tabController = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
+    navigationBarState = Provider.of<NavigationBarState>(context, listen: false);
+    showRating = GStorage.setting.get(SettingBoxKey.showRating, defaultValue: true);
     if (timelineController.bangumiCalendar.isEmpty) {
       timelineController.init();
     }
@@ -110,9 +105,7 @@ class _TimelinePageState extends State<TimelinePage>
     double? compactHeightFactor,
   }) {
     final mediaSize = MediaQuery.sizeOf(context);
-    final maxWidth = mediaSize.width >= LayoutBreakpoint.medium['width']!
-        ? mediaSize.width * 9 / 16
-        : mediaSize.width;
+    final maxWidth = mediaSize.width >= LayoutBreakpoint.medium['width']! ? mediaSize.width * 9 / 16 : mediaSize.width;
     final maxHeight = compactHeightFactor != null
         ? (mediaSize.height >= LayoutBreakpoint.compact['height']!
             ? mediaSize.height * compactHeightFactor
@@ -322,8 +315,7 @@ class _TimelinePageState extends State<TimelinePage>
     return null;
   }
 
-  Widget buildSeasonYearSection(
-      BuildContext context, int year, List<DateTime> availableSeasons) {
+  Widget buildSeasonYearSection(BuildContext context, int year, List<DateTime> availableSeasons) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final hasSelectedSeason = getSelectedSeason(availableSeasons) != null;
@@ -331,9 +323,8 @@ class _TimelinePageState extends State<TimelinePage>
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
       decoration: BoxDecoration(
-        color: hasSelectedSeason
-            ? colorScheme.secondaryContainer.withValues(alpha: 0.5)
-            : colorScheme.surfaceContainerLow,
+        color:
+            hasSelectedSeason ? colorScheme.secondaryContainer.withValues(alpha: 0.5) : colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: hasSelectedSeason
@@ -367,8 +358,7 @@ class _TimelinePageState extends State<TimelinePage>
     );
   }
 
-  Widget buildSeasonChoiceChips(
-      BuildContext context, List<DateTime> availableSeasons) {
+  Widget buildSeasonChoiceChips(BuildContext context, List<DateTime> availableSeasons) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final selectedSeason = getSelectedSeason(availableSeasons);
@@ -378,8 +368,7 @@ class _TimelinePageState extends State<TimelinePage>
       runSpacing: 12,
       children: availableSeasons.map((date) {
         final seasonName = Utils.getSeasonStringByMonth(date.month);
-        final isSelected =
-            selectedSeason != null && Utils.isSameSeason(selectedSeason, date);
+        final isSelected = selectedSeason != null && Utils.isSameSeason(selectedSeason, date);
 
         return ChoiceChip(
           label: Text(seasonName),
@@ -393,17 +382,13 @@ class _TimelinePageState extends State<TimelinePage>
           },
           showCheckmark: false,
           labelStyle: textTheme.labelLarge?.copyWith(
-            color: isSelected
-                ? colorScheme.onSecondaryContainer
-                : colorScheme.onSurface,
+            color: isSelected ? colorScheme.onSecondaryContainer : colorScheme.onSurface,
             fontWeight: FontWeight.w600,
           ),
           backgroundColor: colorScheme.surfaceContainerHigh,
           selectedColor: colorScheme.secondaryContainer,
           side: BorderSide(
-            color: isSelected
-                ? Colors.transparent
-                : colorScheme.outlineVariant.withValues(alpha: 0.4),
+            color: isSelected ? Colors.transparent : colorScheme.outlineVariant.withValues(alpha: 0.4),
             width: 1,
           ),
           shape: RoundedRectangleBorder(
@@ -426,8 +411,7 @@ class _TimelinePageState extends State<TimelinePage>
       await timelineController.getSchedulesBySeason();
     }
 
-    timelineController.seasonString =
-        AnimeSeason(timelineController.selectedDate).toString();
+    timelineController.seasonString = AnimeSeason(timelineController.selectedDate).toString();
   }
 
   String getSortTypeLabel(int sortType) {
@@ -466,8 +450,7 @@ class _TimelinePageState extends State<TimelinePage>
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final foregroundColor =
-        highlighted ? colorScheme.onSecondaryContainer : colorScheme.onSurface;
+    final foregroundColor = highlighted ? colorScheme.onSecondaryContainer : colorScheme.onSurface;
 
     return Material(
       color: Colors.transparent,
@@ -477,9 +460,7 @@ class _TimelinePageState extends State<TimelinePage>
         child: Ink(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            color: highlighted
-                ? colorScheme.secondaryContainer
-                : colorScheme.surfaceContainerHigh,
+            color: highlighted ? colorScheme.secondaryContainer : colorScheme.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -526,9 +507,7 @@ class _TimelinePageState extends State<TimelinePage>
               ),
               buildTimelineOptionSummaryChip(
                 context,
-                label: enabledFilterCount == 0
-                    ? '未启用过滤条件'
-                    : '已启用 $enabledFilterCount 个过滤条件',
+                label: enabledFilterCount == 0 ? '未启用过滤条件' : '已启用 $enabledFilterCount 个过滤条件',
                 onTap: scrollToFilterSection,
               ),
             ],
@@ -596,9 +575,7 @@ class _TimelinePageState extends State<TimelinePage>
 
     return Ink(
       decoration: BoxDecoration(
-        color: isSelected
-            ? colorScheme.secondaryContainer
-            : colorScheme.surfaceContainerHigh,
+        color: isSelected ? colorScheme.secondaryContainer : colorScheme.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isSelected
@@ -611,34 +588,24 @@ class _TimelinePageState extends State<TimelinePage>
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         leading: Icon(
           icon,
-          color: isSelected
-              ? colorScheme.onSecondaryContainer
-              : colorScheme.onSurfaceVariant,
+          color: isSelected ? colorScheme.onSecondaryContainer : colorScheme.onSurfaceVariant,
         ),
         title: Text(
           title,
           style: textTheme.titleMedium?.copyWith(
-            color: isSelected
-                ? colorScheme.onSecondaryContainer
-                : colorScheme.onSurface,
+            color: isSelected ? colorScheme.onSecondaryContainer : colorScheme.onSurface,
             fontWeight: FontWeight.w600,
           ),
         ),
         subtitle: Text(
           description,
           style: textTheme.bodySmall?.copyWith(
-            color: isSelected
-                ? colorScheme.onSecondaryContainer.withValues(alpha: 0.82)
-                : colorScheme.onSurfaceVariant,
+            color: isSelected ? colorScheme.onSecondaryContainer.withValues(alpha: 0.82) : colorScheme.onSurfaceVariant,
           ),
         ),
         trailing: Icon(
-          isSelected
-              ? Icons.check_circle_rounded
-              : Icons.radio_button_unchecked_rounded,
-          color: isSelected
-              ? colorScheme.onSecondaryContainer
-              : colorScheme.onSurfaceVariant,
+          isSelected ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+          color: isSelected ? colorScheme.onSecondaryContainer : colorScheme.onSurfaceVariant,
         ),
         onTap: () {
           KazumiDialog.dismiss();
@@ -661,14 +628,11 @@ class _TimelinePageState extends State<TimelinePage>
 
     return Ink(
       decoration: BoxDecoration(
-        color: value
-            ? colorScheme.secondaryContainer.withValues(alpha: 0.5)
-            : colorScheme.surfaceContainerHigh,
+        color: value ? colorScheme.secondaryContainer.withValues(alpha: 0.5) : colorScheme.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: value
-              ? colorScheme.secondary.withValues(alpha: 0.24)
-              : colorScheme.outlineVariant.withValues(alpha: 0.4),
+          color:
+              value ? colorScheme.secondary.withValues(alpha: 0.24) : colorScheme.outlineVariant.withValues(alpha: 0.4),
         ),
       ),
       child: ListTile(
@@ -676,25 +640,19 @@ class _TimelinePageState extends State<TimelinePage>
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         leading: Icon(
           icon,
-          color: value
-              ? colorScheme.onSecondaryContainer
-              : colorScheme.onSurfaceVariant,
+          color: value ? colorScheme.onSecondaryContainer : colorScheme.onSurfaceVariant,
         ),
         title: Text(
           title,
           style: textTheme.titleMedium?.copyWith(
-            color: value
-                ? colorScheme.onSecondaryContainer
-                : colorScheme.onSurface,
+            color: value ? colorScheme.onSecondaryContainer : colorScheme.onSurface,
             fontWeight: FontWeight.w600,
           ),
         ),
         subtitle: Text(
           description,
           style: textTheme.bodySmall?.copyWith(
-            color: value
-                ? colorScheme.onSecondaryContainer.withValues(alpha: 0.82)
-                : colorScheme.onSurfaceVariant,
+            color: value ? colorScheme.onSecondaryContainer.withValues(alpha: 0.82) : colorScheme.onSurfaceVariant,
           ),
         ),
         trailing: Switch(
@@ -862,8 +820,7 @@ class _TimelinePageState extends State<TimelinePage>
           child: const Icon(Icons.tune),
         ),
         body: Observer(builder: (context) {
-          if (timelineController.isLoading &&
-              timelineController.bangumiCalendar.isEmpty) {
+          if (timelineController.isLoading && timelineController.bangumiCalendar.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -901,32 +858,24 @@ class _TimelinePageState extends State<TimelinePage>
     if (MediaQuery.sizeOf(context).width > LayoutBreakpoint.medium['width']!) {
       crossCount = 3;
     }
-    double cardHeight =
-        Utils.isDesktop() ? 160 : (Utils.isTablet() ? 140 : 120);
+    double cardHeight = Utils.isDesktop() ? 160 : (Utils.isTablet() ? 140 : 120);
     for (var bangumiList in bangumiCalendar) {
       // 根据过滤器设置过滤番剧
       var filteredList = bangumiList;
 
       if (timelineController.notShowAbandonedBangumis) {
-        final abandonedBangumiIds =
-            timelineController.loadAbandonedBangumiIds();
-        filteredList = filteredList
-            .where((item) => !abandonedBangumiIds.contains(item.id))
-            .toList();
+        final abandonedBangumiIds = timelineController.loadAbandonedBangumiIds();
+        filteredList = filteredList.where((item) => !abandonedBangumiIds.contains(item.id)).toList();
       }
 
       if (timelineController.notShowWatchedBangumis) {
         final watchedBangumiIds = timelineController.loadWatchedBangumiIds();
-        filteredList = filteredList
-            .where((item) => !watchedBangumiIds.contains(item.id))
-            .toList();
+        filteredList = filteredList.where((item) => !watchedBangumiIds.contains(item.id)).toList();
       }
 
       if (timelineController.onlyShowWatchingBangumis) {
         final watchingBangumiIds = timelineController.loadWatchingBangumiIds();
-        filteredList = filteredList
-            .where((item) => watchingBangumiIds.contains(item.id))
-            .toList();
+        filteredList = filteredList.where((item) => watchingBangumiIds.contains(item.id)).toList();
       }
 
       gridViewList.add(
@@ -945,13 +894,9 @@ class _TimelinePageState extends State<TimelinePage>
                   (BuildContext context, int index) {
                     if (filteredList.isEmpty) return null;
                     final item = filteredList[index];
-                    return BangumiTimelineCard(
-                        bangumiItem: item,
-                        cardHeight: cardHeight,
-                        showRating: showRating);
+                    return BangumiTimelineCard(bangumiItem: item, cardHeight: cardHeight, showRating: showRating);
                   },
-                  childCount:
-                      filteredList.isNotEmpty ? filteredList.length : 10,
+                  childCount: filteredList.isNotEmpty ? filteredList.length : 10,
                 ),
               ),
             ),

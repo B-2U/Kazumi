@@ -17,8 +17,7 @@ class WebViewVideoSourceProvider implements IVideoSourceProvider {
   /// 通过递增 ID 标识最新请求，取消旧请求
   int _resolveId = 0;
 
-  final StreamController<String> _logController =
-      StreamController<String>.broadcast();
+  final StreamController<String> _logController = StreamController<String>.broadcast();
   Stream<String> get onLog => _logController.stream;
 
   @override

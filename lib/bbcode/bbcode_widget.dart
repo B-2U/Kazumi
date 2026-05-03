@@ -88,9 +88,7 @@ class _BBCodeWidgetState extends State<BBCodeWidget> {
                                 : null;
                 return TextSpan(
                   text: e.text,
-                  mouseCursor: (e.link != null || e.masked)
-                      ? SystemMouseCursors.click
-                      : SystemMouseCursors.text,
+                  mouseCursor: (e.link != null || e.masked) ? SystemMouseCursors.click : SystemMouseCursors.text,
                   recognizer: TapGestureRecognizer()
                     ..onTap = (e.link != null || e.masked)
                         ? () {
@@ -107,29 +105,25 @@ class _BBCodeWidgetState extends State<BBCodeWidget> {
                     fontWeight: (e.bold) ? FontWeight.bold : null,
                     fontStyle: (e.italic) ? FontStyle.italic : null,
                     decoration: TextDecoration.combine([
-                      if (e.underline || e.link != null)
-                        TextDecoration.underline,
+                      if (e.underline || e.link != null) TextDecoration.underline,
                       if (e.strikeThrough) TextDecoration.lineThrough,
                     ]),
                     decorationColor: textColor,
                     fontSize: e.size.toDouble(),
                     color: textColor,
-                    backgroundColor:
-                        (!_isVisible && e.masked) ? Color(0xFF555555) : null,
+                    backgroundColor: (!_isVisible && e.masked) ? Color(0xFF555555) : null,
                     fontFeatures: [FontFeature.tabularFigures()],
                   ),
                 );
               } else if (e is BBCodeImg) {
                 return WidgetSpan(
                   child: GestureDetector(
-                    onTap: () => ImageViewer.show(context,
-                        imageUrl: e.imageUrl, heroTag: e.imageUrl),
+                    onTap: () => ImageViewer.show(context, imageUrl: e.imageUrl, heroTag: e.imageUrl),
                     child: Hero(
                       tag: e.imageUrl,
                       child: CachedNetworkImage(
                         imageUrl: e.imageUrl,
-                        placeholder: (context, url) =>
-                            const SizedBox(width: 1, height: 1),
+                        placeholder: (context, url) => const SizedBox(width: 1, height: 1),
                         errorWidget: (context, error, stackTrace) {
                           return const Text('.');
                         },
@@ -152,8 +146,7 @@ class _BBCodeWidgetState extends State<BBCodeWidget> {
                 return WidgetSpan(
                   child: CachedNetworkImage(
                     imageUrl: url,
-                    placeholder: (context, url) =>
-                        const SizedBox(width: 1, height: 1),
+                    placeholder: (context, url) => const SizedBox(width: 1, height: 1),
                     errorWidget: (context, error, stackTrace) {
                       return const Text('.');
                     },
@@ -162,10 +155,8 @@ class _BBCodeWidgetState extends State<BBCodeWidget> {
               } else if (e is BBCodeMusume) {
                 return WidgetSpan(
                   child: CachedNetworkImage(
-                    imageUrl:
-                        'https://lain.bgm.tv/img/smiles/musume/musume_${e.id}.gif',
-                    placeholder: (context, url) =>
-                        const SizedBox(width: 1, height: 1),
+                    imageUrl: 'https://lain.bgm.tv/img/smiles/musume/musume_${e.id}.gif',
+                    placeholder: (context, url) => const SizedBox(width: 1, height: 1),
                     errorWidget: (context, error, stackTrace) {
                       return const Text('.');
                     },
@@ -177,8 +168,7 @@ class _BBCodeWidgetState extends State<BBCodeWidget> {
                 return WidgetSpan(
                   child: CachedNetworkImage(
                     imageUrl: 'https://bangumi.tv/img/smiles/${e.id}.gif',
-                    placeholder: (context, url) =>
-                        const SizedBox(width: 1, height: 1),
+                    placeholder: (context, url) => const SizedBox(width: 1, height: 1),
                     errorWidget: (context, error, stackTrace) {
                       return const Text('.');
                     },

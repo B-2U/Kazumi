@@ -22,12 +22,8 @@ class StaffCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
-      subtitle: staffFullItem.staff.nameCN.isNotEmpty
-          ? Text(staffFullItem.staff.nameCN)
-          : null,
-      trailing: Text(staffFullItem.positions.isNotEmpty
-          ? (staffFullItem.positions[0].type.cn)
-          : ''),
+      subtitle: staffFullItem.staff.nameCN.isNotEmpty ? Text(staffFullItem.staff.nameCN) : null,
+      trailing: Text(staffFullItem.positions.isNotEmpty ? (staffFullItem.positions[0].type.cn) : ''),
     );
   }
 }

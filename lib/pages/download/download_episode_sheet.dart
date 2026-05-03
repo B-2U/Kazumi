@@ -16,10 +16,8 @@ class DownloadEpisodeSheet extends StatefulWidget {
 }
 
 class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
-  final DownloadController downloadController =
-      Modular.get<DownloadController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
+  final DownloadController downloadController = Modular.get<DownloadController>();
 
   final Set<int> _selectedEpisodes = {};
 
@@ -125,10 +123,7 @@ class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
 
                   return Material(
                     color: isDownloaded
-                        ? Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerHighest
-                            .withValues(alpha: 0.5)
+                        ? Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
                         : isSelected
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Theme.of(context).colorScheme.onInverseSurface,
@@ -150,8 +145,7 @@ class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
                         children: [
                           Center(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
                                 identifier,
                                 maxLines: 2,
@@ -159,9 +153,7 @@ class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: isDownloaded
-                                      ? Theme.of(context).colorScheme.outline
-                                      : null,
+                                  color: isDownloaded ? Theme.of(context).colorScheme.outline : null,
                                 ),
                               ),
                             ),
@@ -208,9 +200,7 @@ class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
                     SizedBox(
                       width: 140,
                       child: FilledButton(
-                        onPressed: _selectedEpisodes.isEmpty
-                            ? null
-                            : () => _startBatchDownload(context),
+                        onPressed: _selectedEpisodes.isEmpty ? null : () => _startBatchDownload(context),
                         child: Text('开始下载(${_selectedEpisodes.length})'),
                       ),
                     ),
@@ -238,9 +228,7 @@ class _DownloadEpisodeSheetState extends State<DownloadEpisodeSheet> {
 
       downloadController.startDownload(
         bangumiId: bangumiItem.id,
-        bangumiName: bangumiItem.nameCn.isNotEmpty
-            ? bangumiItem.nameCn
-            : bangumiItem.name,
+        bangumiName: bangumiItem.nameCn.isNotEmpty ? bangumiItem.nameCn : bangumiItem.name,
         bangumiCover: bangumiItem.images['large'] ?? '',
         pluginName: plugin.name,
         episodeNumber: episodeNumber,

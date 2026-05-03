@@ -33,8 +33,7 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
 
   Future<void> updateProxyEnable(bool value) async {
     if (value) {
-      final proxyConfigured =
-          setting.get(SettingBoxKey.proxyConfigured, defaultValue: false);
+      final proxyConfigured = setting.get(SettingBoxKey.proxyConfigured, defaultValue: false);
       if (!proxyConfigured) {
         KazumiDialog.showToast(message: '请先在代理配置中完成测试');
         return;
@@ -70,24 +69,19 @@ class _ProxySettingsPageState extends State<ProxySettingsPage> {
                   onToggle: (value) async {
                     await updateProxyEnable(value ?? !proxyEnable);
                   },
-                  title:
-                      Text('启用代理', style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('启用后网络请求将通过代理服务器',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('启用代理', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('启用后网络请求将通过代理服务器', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: proxyEnable,
                 ),
                 SettingsTile.navigation(
                   onPressed: (_) async {
                     await Modular.to.pushNamed('/settings/proxy/editor');
                     setState(() {
-                      proxyEnable = setting.get(SettingBoxKey.proxyEnable,
-                          defaultValue: false);
+                      proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
                     });
                   },
-                  title:
-                      Text('代理配置', style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('配置代理服务器地址和认证信息',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('代理配置', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('配置代理服务器地址和认证信息', style: TextStyle(fontFamily: fontFamily)),
                 ),
               ],
             ),

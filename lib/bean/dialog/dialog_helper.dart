@@ -35,8 +35,7 @@ class KazumiDialog {
         return null;
       }
     } else {
-      debugPrint(
-          'Kazumi Dialog Error: No context available to show the dialog');
+      debugPrint('Kazumi Dialog Error: No context available to show the dialog');
       return null;
     }
   }
@@ -58,10 +57,7 @@ class KazumiDialog {
             SnackBar(
               content: Text(message),
               behavior: SnackBarBehavior.floating,
-              width: MediaQuery.sizeOf(ctx).width >
-                      LayoutBreakpoint.medium['width']!
-                  ? 600
-                  : null,
+              width: MediaQuery.sizeOf(ctx).width > LayoutBreakpoint.medium['width']! ? 600 : null,
               duration: duration,
               persist: false,
               action: showActionButton
@@ -79,8 +75,7 @@ class KazumiDialog {
         debugPrint('Kazumi Dialog Error: Failed to show toast: $e');
       }
     } else {
-      debugPrint(
-          'Kazumi Dialog Error: No Scaffold context available to show Toast');
+      debugPrint('Kazumi Dialog Error: No Scaffold context available to show Toast');
     }
   }
 
@@ -100,8 +95,7 @@ class KazumiDialog {
             return Center(
               child: Card(
                 elevation: 8.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
@@ -126,8 +120,7 @@ class KazumiDialog {
         debugPrint('Kazumi Dialog Error: Failed to show loading dialog: $e');
       }
     } else {
-      debugPrint(
-          'Kazumi Dialog Error: No context available to show the loading dialog');
+      debugPrint('Kazumi Dialog Error: No context available to show the loading dialog');
     }
   }
 
@@ -166,8 +159,7 @@ class KazumiDialog {
           useRootNavigator: useRootNavigator,
           isDismissible: isDismissible,
           enableDrag: enableDrag,
-          routeSettings:
-              routeSettings ?? const RouteSettings(name: 'KazumiBottomSheet'),
+          routeSettings: routeSettings ?? const RouteSettings(name: 'KazumiBottomSheet'),
           transitionAnimationController: transitionAnimationController,
           anchorPoint: anchorPoint,
           useSafeArea: useSafeArea,
@@ -178,8 +170,7 @@ class KazumiDialog {
         return null;
       }
     } else {
-      debugPrint(
-          'Kazumi Dialog Error: No context available to show the bottom sheet');
+      debugPrint('Kazumi Dialog Error: No context available to show the bottom sheet');
       return null;
     }
   }
@@ -291,14 +282,12 @@ class KazumiDialogObserver extends NavigatorObserver {
   BuildContext? get scaffoldContext => _scaffoldContext ?? _currentContext;
 
   /// Get the root context for bottom sheets, fallback to scaffold context, then current context
-  BuildContext? get rootContext =>
-      _rootContext ?? _scaffoldContext ?? _currentContext;
+  BuildContext? get rootContext => _rootContext ?? _scaffoldContext ?? _currentContext;
 
   bool get hasKazumiDialog => _kazumiDialogRoutes.isNotEmpty;
 
-  BuildContext? get kazumiDialogContext => _kazumiDialogRoutes.isNotEmpty
-      ? _kazumiDialogRoutes.last.navigator?.context
-      : null;
+  BuildContext? get kazumiDialogContext =>
+      _kazumiDialogRoutes.isNotEmpty ? _kazumiDialogRoutes.last.navigator?.context : null;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
@@ -371,15 +360,13 @@ class KazumiDialogObserver extends NavigatorObserver {
   }
 
   bool _isKazumiDialogRoute(Route<dynamic> route) {
-    return route.settings.name == 'KazumiDialog' ||
-        route.settings.name == 'KazumiBottomSheet';
+    return route.settings.name == 'KazumiDialog' || route.settings.name == 'KazumiBottomSheet';
   }
 
   void _removeCurrentSnackBar(Route<dynamic>? route) {
     if (route?.navigator?.context != null) {
       try {
-        ScaffoldMessenger.maybeOf(route!.navigator!.context)
-            ?.removeCurrentSnackBar();
+        ScaffoldMessenger.maybeOf(route!.navigator!.context)?.removeCurrentSnackBar();
       } catch (_) {}
     }
   }

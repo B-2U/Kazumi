@@ -5,8 +5,7 @@ import 'package:kazumi/utils/utils.dart';
 import 'package:kazumi/webview/video/video_webview_controller.dart';
 import 'package:flutter_inappwebview_platform_interface/flutter_inappwebview_platform_interface.dart';
 
-class VideoWebviewAppleImpl
-    extends VideoWebviewController<PlatformInAppWebViewController> {
+class VideoWebviewAppleImpl extends VideoWebviewController<PlatformInAppWebViewController> {
   PlatformHeadlessInAppWebView? headlessWebView;
   bool hasInjectedScripts = false;
 
@@ -40,65 +39,46 @@ class VideoWebviewAppleImpl
           isInspectable: false,
           contentBlockers: [
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?devtools-detector\.js",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.SCRIPT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?devtools-detector\.js", resourceType: [
+                ContentBlockerTriggerResourceType.SCRIPT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
               trigger: ContentBlockerTrigger(urlFilter: '.*', resourceType: [
                 ContentBlockerTriggerResourceType.IMAGE,
               ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?googleads",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.DOCUMENT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?googleads", resourceType: [
+                ContentBlockerTriggerResourceType.DOCUMENT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?googlesyndication\.com",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.DOCUMENT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?googlesyndication\.com", resourceType: [
+                ContentBlockerTriggerResourceType.DOCUMENT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?prestrain\.html",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.DOCUMENT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?prestrain\.html", resourceType: [
+                ContentBlockerTriggerResourceType.DOCUMENT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?prestrain%2Ehtml",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.DOCUMENT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?prestrain%2Ehtml", resourceType: [
+                ContentBlockerTriggerResourceType.DOCUMENT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
             ContentBlocker(
-              trigger: ContentBlockerTrigger(
-                  urlFilter: r"^https?://.+?adtrafficquality",
-                  resourceType: [
-                    ContentBlockerTriggerResourceType.DOCUMENT,
-                  ]),
-              action:
-                  ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
+              trigger: ContentBlockerTrigger(urlFilter: r"^https?://.+?adtrafficquality", resourceType: [
+                ContentBlockerTriggerResourceType.DOCUMENT,
+              ]),
+              action: ContentBlockerAction(type: ContentBlockerActionType.BLOCK),
             ),
           ],
         ),
@@ -122,8 +102,7 @@ class VideoWebviewAppleImpl
   }
 
   @override
-  Future<void> loadUrl(String url, bool useLegacyParser,
-      {int offset = 0}) async {
+  Future<void> loadUrl(String url, bool useLegacyParser, {int offset = 0}) async {
     await unloadPage();
     if (!hasInjectedScripts) {
       addJavaScriptHandlers(useLegacyParser);
@@ -158,8 +137,7 @@ class VideoWebviewAppleImpl
           callback: (args) {
             String message = args[0].toString();
             logEventController.add('Callback received: $message');
-            logEventController.add(
-                'If there is audio but no video, please report it to the rule developer.');
+            logEventController.add('If there is audio but no video, please report it to the rule developer.');
             if ((message.contains('http') || message.startsWith('//')) &&
                 !message.contains('googleads') &&
                 !message.contains('googlesyndication.com') &&
@@ -172,11 +150,9 @@ class VideoWebviewAppleImpl
                 isIframeLoaded = true;
                 isVideoSourceLoaded = true;
                 videoLoadingEventController.add(false);
-                logEventController.add(
-                    'Loading video source ${Utils.decodeVideoSource(encodedUrl)}');
+                logEventController.add('Loading video source ${Utils.decodeVideoSource(encodedUrl)}');
                 unloadPage();
-                videoParserEventController
-                    .add((Utils.decodeVideoSource(encodedUrl), offset));
+                videoParserEventController.add((Utils.decodeVideoSource(encodedUrl), offset));
               }
             }
           });
@@ -199,8 +175,7 @@ class VideoWebviewAppleImpl
     }
   }
 
-  Future<void> addUserScripts(
-      bool useLegacyParser) async {
+  Future<void> addUserScripts(bool useLegacyParser) async {
     final List<UserScript> scripts = [];
 
     if (useLegacyParser) {
@@ -318,8 +293,7 @@ class VideoWebviewAppleImpl
 
   @override
   Future<void> unloadPage() async {
-    await webviewController!
-        .loadUrl(urlRequest: URLRequest(url: WebUri("about:blank")));
+    await webviewController!.loadUrl(urlRequest: URLRequest(url: WebUri("about:blank")));
   }
 
   @override

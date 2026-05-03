@@ -9,8 +9,7 @@ part of 'video_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$VideoPageController on _VideoPageController, Store {
-  late final _$episodeCommentsListAtom =
-      Atom(name: '_VideoPageController.episodeCommentsList', context: context);
+  late final _$episodeCommentsListAtom = Atom(name: '_VideoPageController.episodeCommentsList', context: context);
 
   @override
   ObservableList<EpisodeCommentItem> get episodeCommentsList {
@@ -25,8 +24,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: '_VideoPageController.loading', context: context);
+  late final _$loadingAtom = Atom(name: '_VideoPageController.loading', context: context);
 
   @override
   bool get loading {
@@ -41,8 +39,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$errorMessageAtom =
-      Atom(name: '_VideoPageController.errorMessage', context: context);
+  late final _$errorMessageAtom = Atom(name: '_VideoPageController.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -57,8 +54,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$currentEpisodeAtom =
-      Atom(name: '_VideoPageController.currentEpisode', context: context);
+  late final _$currentEpisodeAtom = Atom(name: '_VideoPageController.currentEpisode', context: context);
 
   @override
   int get currentEpisode {
@@ -73,8 +69,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$currentRoadAtom =
-      Atom(name: '_VideoPageController.currentRoad', context: context);
+  late final _$currentRoadAtom = Atom(name: '_VideoPageController.currentRoad', context: context);
 
   @override
   int get currentRoad {
@@ -89,8 +84,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$isFullscreenAtom =
-      Atom(name: '_VideoPageController.isFullscreen', context: context);
+  late final _$isFullscreenAtom = Atom(name: '_VideoPageController.isFullscreen', context: context);
 
   @override
   bool get isFullscreen {
@@ -105,8 +99,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$isCommentsAscendingAtom =
-      Atom(name: '_VideoPageController.isCommentsAscending', context: context);
+  late final _$isCommentsAscendingAtom = Atom(name: '_VideoPageController.isCommentsAscending', context: context);
 
   @override
   bool get isCommentsAscending {
@@ -121,8 +114,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$isPipAtom =
-      Atom(name: '_VideoPageController.isPip', context: context);
+  late final _$isPipAtom = Atom(name: '_VideoPageController.isPip', context: context);
 
   @override
   bool get isPip {
@@ -137,8 +129,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$showTabBodyAtom =
-      Atom(name: '_VideoPageController.showTabBody', context: context);
+  late final _$showTabBodyAtom = Atom(name: '_VideoPageController.showTabBody', context: context);
 
   @override
   bool get showTabBody {
@@ -153,8 +144,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$historyOffsetAtom =
-      Atom(name: '_VideoPageController.historyOffset', context: context);
+  late final _$historyOffsetAtom = Atom(name: '_VideoPageController.historyOffset', context: context);
 
   @override
   int get historyOffset {
@@ -169,8 +159,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$isOfflineModeAtom =
-      Atom(name: '_VideoPageController.isOfflineMode', context: context);
+  late final _$isOfflineModeAtom = Atom(name: '_VideoPageController.isOfflineMode', context: context);
 
   @override
   bool get isOfflineMode {
@@ -185,8 +174,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
     });
   }
 
-  late final _$roadListAtom =
-      Atom(name: '_VideoPageController.roadList', context: context);
+  late final _$roadListAtom = Atom(name: '_VideoPageController.roadList', context: context);
 
   @override
   ObservableList<Road> get roadList {

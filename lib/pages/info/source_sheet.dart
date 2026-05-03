@@ -31,10 +31,8 @@ class SourceSheet extends StatefulWidget {
   State<SourceSheet> createState() => _SourceSheetState();
 }
 
-class _SourceSheetState extends State<SourceSheet>
-    with SingleTickerProviderStateMixin {
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+class _SourceSheetState extends State<SourceSheet> with SingleTickerProviderStateMixin {
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final CollectController collectController = Modular.get<CollectController>();
   final PluginsController pluginsController = Modular.get<PluginsController>();
   late String keyword;
@@ -210,8 +208,7 @@ class _SourceSheetState extends State<SourceSheet>
                                   base64Decode(imageUrl.split(',').last),
                                   height: 80,
                                   fit: BoxFit.contain,
-                                  errorBuilder: (context, error, _) =>
-                                      const Text('图片解码失败'),
+                                  errorBuilder: (context, error, _) => const Text('图片解码失败'),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -223,8 +220,7 @@ class _SourceSheetState extends State<SourceSheet>
                                   labelText: '请输入验证码',
                                   border: OutlineInputBorder(),
                                 ),
-                                onSubmitted:
-                                    isSubmitting ? null : (_) => doSubmit(),
+                                onSubmitted: isSubmitting ? null : (_) => doSubmit(),
                               ),
                             ],
                           );
@@ -234,8 +230,7 @@ class _SourceSheetState extends State<SourceSheet>
                   ),
                   const SizedBox(height: 20),
                   ListenableBuilder(
-                    listenable: Listenable.merge(
-                        [captchaImageNotifier, submittingNotifier]),
+                    listenable: Listenable.merge([captchaImageNotifier, submittingNotifier]),
                     builder: (context, _) {
                       final isImageLoading = captchaImageNotifier.value == null;
                       final isSubmitting = submittingNotifier.value;
@@ -247,8 +242,7 @@ class _SourceSheetState extends State<SourceSheet>
                             onPressed: () => KazumiDialog.dismiss(),
                             child: Text(
                               '取消',
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.outline),
+                              style: TextStyle(color: Theme.of(context).colorScheme.outline),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -354,8 +348,7 @@ class _SourceSheetState extends State<SourceSheet>
                     onPressed: () => KazumiDialog.dismiss(),
                     child: Text(
                       '取消',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.outline),
+                      style: TextStyle(color: Theme.of(context).colorScheme.outline),
                     ),
                   ),
                 ),
@@ -368,8 +361,7 @@ class _SourceSheetState extends State<SourceSheet>
   }
 
   Widget buildPluginView(Plugin plugin, List<Widget> cardList) {
-    final status =
-        widget.infoController.pluginSearchStatus[plugin.name];
+    final status = widget.infoController.pluginSearchStatus[plugin.name];
     if (status == 'pending') {
       return const Center(child: CircularProgressIndicator());
     }
@@ -443,18 +435,13 @@ class _SourceSheetState extends State<SourceSheet>
                 Text(
                   '结果不准确？',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.color
-                            ?.withValues(alpha: 0.75),
+                        color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.75),
                       ),
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     textStyle: Theme.of(context).textTheme.bodySmall,
@@ -465,8 +452,7 @@ class _SourceSheetState extends State<SourceSheet>
                 TextButton(
                   style: TextButton.styleFrom(
                     minimumSize: Size.zero,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     textStyle: Theme.of(context).textTheme.bodySmall,
@@ -487,8 +473,7 @@ class _SourceSheetState extends State<SourceSheet>
       KazumiDialog.showToast(message: '无可用别名，试试手动检索');
       return;
     }
-    final aliasNotifier =
-        ValueNotifier<List<String>>(widget.infoController.bangumiItem.alias);
+    final aliasNotifier = ValueNotifier<List<String>>(widget.infoController.bangumiItem.alias);
     KazumiDialog.show(builder: (context) {
       return Dialog(
         clipBehavior: Clip.antiAlias,
@@ -518,10 +503,7 @@ class _SourceSheetState extends State<SourceSheet>
                                   },
                                   child: Text(
                                     '取消',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outline),
+                                    style: TextStyle(color: Theme.of(context).colorScheme.outline),
                                   ),
                                 ),
                                 TextButton(
@@ -529,8 +511,7 @@ class _SourceSheetState extends State<SourceSheet>
                                     KazumiDialog.dismiss();
                                     aliasList.removeAt(index);
                                     aliasNotifier.value = List.from(aliasList);
-                                    collectController.updateLocalCollect(
-                                        widget.infoController.bangumiItem);
+                                    collectController.updateLocalCollect(widget.infoController.bangumiItem);
                                     if (aliasList.isEmpty) {
                                       // pop whole dialog when empty
                                       Navigator.of(context).pop();
@@ -569,8 +550,7 @@ class _SourceSheetState extends State<SourceSheet>
             controller: textController,
             onSubmitted: (keyword) {
               if (textController.text != '') {
-                widget.infoController.bangumiItem.alias
-                    .add(textController.text);
+                widget.infoController.bangumiItem.alias.add(textController.text);
                 KazumiDialog.dismiss();
                 queryManager?.querySource(textController.text, pluginName);
               }
@@ -589,10 +569,8 @@ class _SourceSheetState extends State<SourceSheet>
             TextButton(
               onPressed: () {
                 if (textController.text != '') {
-                  widget.infoController.bangumiItem.alias
-                      .add(textController.text);
-                  collectController
-                      .updateLocalCollect(widget.infoController.bangumiItem);
+                  widget.infoController.bangumiItem.alias.add(textController.text);
+                  collectController.updateLocalCollect(widget.infoController.bangumiItem);
                   KazumiDialog.dismiss();
                   queryManager?.querySource(textController.text, pluginName);
                 }
@@ -633,21 +611,15 @@ class _SourceSheetState extends State<SourceSheet>
                                       plugin.name,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .fontSize,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSurface),
+                                          fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                                          color: Theme.of(context).colorScheme.onSurface),
                                     ),
                                     const SizedBox(width: 5.0),
                                     Container(
                                       width: 8.0,
                                       height: 8.0,
                                       decoration: BoxDecoration(
-                                        color: switch (widget.infoController
-                                            .pluginSearchStatus[plugin.name]) {
+                                        color: switch (widget.infoController.pluginSearchStatus[plugin.name]) {
                                           'success' => Colors.green,
                                           'noResult' => Colors.orange,
                                           'captcha' => Colors.blue,
@@ -670,8 +642,7 @@ class _SourceSheetState extends State<SourceSheet>
                   onPressed: () {
                     int currentIndex = widget.tabController.index;
                     launchUrl(
-                      Uri.parse(pluginsController
-                          .pluginList[currentIndex].searchURL
+                      Uri.parse(pluginsController.pluginList[currentIndex].searchURL
                           .replaceFirst('@keyword', Uri.encodeQueryComponent(keyword))),
                       mode: LaunchMode.externalApplication,
                     );
@@ -686,19 +657,16 @@ class _SourceSheetState extends State<SourceSheet>
               child: Observer(
                 builder: (context) => TabBarView(
                   controller: widget.tabController,
-                  children: List.generate(pluginsController.pluginList.length,
-                      (pluginIndex) {
+                  children: List.generate(pluginsController.pluginList.length, (pluginIndex) {
                     var plugin = pluginsController.pluginList[pluginIndex];
                     var cardList = <Widget>[];
-                    for (var searchResponse
-                        in widget.infoController.pluginSearchResponseList) {
+                    for (var searchResponse in widget.infoController.pluginSearchResponseList) {
                       if (searchResponse.pluginName == plugin.name) {
                         for (var searchItem in searchResponse.data) {
                           cardList.add(
                             Card(
                               elevation: 0,
-                              margin: const EdgeInsets.only(
-                                  left: 10, right: 10, top: 10),
+                              margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(12),
                                 onTap: () async {
@@ -709,19 +677,16 @@ class _SourceSheetState extends State<SourceSheet>
                                       videoPageController.cancelQueryRoads();
                                     },
                                   );
-                                  videoPageController.bangumiItem =
-                                      widget.infoController.bangumiItem;
+                                  videoPageController.bangumiItem = widget.infoController.bangumiItem;
                                   videoPageController.currentPlugin = plugin;
                                   videoPageController.title = searchItem.name;
                                   videoPageController.src = searchItem.src;
                                   try {
-                                    await videoPageController.queryRoads(
-                                        searchItem.src, plugin.name);
+                                    await videoPageController.queryRoads(searchItem.src, plugin.name);
                                     KazumiDialog.dismiss();
                                     Modular.to.pushNamed('/video/');
                                   } catch (_) {
-                                    KazumiLogger().w(
-                                        "QueryManager: failed to query video playlist");
+                                    KazumiLogger().w("QueryManager: failed to query video playlist");
                                     KazumiDialog.dismiss();
                                   }
                                 },

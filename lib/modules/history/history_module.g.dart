@@ -51,10 +51,7 @@ class HistoryAdapter extends TypeAdapter<History> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HistoryAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is HistoryAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class ProgressAdapter extends TypeAdapter<Progress> {
@@ -91,8 +88,5 @@ class ProgressAdapter extends TypeAdapter<Progress> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProgressAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is ProgressAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

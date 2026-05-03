@@ -49,8 +49,7 @@ class M3u8AdFilter {
       }
 
       // First or last group with short duration (< 30s)
-      if ((groupId == sortedKeys.first || groupId == sortedKeys.last) &&
-          groupDuration < 30.0) {
+      if ((groupId == sortedKeys.first || groupId == sortedKeys.last) && groupDuration < 30.0) {
         isAd = true;
       }
 
@@ -67,9 +66,7 @@ class M3u8AdFilter {
     if (adGroups.isEmpty) return segments;
 
     // Remove ad segments
-    return segments
-        .where((seg) => !adGroups.contains(seg.discontinuityGroup))
-        .toList();
+    return segments.where((seg) => !adGroups.contains(seg.discontinuityGroup)).toList();
   }
 
   /// Calculate the new target duration after filtering

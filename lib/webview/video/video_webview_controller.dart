@@ -22,34 +22,29 @@ abstract class VideoWebviewController<T> {
   /// Webview initialization method
   Future<void> init();
 
-  final StreamController<bool> initEventController =
-      StreamController<bool>.broadcast();
+  final StreamController<bool> initEventController = StreamController<bool>.broadcast();
 
   // Stream to notify when the webview is initialized
   Stream<bool> get onInitialized => initEventController.stream;
 
-  final StreamController<String> logEventController =
-      StreamController<String>.broadcast();
+  final StreamController<String> logEventController = StreamController<String>.broadcast();
 
   // Stream to subscribe to webview logs
   Stream<String> get onLog => logEventController.stream;
 
-  final StreamController<bool> videoLoadingEventController =
-      StreamController<bool>.broadcast();
+  final StreamController<bool> videoLoadingEventController = StreamController<bool>.broadcast();
 
   // Stream to notify when the video source is loaded
   Stream<bool> get onVideoLoading => videoLoadingEventController.stream;
 
   // Stream to notify video source URL when the video source is loaded
   // The first parameter is the video source URL and the second parameter is the video offset (start position)
-  final StreamController<(String, int)> videoParserEventController =
-      StreamController<(String, int)>.broadcast();
+  final StreamController<(String, int)> videoParserEventController = StreamController<(String, int)>.broadcast();
 
   Stream<(String, int)> get onVideoURLParser => videoParserEventController.stream;
 
   /// Webview load URL method
-  Future<void> loadUrl(String url, bool useLegacyParser,
-      {int offset = 0});
+  Future<void> loadUrl(String url, bool useLegacyParser, {int offset = 0});
 
   /// Webview unload page method
   Future<void> unloadPage();

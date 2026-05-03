@@ -53,8 +53,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void scrollListener() {
-    if (scrollController.position.pixels >=
-            scrollController.position.maxScrollExtent - 200 &&
+    if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200 &&
         !searchPageController.isLoading &&
         searchController.text != '' &&
         searchPageController.bangumiList.length >= 20) {
@@ -69,8 +68,7 @@ class _SearchPageState extends State<SearchPage> {
         Observer(
           builder: (context) => InkWell(
             onTap: () {
-              searchPageController.setNotShowWatchedBangumis(
-                  !searchPageController.notShowWatchedBangumis);
+              searchPageController.setNotShowWatchedBangumis(!searchPageController.notShowWatchedBangumis);
             },
             child: ListTile(
               title: const Text('不显示已看过的番剧'),
@@ -86,8 +84,7 @@ class _SearchPageState extends State<SearchPage> {
         Observer(
           builder: (context) => InkWell(
             onTap: () {
-              searchPageController.setNotShowAbandonedBangumis(
-                  !searchPageController.notShowAbandonedBangumis);
+              searchPageController.setNotShowAbandonedBangumis(!searchPageController.notShowAbandonedBangumis);
             },
             child: ListTile(
               title: const Text('不显示已抛弃的番剧'),
@@ -114,30 +111,24 @@ class _SearchPageState extends State<SearchPage> {
               title: const Text('按热度排序'),
               onTap: () {
                 Navigator.pop(context);
-                searchController.text = searchPageController.attachSortParams(
-                    searchController.text, 'heat');
-                searchPageController.searchBangumi(searchController.text,
-                    type: 'init');
+                searchController.text = searchPageController.attachSortParams(searchController.text, 'heat');
+                searchPageController.searchBangumi(searchController.text, type: 'init');
               },
             ),
             ListTile(
               title: const Text('按评分排序'),
               onTap: () {
                 Navigator.pop(context);
-                searchController.text = searchPageController.attachSortParams(
-                    searchController.text, 'rank');
-                searchPageController.searchBangumi(searchController.text,
-                    type: 'init');
+                searchController.text = searchPageController.attachSortParams(searchController.text, 'rank');
+                searchPageController.searchBangumi(searchController.text, type: 'init');
               },
             ),
             ListTile(
               title: const Text('按匹配程度排序'),
               onTap: () {
                 Navigator.pop(context);
-                searchController.text = searchPageController.attachSortParams(
-                    searchController.text, 'match');
-                searchPageController.searchBangumi(searchController.text,
-                    type: 'init');
+                searchController.text = searchPageController.attachSortParams(searchController.text, 'match');
+                searchPageController.searchBangumi(searchController.text, type: 'init');
               },
             ),
           ],
@@ -180,12 +171,10 @@ class _SearchPageState extends State<SearchPage> {
           showModalBottomSheet(
             isScrollControlled: true,
             constraints: BoxConstraints(
-              maxHeight: (MediaQuery.sizeOf(context).height >=
-                      LayoutBreakpoint.compact['height']!)
+              maxHeight: (MediaQuery.sizeOf(context).height >= LayoutBreakpoint.compact['height']!)
                   ? MediaQuery.of(context).size.height * 1 / 4
                   : MediaQuery.of(context).size.height,
-              maxWidth: (MediaQuery.sizeOf(context).width >=
-                      LayoutBreakpoint.medium['width']!)
+              maxWidth: (MediaQuery.sizeOf(context).width >= LayoutBreakpoint.medium['width']!)
                   ? MediaQuery.of(context).size.width * 9 / 16
                   : MediaQuery.of(context).size.width,
             ),
@@ -193,8 +182,7 @@ class _SearchPageState extends State<SearchPage> {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             context: context,
             builder: (context) {
-              return showSearchOptionTabBar(
-                  options: [showSortSwitcher(), showFilterSwitcher()]);
+              return showSearchOptionTabBar(options: [showSortSwitcher(), showFilterSwitcher()]);
             },
           );
         },
@@ -222,19 +210,16 @@ class _SearchPageState extends State<SearchPage> {
                 barTrailing: [
                   IconButton(
                     onPressed: () async {
-                      final result =
-                          await Modular.to.pushNamed('/search/image');
+                      final result = await Modular.to.pushNamed('/search/image');
                       if (result is String && result.isNotEmpty) {
                         searchController.text = result;
-                        searchPageController.searchBangumi(result,
-                            type: 'init');
+                        searchPageController.searchBangumi(result, type: 'init');
                       }
                     },
                     icon: const Icon(Icons.image_search_rounded),
                   ),
                 ],
-                isFullScreen: MediaQuery.sizeOf(context).width <
-                    LayoutBreakpoint.compact['width']!,
+                isFullScreen: MediaQuery.sizeOf(context).width < LayoutBreakpoint.compact['width']!,
                 suggestionsBuilder: (context, controller) => [
                   Observer(
                     builder: (context) {
@@ -248,16 +233,12 @@ class _SearchPageState extends State<SearchPage> {
                         return Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            for (var history in searchPageController
-                                .searchHistories
-                                .take(10))
+                            for (var history in searchPageController.searchHistories.take(10))
                               ListTile(
                                 title: Text(history.keyword),
                                 onTap: () {
                                   controller.text = history.keyword;
-                                  searchPageController.searchBangumi(
-                                      controller.text,
-                                      type: 'init');
+                                  searchPageController.searchBangumi(controller.text, type: 'init');
                                   if (searchController.isOpen) {
                                     searchController.closeView(history.keyword);
                                   }
@@ -265,8 +246,7 @@ class _SearchPageState extends State<SearchPage> {
                                 trailing: IconButton(
                                   icon: const Icon(Icons.close),
                                   onPressed: () {
-                                    searchPageController
-                                        .deleteSearchHistory(history);
+                                    searchPageController.deleteSearchHistory(history);
                                   },
                                 ),
                               ),
@@ -296,9 +276,7 @@ class _SearchPageState extends State<SearchPage> {
                       actions: [
                         GeneralErrorButton(
                           onPressed: () {
-                            searchPageController.searchBangumi(
-                                searchController.text,
-                                type: 'init');
+                            searchPageController.searchBangumi(searchController.text, type: 'init');
                           },
                           text: '点击重试',
                         ),
@@ -308,36 +286,26 @@ class _SearchPageState extends State<SearchPage> {
                 );
               }
 
-              if (searchPageController.isLoading &&
-                  searchPageController.bangumiList.isEmpty) {
+              if (searchPageController.isLoading && searchPageController.bangumiList.isEmpty) {
                 return Center(child: CircularProgressIndicator());
               }
               int crossCount = 3;
-              if (MediaQuery.sizeOf(context).width >
-                  LayoutBreakpoint.compact['width']!) {
+              if (MediaQuery.sizeOf(context).width > LayoutBreakpoint.compact['width']!) {
                 crossCount = 5;
               }
-              if (MediaQuery.sizeOf(context).width >
-                  LayoutBreakpoint.medium['width']!) {
+              if (MediaQuery.sizeOf(context).width > LayoutBreakpoint.medium['width']!) {
                 crossCount = 6;
               }
-              List<BangumiItem> filteredList =
-                  searchPageController.bangumiList.toList();
+              List<BangumiItem> filteredList = searchPageController.bangumiList.toList();
 
               if (searchPageController.notShowWatchedBangumis) {
-                final watchedBangumiIds =
-                    searchPageController.loadWatchedBangumiIds();
-                filteredList = filteredList
-                    .where((item) => !watchedBangumiIds.contains(item.id))
-                    .toList();
+                final watchedBangumiIds = searchPageController.loadWatchedBangumiIds();
+                filteredList = filteredList.where((item) => !watchedBangumiIds.contains(item.id)).toList();
               }
 
               if (searchPageController.notShowAbandonedBangumis) {
-                final abandonedBangumiIds =
-                    searchPageController.loadAbandonedBangumiIds();
-                filteredList = filteredList
-                    .where((item) => !abandonedBangumiIds.contains(item.id))
-                    .toList();
+                final abandonedBangumiIds = searchPageController.loadAbandonedBangumiIds();
+                filteredList = filteredList.where((item) => !abandonedBangumiIds.contains(item.id)).toList();
               }
 
               return GridView.builder(
@@ -347,9 +315,8 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisSpacing: StyleString.cardSpace - 2,
                   crossAxisSpacing: StyleString.cardSpace,
                   crossAxisCount: crossCount,
-                  mainAxisExtent:
-                      MediaQuery.of(context).size.width / crossCount / 0.65 +
-                          MediaQuery.textScalerOf(context).scale(32.0),
+                  mainAxisExtent: MediaQuery.of(context).size.width / crossCount / 0.65 +
+                      MediaQuery.textScalerOf(context).scale(32.0),
                 ),
                 itemCount: filteredList.isNotEmpty ? filteredList.length : 10,
                 itemBuilder: (context, index) {

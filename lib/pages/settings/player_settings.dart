@@ -45,41 +45,27 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
   @override
   void initState() {
     super.initState();
-    defaultPlaySpeed =
-        setting.get(SettingBoxKey.defaultPlaySpeed, defaultValue: 1.0);
-    defaultShortcutForwardPlaySpeed = 
-        setting.get(SettingBoxKey.defaultShortcutForwardPlaySpeed, defaultValue: 2.0);
-    defaultAspectRatioType =
-        setting.get(SettingBoxKey.defaultAspectRatioType, defaultValue: 1);
+    defaultPlaySpeed = setting.get(SettingBoxKey.defaultPlaySpeed, defaultValue: 1.0);
+    defaultShortcutForwardPlaySpeed = setting.get(SettingBoxKey.defaultShortcutForwardPlaySpeed, defaultValue: 2.0);
+    defaultAspectRatioType = setting.get(SettingBoxKey.defaultAspectRatioType, defaultValue: 1);
     hAenable = setting.get(SettingBoxKey.hAenable, defaultValue: true);
-    androidEnableOpenSLES =
-        setting.get(SettingBoxKey.androidEnableOpenSLES, defaultValue: true);
-    androidAutoEnterPIP =
-        setting.get(SettingBoxKey.androidAutoEnterPIP, defaultValue: false);
-    lowMemoryMode =
-        setting.get(SettingBoxKey.lowMemoryMode, defaultValue: false);
+    androidEnableOpenSLES = setting.get(SettingBoxKey.androidEnableOpenSLES, defaultValue: true);
+    androidAutoEnterPIP = setting.get(SettingBoxKey.androidAutoEnterPIP, defaultValue: false);
+    lowMemoryMode = setting.get(SettingBoxKey.lowMemoryMode, defaultValue: false);
     playResume = setting.get(SettingBoxKey.playResume, defaultValue: true);
     privateMode = setting.get(SettingBoxKey.privateMode, defaultValue: false);
-    showPlayerError =
-        setting.get(SettingBoxKey.showPlayerError, defaultValue: true);
-    playerDebugMode =
-        setting.get(SettingBoxKey.playerDebugMode, defaultValue: false);
+    showPlayerError = setting.get(SettingBoxKey.showPlayerError, defaultValue: true);
+    playerDebugMode = setting.get(SettingBoxKey.playerDebugMode, defaultValue: false);
     autoPlayNext = setting.get(SettingBoxKey.autoPlayNext, defaultValue: true);
-    backgroundPlayback =
-        setting.get(SettingBoxKey.backgroundPlayback, defaultValue: false);
-    playerDisableAnimations =
-        setting.get(SettingBoxKey.playerDisableAnimations, defaultValue: false);
-    forceAdBlocker =
-        setting.get(SettingBoxKey.forceAdBlocker, defaultValue: false);
+    backgroundPlayback = setting.get(SettingBoxKey.backgroundPlayback, defaultValue: false);
+    playerDisableAnimations = setting.get(SettingBoxKey.playerDisableAnimations, defaultValue: false);
+    forceAdBlocker = setting.get(SettingBoxKey.forceAdBlocker, defaultValue: false);
     playerLogLevel = setting.get(SettingBoxKey.playerLogLevel, defaultValue: 2);
 
-    brightnessVolumeGesture =
-        setting.get(SettingBoxKey.brightnessVolumeGesture, defaultValue: true);
+    brightnessVolumeGesture = setting.get(SettingBoxKey.brightnessVolumeGesture, defaultValue: true);
 
-    playerButtonSkipTime =
-        setting.get(SettingBoxKey.buttonSkipTime, defaultValue: 80);
-    playerArrowKeySkipTime =
-        setting.get(SettingBoxKey.arrowKeySkipTime, defaultValue: 10);
+    playerButtonSkipTime = setting.get(SettingBoxKey.buttonSkipTime, defaultValue: 80);
+    playerArrowKeySkipTime = setting.get(SettingBoxKey.arrowKeySkipTime, defaultValue: 10);
   }
 
   void onBackPressed(BuildContext context) {
@@ -118,12 +104,11 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
   }
 
   Future<void> updateButtonSkipTime() async {
-    final int? newButtonSkipTime = await _showSkipTimeChangeDialog(
-        title: '顶部按钮快进时长', initialValue: playerButtonSkipTime.toString());
+    final int? newButtonSkipTime =
+        await _showSkipTimeChangeDialog(title: '顶部按钮快进时长', initialValue: playerButtonSkipTime.toString());
     print('新设置的顶部按钮快进时长: $newButtonSkipTime');
 
-    if (newButtonSkipTime != null &&
-        newButtonSkipTime != playerButtonSkipTime) {
+    if (newButtonSkipTime != null && newButtonSkipTime != playerButtonSkipTime) {
       setting.put(SettingBoxKey.buttonSkipTime, newButtonSkipTime);
       setState(() {
         playerButtonSkipTime = newButtonSkipTime;
@@ -131,21 +116,18 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
     }
   }
 
-  Future<int?> _showSkipTimeChangeDialog(
-      {required String title, required String initialValue}) async {
+  Future<int?> _showSkipTimeChangeDialog({required String title, required String initialValue}) async {
     return KazumiDialog.show<int>(builder: (context) {
       String input = "";
       return AlertDialog(
         title: Text(title),
-        content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
           return TextField(
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly, // 只允许输入数字
             ],
             decoration: InputDecoration(
-              floatingLabelBehavior:
-                  FloatingLabelBehavior.never, // 控制label的显示方式
+              floatingLabelBehavior: FloatingLabelBehavior.never, // 控制label的显示方式
               labelText: initialValue,
             ),
             onChanged: (value) {
@@ -227,8 +209,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     lowMemoryMode = value ?? !lowMemoryMode;
-                    await setting.put(
-                        SettingBoxKey.lowMemoryMode, lowMemoryMode);
+                    await setting.put(SettingBoxKey.lowMemoryMode, lowMemoryMode);
                     setState(() {});
                   },
                   title: Text('低内存模式', style: TextStyle(fontFamily: fontFamily)),
@@ -239,8 +220,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   SettingsTile.switchTile(
                     onToggle: (value) async {
                       androidEnableOpenSLES = value ?? !androidEnableOpenSLES;
-                      await setting.put(SettingBoxKey.androidEnableOpenSLES,
-                          androidEnableOpenSLES);
+                      await setting.put(SettingBoxKey.androidEnableOpenSLES, androidEnableOpenSLES);
                       setState(() {});
                     },
                     title: Text('低延迟音频', style: TextStyle(fontFamily: fontFamily)),
@@ -261,8 +241,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     backgroundPlayback = value ?? !backgroundPlayback;
-                    await setting.put(
-                        SettingBoxKey.backgroundPlayback, backgroundPlayback);
+                    await setting.put(SettingBoxKey.backgroundPlayback, backgroundPlayback);
                     setState(() {});
                   },
                   title: Text('后台播放', style: TextStyle(fontFamily: fontFamily)),
@@ -293,16 +272,12 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   SettingsTile.switchTile(
                     onToggle: (value) async {
                       androidAutoEnterPIP = value ?? !androidAutoEnterPIP;
-                      await setting.put(SettingBoxKey.androidAutoEnterPIP,
-                          androidAutoEnterPIP);
-                      await PipUtils.setAndroidAutoEnterPIPEnabled(
-                          androidAutoEnterPIP);
+                      await setting.put(SettingBoxKey.androidAutoEnterPIP, androidAutoEnterPIP);
+                      await PipUtils.setAndroidAutoEnterPIPEnabled(androidAutoEnterPIP);
                       setState(() {});
                     },
-                    title: Text('自动进入画中画',
-                        style: TextStyle(fontFamily: fontFamily)),
-                    description: Text('切到后台时，自动进入画中画',
-                        style: TextStyle(fontFamily: fontFamily)),
+                    title: Text('自动进入画中画', style: TextStyle(fontFamily: fontFamily)),
+                    description: Text('切到后台时，自动进入画中画', style: TextStyle(fontFamily: fontFamily)),
                     initialValue: androidAutoEnterPIP,
                   ),
                 SettingsTile.switchTile(
@@ -318,8 +293,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     playerDisableAnimations = value ?? !playerDisableAnimations;
-                    await setting.put(SettingBoxKey.playerDisableAnimations,
-                        playerDisableAnimations);
+                    await setting.put(SettingBoxKey.playerDisableAnimations, playerDisableAnimations);
                     setState(() {});
                   },
                   title: Text('禁用动画', style: TextStyle(fontFamily: fontFamily)),
@@ -329,16 +303,12 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 if (!Utils.isDesktop())
                   SettingsTile.switchTile(
                     onToggle: (value) async {
-                      brightnessVolumeGesture =
-                          value ?? !brightnessVolumeGesture;
-                      await setting.put(SettingBoxKey.brightnessVolumeGesture,
-                          brightnessVolumeGesture);
+                      brightnessVolumeGesture = value ?? !brightnessVolumeGesture;
+                      await setting.put(SettingBoxKey.brightnessVolumeGesture, brightnessVolumeGesture);
                       setState(() {});
                     },
-                    title:
-                        Text('滑动手势', style: TextStyle(fontFamily: fontFamily)),
-                    description: Text('竖向滑动调节音量和亮度',
-                        style: TextStyle(fontFamily: fontFamily)),
+                    title: Text('滑动手势', style: TextStyle(fontFamily: fontFamily)),
+                    description: Text('竖向滑动调节音量和亮度', style: TextStyle(fontFamily: fontFamily)),
                     initialValue: brightnessVolumeGesture,
                   ),
                 SettingsTile.switchTile(
@@ -358,8 +328,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     showPlayerError = value ?? !showPlayerError;
-                    await setting.put(
-                        SettingBoxKey.showPlayerError, showPlayerError);
+                    await setting.put(SettingBoxKey.showPlayerError, showPlayerError);
                     setState(() {});
                   },
                   title: Text('错误提示', style: TextStyle(fontFamily: fontFamily)),
@@ -369,8 +338,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     playerDebugMode = value ?? !playerDebugMode;
-                    await setting.put(
-                        SettingBoxKey.playerDebugMode, playerDebugMode);
+                    await setting.put(SettingBoxKey.playerDebugMode, playerDebugMode);
                     setState(() {});
                   },
                   title: Text('调试模式', style: TextStyle(fontFamily: fontFamily)),
@@ -408,9 +376,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                               child: Text(
                                 entry.value,
                                 style: TextStyle(
-                                  color: entry.key == playerLogLevel
-                                      ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                  color: entry.key == playerLogLevel ? Theme.of(context).colorScheme.primary : null,
                                 ),
                               ),
                             ),
@@ -432,8 +398,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                     divisions: 11,
                     label: '${defaultPlaySpeed}x',
                     onChanged: (value) {
-                      updateDefaultPlaySpeed(
-                          double.parse(value.toStringAsFixed(2)));
+                      updateDefaultPlaySpeed(double.parse(value.toStringAsFixed(2)));
                     },
                   ),
                 ),
@@ -446,8 +411,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                     divisions: 7,
                     label: '${defaultShortcutForwardPlaySpeed}x',
                     onChanged: (value) {
-                      updateDefaultShortcutForwardPlaySpeed(
-                          double.parse(value.toStringAsFixed(2)));
+                      updateDefaultShortcutForwardPlaySpeed(double.parse(value.toStringAsFixed(2)));
                     },
                   ),
                 ),
@@ -463,8 +427,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                       print('新设置的方向键快进/快退时长: $newArrowKeySkipTime');
 
                       if (value != playerArrowKeySkipTime) {
-                        setting.put(SettingBoxKey.arrowKeySkipTime,
-                            newArrowKeySkipTime);
+                        setting.put(SettingBoxKey.arrowKeySkipTime, newArrowKeySkipTime);
                         setState(() {
                           playerArrowKeySkipTime = newArrowKeySkipTime;
                         });
@@ -503,8 +466,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                       for (final entry in aspectRatioTypeMap.entries)
                         MenuItemButton(
                           requestFocusOnHover: false,
-                          onPressed: () =>
-                              updateDefaultAspectRatioType(entry.key),
+                          onPressed: () => updateDefaultAspectRatioType(entry.key),
                           child: Container(
                             height: 48,
                             constraints: BoxConstraints(minWidth: 112),

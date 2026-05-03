@@ -82,9 +82,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       showDelete = !showDelete;
                     });
                   },
-                  icon: showDelete
-                      ? const Icon(Icons.edit_off_outlined)
-                      : const Icon(Icons.edit_outlined),
+                  icon: showDelete ? const Icon(Icons.edit_off_outlined) : const Icon(Icons.edit_outlined),
                   tooltip: showDelete ? '退出编辑' : '编辑',
                 ),
                 IconButton(
@@ -140,9 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double maxContentWidth = 1000;
-    final double horizontalPadding = screenWidth > maxContentWidth
-        ? (screenWidth - maxContentWidth) / 2
-        : 0;
+    final double horizontalPadding = screenWidth > maxContentWidth ? (screenWidth - maxContentWidth) / 2 : 0;
 
     return CustomScrollView(
       slivers: [
@@ -162,8 +158,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   historyItem: historyController.histories[index],
                   showDelete: showDelete,
                   onDeleted: () {
-                    historyController
-                        .deleteHistory(historyController.histories[index]);
+                    historyController.deleteHistory(historyController.histories[index]);
                   },
                 );
               },

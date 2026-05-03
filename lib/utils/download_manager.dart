@@ -39,8 +39,7 @@ class DownloadTask {
   }) : cancelToken = cancelToken ?? CancelToken();
 }
 
-typedef ProgressCallback = void Function(
-    String recordKey, int episodeNumber, DownloadEpisode episode, double speed);
+typedef ProgressCallback = void Function(String recordKey, int episodeNumber, DownloadEpisode episode, double speed);
 
 class DownloadRequest {
   final String recordKey;
@@ -185,8 +184,7 @@ class DownloadManager implements IDownloadManager {
     return _speedTrackers[key]?.currentSpeed ?? 0.0;
   }
 
-  String _taskKey(String recordKey, int episodeNumber) =>
-      '${recordKey}_$episodeNumber';
+  String _taskKey(String recordKey, int episodeNumber) => '${recordKey}_$episodeNumber';
 
   @override
   bool isDownloading(String recordKey, int episodeNumber) =>
@@ -486,8 +484,7 @@ class DownloadManager implements IDownloadManager {
             totalBytes += bytes;
             episode.downloadedSegments++;
             episode.totalBytes = totalBytes;
-            episode.progressPercent =
-                episode.downloadedSegments / episode.totalSegments;
+            episode.progressPercent = episode.downloadedSegments / episode.totalSegments;
             _speedTrackers[key]?.update(totalBytes);
             _notifyProgress(task.recordKey, task.episodeNumber, episode);
             completedCount++;
@@ -524,9 +521,8 @@ class DownloadManager implements IDownloadManager {
         return;
       }
 
-      final targetDuration = adBlockerEnabled
-          ? M3u8AdFilter.calculateTargetDuration(segments)
-          : resolvedPlaylist.targetDuration;
+      final targetDuration =
+          adBlockerEnabled ? M3u8AdFilter.calculateTargetDuration(segments) : resolvedPlaylist.targetDuration;
       final localM3u8 = M3u8Parser.buildLocalM3u8(
         segments,
         targetDuration: targetDuration,
@@ -644,8 +640,7 @@ class DownloadManager implements IDownloadManager {
       }
 
       final contentRange = response.headers.value('content-range');
-      final contentLength = int.tryParse(
-          response.headers.value(Headers.contentLengthHeader) ?? '') ?? 0;
+      final contentLength = int.tryParse(response.headers.value(Headers.contentLengthHeader) ?? '') ?? 0;
       int totalSize;
       if (contentRange != null) {
         final totalMatch = RegExp(r'/(\d+)').firstMatch(contentRange);
@@ -654,8 +649,7 @@ class DownloadManager implements IDownloadManager {
         totalSize = existingBytes + contentLength;
       }
 
-      final raf = await tmpFile.open(
-          mode: existingBytes > 0 ? FileMode.append : FileMode.write);
+      final raf = await tmpFile.open(mode: existingBytes > 0 ? FileMode.append : FileMode.write);
       int received = existingBytes;
 
       _speedTrackers[key] = _SpeedTracker();
@@ -732,15 +726,13 @@ class DownloadManager implements IDownloadManager {
     _processQueue();
   }
 
-  void _notifyProgress(
-      String recordKey, int episodeNumber, DownloadEpisode episode) {
+  void _notifyProgress(String recordKey, int episodeNumber, DownloadEpisode episode) {
     final key = _taskKey(recordKey, episodeNumber);
     final speed = _speedTrackers[key]?.currentSpeed ?? 0.0;
     onProgress?.call(recordKey, episodeNumber, episode, speed);
   }
 
-  Future<String> _fetchM3u8(
-      String url, Map<String, String> headers, CancelToken cancelToken) async {
+  Future<String> _fetchM3u8(String url, Map<String, String> headers, CancelToken cancelToken) async {
     final fetchToken = CancelToken();
 
     if (cancelToken.isCancelled) {
@@ -787,8 +779,7 @@ class DownloadManager implements IDownloadManager {
     }
   }
 
-  Future<void> _downloadFile(String url, String savePath,
-      Map<String, String> headers, CancelToken cancelToken) async {
+  Future<void> _downloadFile(String url, String savePath, Map<String, String> headers, CancelToken cancelToken) async {
     await _dio.download(
       url,
       savePath,
@@ -831,8 +822,7 @@ class DownloadManager implements IDownloadManager {
   }
 
   @override
-  Future<void> deleteEpisodeFiles(
-      int bangumiId, String pluginName, int episodeNumber) async {
+  Future<void> deleteEpisodeFiles(int bangumiId, String pluginName, int episodeNumber) async {
     final base = await _downloadBaseDir;
     final dir = Directory(getEpisodeDir(base, bangumiId, pluginName, episodeNumber));
     if (await dir.exists()) {

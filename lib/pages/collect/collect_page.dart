@@ -22,8 +22,7 @@ class CollectPage extends StatefulWidget {
   State<CollectPage> createState() => _CollectPageState();
 }
 
-class _CollectPageState extends State<CollectPage>
-    with SingleTickerProviderStateMixin {
+class _CollectPageState extends State<CollectPage> with SingleTickerProviderStateMixin {
   final CollectController collectController = Modular.get<CollectController>();
   late NavigationBarState navigationBarState;
   TabController? tabController;
@@ -137,8 +136,7 @@ class _CollectPageState extends State<CollectPage>
       if (webDavEnabled) {
         progressText.value = '正在同步 WebDav 收藏...';
         progressValue.value = null;
-        webDavSynced =
-            await collectController.syncCollectibles(showSuccessToast: false);
+        webDavSynced = await collectController.syncCollectibles(showSuccessToast: false);
       }
 
       if (bangumiEnabled) {
@@ -191,8 +189,7 @@ class _CollectPageState extends State<CollectPage>
     super.initState();
     collectController.loadCollectibles();
     tabController = TabController(vsync: this, length: tabs.length);
-    navigationBarState =
-        Provider.of<NavigationBarState>(context, listen: false);
+    navigationBarState = Provider.of<NavigationBarState>(context, listen: false);
   }
 
   @override
@@ -239,17 +236,13 @@ class _CollectPageState extends State<CollectPage>
                     showDelete = !showDelete;
                   });
                 },
-                icon: showDelete
-                    ? const Icon(Icons.edit_outlined)
-                    : const Icon(Icons.edit))
+                icon: showDelete ? const Icon(Icons.edit_outlined) : const Icon(Icons.edit))
           ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            bool webDavenable = await setting.get(SettingBoxKey.webDavEnable,
-              defaultValue: false);
-            bool bgmSyncEnable = await setting.get(SettingBoxKey.bangumiSyncEnable,
-              defaultValue: false);
+            bool webDavenable = await setting.get(SettingBoxKey.webDavEnable, defaultValue: false);
+            bool bgmSyncEnable = await setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
             if (!webDavenable && !bgmSyncEnable) {
               KazumiDialog.showToast(message: '同步功能不可用，请至少开启一个同步功能');
               return;
@@ -278,8 +271,7 @@ class _CollectPageState extends State<CollectPage>
             }
           },
           child: syncCollectiblesing
-              ? const SizedBox(
-                  width: 32, height: 32, child: CircularProgressIndicator())
+              ? const SizedBox(width: 32, height: 32, child: CircularProgressIndicator())
               : const Icon(Icons.sync_rounded),
         ),
         body: Observer(builder: (context) {
@@ -310,8 +302,7 @@ class _CollectPageState extends State<CollectPage>
       collectedBangumiRenderItemList[element.type - 1].add(element);
     }
     for (List<CollectedBangumi> list in collectedBangumiRenderItemList) {
-      list.sort((a, b) => b.time.millisecondsSinceEpoch
-          .compareTo(a.time.millisecondsSinceEpoch));
+      list.sort((a, b) => b.time.millisecondsSinceEpoch.compareTo(a.time.millisecondsSinceEpoch));
     }
     int crossCount = 3;
     if (MediaQuery.sizeOf(context).width > LayoutBreakpoint.compact['width']!) {
@@ -320,22 +311,20 @@ class _CollectPageState extends State<CollectPage>
     if (MediaQuery.sizeOf(context).width > LayoutBreakpoint.medium['width']!) {
       crossCount = 6;
     }
-    for (List<CollectedBangumi> collectedBangumiRenderItem
-        in collectedBangumiRenderItemList) {
+    for (List<CollectedBangumi> collectedBangumiRenderItem in collectedBangumiRenderItemList) {
       gridViewList.add(
         CustomScrollView(
           slivers: [
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(
-                  StyleString.cardSpace, StyleString.cardSpace, StyleString.cardSpace, 0),
+              padding:
+                  const EdgeInsets.fromLTRB(StyleString.cardSpace, StyleString.cardSpace, StyleString.cardSpace, 0),
               sliver: SliverGrid(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: StyleString.cardSpace - 2,
                   crossAxisSpacing: StyleString.cardSpace,
                   crossAxisCount: crossCount,
-                  mainAxisExtent:
-                      MediaQuery.of(context).size.width / crossCount / 0.65 +
-                          MediaQuery.textScalerOf(context).scale(32.0),
+                  mainAxisExtent: MediaQuery.of(context).size.width / crossCount / 0.65 +
+                      MediaQuery.textScalerOf(context).scale(32.0),
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
@@ -343,8 +332,7 @@ class _CollectPageState extends State<CollectPage>
                         ? Stack(
                             children: [
                               BangumiCardV(
-                                bangumiItem: collectedBangumiRenderItem[index]
-                                    .bangumiItem,
+                                bangumiItem: collectedBangumiRenderItem[index].bangumiItem,
                                 canTap: !showDelete,
                               ),
                               Positioned(
@@ -355,18 +343,12 @@ class _CollectPageState extends State<CollectPage>
                                         width: 40,
                                         height: 40,
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondaryContainer,
+                                          color: Theme.of(context).colorScheme.secondaryContainer,
                                           shape: BoxShape.circle,
                                         ),
                                         child: CollectButton(
-                                          bangumiItem:
-                                              collectedBangumiRenderItem[index]
-                                                  .bangumiItem,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onSecondaryContainer,
+                                          bangumiItem: collectedBangumiRenderItem[index].bangumiItem,
+                                          color: Theme.of(context).colorScheme.onSecondaryContainer,
                                         ),
                                       )
                                     : Container(),
@@ -375,9 +357,7 @@ class _CollectPageState extends State<CollectPage>
                           )
                         : null;
                   },
-                  childCount: collectedBangumiRenderItem.isNotEmpty
-                      ? collectedBangumiRenderItem.length
-                      : 10,
+                  childCount: collectedBangumiRenderItem.isNotEmpty ? collectedBangumiRenderItem.length : 10,
                 ),
               ),
             ),

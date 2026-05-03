@@ -17,8 +17,7 @@ class _PlayerItemSurfaceState extends State<PlayerItemSurface> {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      if (playerController.loading ||
-          playerController.videoController == null) {
+      if (playerController.loading || playerController.videoController == null) {
         return Container(
           color: Colors.black,
           child: const Center(

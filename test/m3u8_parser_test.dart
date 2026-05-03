@@ -1,4 +1,4 @@
-﻿import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:kazumi/utils/m3u8_parser.dart';
 
 void main() {
@@ -29,8 +29,7 @@ url_8/193039199_mp4_h264_aac_fhd_8.m3u8
       final best = master.bestVariant;
       expect(best.bandwidth, 6221600);
       expect(best.resolution, '1920x1080');
-      expect(best.uri,
-          'https://test-streams.mux.dev/x36xhzz/url_8/193039199_mp4_h264_aac_fhd_8.m3u8');
+      expect(best.uri, 'https://test-streams.mux.dev/x36xhzz/url_8/193039199_mp4_h264_aac_fhd_8.m3u8');
     });
 
     // ── Media playlist with VOD + ENDLIST ────────────────────────────────────
@@ -51,8 +50,7 @@ seg_00002.ts
 seg_00003.ts
 #EXT-X-ENDLIST
 ''';
-      const baseUrl =
-          'https://test-streams.mux.dev/x36xhzz/url_0/193039199_mp4_h264_aac_hd_7.m3u8';
+      const baseUrl = 'https://test-streams.mux.dev/x36xhzz/url_0/193039199_mp4_h264_aac_hd_7.m3u8';
 
       expect(M3u8Parser.detectType(content), M3u8Type.media);
 
@@ -60,8 +58,7 @@ seg_00003.ts
       expect(playlist.isVod, isTrue);
       expect(playlist.targetDuration, 10.0);
       expect(playlist.segments.length, 4);
-      expect(playlist.segments.first.uri,
-          'https://test-streams.mux.dev/x36xhzz/url_0/seg_00000.ts');
+      expect(playlist.segments.first.uri, 'https://test-streams.mux.dev/x36xhzz/url_0/seg_00000.ts');
 
       expect(content.contains('#EXT-X-PLAYLIST-TYPE:VOD'), isTrue);
       expect(content.contains('#EXT-X-ENDLIST'), isTrue);
@@ -107,8 +104,7 @@ https://example.com/seg_00001.ts
 #EXTINF:8.5,
 https://example.com/seg_00002.ts
 ''';
-      final playlist =
-          M3u8Parser.parseMediaPlaylist(content, 'https://example.com/playlist.m3u8');
+      final playlist = M3u8Parser.parseMediaPlaylist(content, 'https://example.com/playlist.m3u8');
 
       expect(playlist.isVod, isTrue);
       expect(playlist.segments.length, 3);
@@ -127,8 +123,7 @@ https://example.com/seg_00000.ts
 #EXTINF:10.0,
 https://example.com/seg_00001.ts
 ''';
-      final playlist =
-          M3u8Parser.parseMediaPlaylist(content, 'https://example.com/event.m3u8');
+      final playlist = M3u8Parser.parseMediaPlaylist(content, 'https://example.com/event.m3u8');
 
       expect(playlist.isVod, isFalse);
     });
@@ -146,8 +141,7 @@ https://example.com/seg_00000.ts
 #EXTINF:10.0,
 https://example.com/seg_00001.ts
 ''';
-      final playlist =
-          M3u8Parser.parseMediaPlaylist(content, 'https://example.com/vod.m3u8');
+      final playlist = M3u8Parser.parseMediaPlaylist(content, 'https://example.com/vod.m3u8');
       expect(playlist.isVod, isTrue);
 
       const emptyVod = '''
@@ -156,8 +150,7 @@ https://example.com/seg_00001.ts
 #EXT-X-PLAYLIST-TYPE:VOD
 #EXT-X-TARGETDURATION:10
 ''';
-      final emptyPlaylist =
-          M3u8Parser.parseMediaPlaylist(emptyVod, 'https://example.com/empty.m3u8');
+      final emptyPlaylist = M3u8Parser.parseMediaPlaylist(emptyVod, 'https://example.com/empty.m3u8');
       expect(emptyPlaylist.isVod, isTrue);
       expect(emptyPlaylist.segments.length, 0);
     });
@@ -190,8 +183,7 @@ seg_c.ts
 #EXT-X-ENDLIST
 ''';
 
-      final outer =
-          M3u8Parser.parseMediaPlaylist(outerContent, 'https://example.com/main.m3u8');
+      final outer = M3u8Parser.parseMediaPlaylist(outerContent, 'https://example.com/main.m3u8');
       expect(outer.segments.length, 3);
       expect(outer.segments.where((s) => s.uri.endsWith('.m3u8')).length, 1);
 

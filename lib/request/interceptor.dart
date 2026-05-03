@@ -14,8 +14,7 @@ class ApiInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Github mirror
     if (options.path.contains('github')) {
-      bool enableGitProxy =
-          setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
+      bool enableGitProxy = setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
       if (enableGitProxy) {
         options.path = Api.gitMirror + options.path;
       }
@@ -28,24 +27,17 @@ class ApiInterceptor extends Interceptor {
         'X-Auth': 1,
         'X-AppId': mortis['id'],
         'X-Timestamp': timestamp,
-        'X-Signature': Utils.generateDandanSignature(
-            Uri.parse(options.path).path, timestamp),
+        'X-Signature': Utils.generateDandanSignature(Uri.parse(options.path).path, timestamp),
       };
     }
-    if (options.path.contains(Api.bangumiAPIDomain) ||
-        options.path.contains(Api.bangumiAPINextDomain)) {
+    if (options.path.contains(Api.bangumiAPIDomain) || options.path.contains(Api.bangumiAPINextDomain)) {
       final mergedHeaders = <String, dynamic>{
         ...options.headers,
         ...bangumiHTTPHeader,
       };
-      final bool bangumiSyncEnable =
-          setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
-      final bool requiresBangumiAuth =
-          options.extra['requiresBangumiAuth'] == true;
-      final String token = setting
-          .get(SettingBoxKey.bangumiAccessToken, defaultValue: '')
-          .toString()
-          .trim();
+      final bool bangumiSyncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+      final bool requiresBangumiAuth = options.extra['requiresBangumiAuth'] == true;
+      final String token = setting.get(SettingBoxKey.bangumiAccessToken, defaultValue: '').toString().trim();
       if ((bangumiSyncEnable || requiresBangumiAuth) && token.isNotEmpty) {
         mergedHeaders['Authorization'] = 'Bearer $token';
       }
@@ -62,8 +54,7 @@ class ApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     String url = err.requestOptions.uri.toString();
-    if (!url.contains('heartBeat') &&
-        err.requestOptions.extra['customError'] != '') {
+    if (!url.contains('heartBeat') && err.requestOptions.extra['customError'] != '') {
       if (err.requestOptions.extra['customError'] == null) {
         KazumiDialog.showToast(
           message: await dioError(err),
@@ -78,8 +69,7 @@ class ApiInterceptor extends Interceptor {
   }
 
   static Future<String> dioError(DioException error) async {
-    bool proxyEnable =
-        await setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    bool proxyEnable = await setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (proxyEnable) {
       return '代理连接异常，请检查代理设置';
     }

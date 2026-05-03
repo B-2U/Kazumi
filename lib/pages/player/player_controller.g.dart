@@ -9,8 +9,7 @@ part of 'player_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$PlayerController on _PlayerController, Store {
-  late final _$danDanmakusAtom =
-      Atom(name: '_PlayerController.danDanmakus', context: context);
+  late final _$danDanmakusAtom = Atom(name: '_PlayerController.danDanmakus', context: context);
 
   @override
   Map<int, List<Danmaku>> get danDanmakus {
@@ -25,8 +24,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$danmakuOnAtom =
-      Atom(name: '_PlayerController.danmakuOn', context: context);
+  late final _$danmakuOnAtom = Atom(name: '_PlayerController.danmakuOn', context: context);
 
   @override
   bool get danmakuOn {
@@ -41,8 +39,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$danmakuLoadingAtom =
-      Atom(name: '_PlayerController.danmakuLoading', context: context);
+  late final _$danmakuLoadingAtom = Atom(name: '_PlayerController.danmakuLoading', context: context);
 
   @override
   bool get danmakuLoading {
@@ -57,8 +54,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$syncplayRoomAtom =
-      Atom(name: '_PlayerController.syncplayRoom', context: context);
+  late final _$syncplayRoomAtom = Atom(name: '_PlayerController.syncplayRoom', context: context);
 
   @override
   String get syncplayRoom {
@@ -73,8 +69,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$syncplayClientRttAtom =
-      Atom(name: '_PlayerController.syncplayClientRtt', context: context);
+  late final _$syncplayClientRttAtom = Atom(name: '_PlayerController.syncplayClientRtt', context: context);
 
   @override
   int get syncplayClientRtt {
@@ -89,8 +84,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$aspectRatioTypeAtom =
-      Atom(name: '_PlayerController.aspectRatioType', context: context);
+  late final _$aspectRatioTypeAtom = Atom(name: '_PlayerController.aspectRatioType', context: context);
 
   @override
   int get aspectRatioType {
@@ -105,8 +99,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$superResolutionTypeAtom =
-      Atom(name: '_PlayerController.superResolutionType', context: context);
+  late final _$superResolutionTypeAtom = Atom(name: '_PlayerController.superResolutionType', context: context);
 
   @override
   int get superResolutionType {
@@ -121,8 +114,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$volumeAtom =
-      Atom(name: '_PlayerController.volume', context: context);
+  late final _$volumeAtom = Atom(name: '_PlayerController.volume', context: context);
 
   @override
   double get volume {
@@ -137,8 +129,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$brightnessAtom =
-      Atom(name: '_PlayerController.brightness', context: context);
+  late final _$brightnessAtom = Atom(name: '_PlayerController.brightness', context: context);
 
   @override
   double get brightness {
@@ -153,8 +144,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$lockPanelAtom =
-      Atom(name: '_PlayerController.lockPanel', context: context);
+  late final _$lockPanelAtom = Atom(name: '_PlayerController.lockPanel', context: context);
 
   @override
   bool get lockPanel {
@@ -169,8 +159,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$showVideoControllerAtom =
-      Atom(name: '_PlayerController.showVideoController', context: context);
+  late final _$showVideoControllerAtom = Atom(name: '_PlayerController.showVideoController', context: context);
 
   @override
   bool get showVideoController {
@@ -185,8 +174,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$showSeekTimeAtom =
-      Atom(name: '_PlayerController.showSeekTime', context: context);
+  late final _$showSeekTimeAtom = Atom(name: '_PlayerController.showSeekTime', context: context);
 
   @override
   bool get showSeekTime {
@@ -201,8 +189,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$showBrightnessAtom =
-      Atom(name: '_PlayerController.showBrightness', context: context);
+  late final _$showBrightnessAtom = Atom(name: '_PlayerController.showBrightness', context: context);
 
   @override
   bool get showBrightness {
@@ -217,8 +204,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$showVolumeAtom =
-      Atom(name: '_PlayerController.showVolume', context: context);
+  late final _$showVolumeAtom = Atom(name: '_PlayerController.showVolume', context: context);
 
   @override
   bool get showVolume {
@@ -233,8 +219,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$showPlaySpeedAtom =
-      Atom(name: '_PlayerController.showPlaySpeed', context: context);
+  late final _$showPlaySpeedAtom = Atom(name: '_PlayerController.showPlaySpeed', context: context);
 
   @override
   bool get showPlaySpeed {
@@ -249,8 +234,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$brightnessSeekingAtom =
-      Atom(name: '_PlayerController.brightnessSeeking', context: context);
+  late final _$brightnessSeekingAtom = Atom(name: '_PlayerController.brightnessSeeking', context: context);
 
   @override
   bool get brightnessSeeking {
@@ -265,8 +249,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$volumeSeekingAtom =
-      Atom(name: '_PlayerController.volumeSeeking', context: context);
+  late final _$volumeSeekingAtom = Atom(name: '_PlayerController.volumeSeeking', context: context);
 
   @override
   bool get volumeSeeking {
@@ -281,8 +264,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$canHidePlayerPanelAtom =
-      Atom(name: '_PlayerController.canHidePlayerPanel', context: context);
+  late final _$canHidePlayerPanelAtom = Atom(name: '_PlayerController.canHidePlayerPanel', context: context);
 
   @override
   bool get canHidePlayerPanel {
@@ -297,8 +279,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$loadingAtom =
-      Atom(name: '_PlayerController.loading', context: context);
+  late final _$loadingAtom = Atom(name: '_PlayerController.loading', context: context);
 
   @override
   bool get loading {
@@ -313,8 +294,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playingAtom =
-      Atom(name: '_PlayerController.playing', context: context);
+  late final _$playingAtom = Atom(name: '_PlayerController.playing', context: context);
 
   @override
   bool get playing {
@@ -329,8 +309,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$isBufferingAtom =
-      Atom(name: '_PlayerController.isBuffering', context: context);
+  late final _$isBufferingAtom = Atom(name: '_PlayerController.isBuffering', context: context);
 
   @override
   bool get isBuffering {
@@ -345,8 +324,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$completedAtom =
-      Atom(name: '_PlayerController.completed', context: context);
+  late final _$completedAtom = Atom(name: '_PlayerController.completed', context: context);
 
   @override
   bool get completed {
@@ -361,8 +339,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$currentPositionAtom =
-      Atom(name: '_PlayerController.currentPosition', context: context);
+  late final _$currentPositionAtom = Atom(name: '_PlayerController.currentPosition', context: context);
 
   @override
   Duration get currentPosition {
@@ -377,8 +354,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$bufferAtom =
-      Atom(name: '_PlayerController.buffer', context: context);
+  late final _$bufferAtom = Atom(name: '_PlayerController.buffer', context: context);
 
   @override
   Duration get buffer {
@@ -393,8 +369,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$durationAtom =
-      Atom(name: '_PlayerController.duration', context: context);
+  late final _$durationAtom = Atom(name: '_PlayerController.duration', context: context);
 
   @override
   Duration get duration {
@@ -409,8 +384,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerSpeedAtom =
-      Atom(name: '_PlayerController.playerSpeed', context: context);
+  late final _$playerSpeedAtom = Atom(name: '_PlayerController.playerSpeed', context: context);
 
   @override
   double get playerSpeed {
@@ -425,8 +399,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerLogAtom =
-      Atom(name: '_PlayerController.playerLog', context: context);
+  late final _$playerLogAtom = Atom(name: '_PlayerController.playerLog', context: context);
 
   @override
   ObservableList<String> get playerLog {
@@ -441,8 +414,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerWidthAtom =
-      Atom(name: '_PlayerController.playerWidth', context: context);
+  late final _$playerWidthAtom = Atom(name: '_PlayerController.playerWidth', context: context);
 
   @override
   int get playerWidth {
@@ -457,8 +429,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerHeightAtom =
-      Atom(name: '_PlayerController.playerHeight', context: context);
+  late final _$playerHeightAtom = Atom(name: '_PlayerController.playerHeight', context: context);
 
   @override
   int get playerHeight {
@@ -473,8 +444,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerVideoParamsAtom =
-      Atom(name: '_PlayerController.playerVideoParams', context: context);
+  late final _$playerVideoParamsAtom = Atom(name: '_PlayerController.playerVideoParams', context: context);
 
   @override
   String get playerVideoParams {
@@ -489,8 +459,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerAudioParamsAtom =
-      Atom(name: '_PlayerController.playerAudioParams', context: context);
+  late final _$playerAudioParamsAtom = Atom(name: '_PlayerController.playerAudioParams', context: context);
 
   @override
   String get playerAudioParams {
@@ -505,8 +474,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerPlaylistAtom =
-      Atom(name: '_PlayerController.playerPlaylist', context: context);
+  late final _$playerPlaylistAtom = Atom(name: '_PlayerController.playerPlaylist', context: context);
 
   @override
   String get playerPlaylist {
@@ -521,8 +489,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerAudioTracksAtom =
-      Atom(name: '_PlayerController.playerAudioTracks', context: context);
+  late final _$playerAudioTracksAtom = Atom(name: '_PlayerController.playerAudioTracks', context: context);
 
   @override
   String get playerAudioTracks {
@@ -537,8 +504,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerVideoTracksAtom =
-      Atom(name: '_PlayerController.playerVideoTracks', context: context);
+  late final _$playerVideoTracksAtom = Atom(name: '_PlayerController.playerVideoTracks', context: context);
 
   @override
   String get playerVideoTracks {
@@ -553,8 +519,7 @@ mixin _$PlayerController on _PlayerController, Store {
     });
   }
 
-  late final _$playerAudioBitrateAtom =
-      Atom(name: '_PlayerController.playerAudioBitrate', context: context);
+  late final _$playerAudioBitrateAtom = Atom(name: '_PlayerController.playerAudioBitrate', context: context);
 
   @override
   String get playerAudioBitrate {

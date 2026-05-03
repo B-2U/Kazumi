@@ -24,9 +24,7 @@ class CharacterCard extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
-      subtitle: characterItem.actorList.isNotEmpty
-          ? Text(characterItem.actorList[0].name)
-          : null,
+      subtitle: characterItem.actorList.isNotEmpty ? Text(characterItem.actorList[0].name) : null,
       trailing: Text(characterItem.relation),
       onTap: () {
         showModalBottomSheet(

@@ -8,24 +8,20 @@ class SuperResolutionSettings extends StatefulWidget {
   const SuperResolutionSettings({super.key});
 
   @override
-  State<SuperResolutionSettings> createState() =>
-      _SuperResolutionSettingsState();
+  State<SuperResolutionSettings> createState() => _SuperResolutionSettingsState();
 }
 
 class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
   late final Box setting = GStorage.setting;
   late bool promptOnEnable;
   late final ValueNotifier<String> superResolutionType = ValueNotifier<String>(
-    setting
-        .get(SettingBoxKey.defaultSuperResolutionType, defaultValue: 1)
-        .toString(),
+    setting.get(SettingBoxKey.defaultSuperResolutionType, defaultValue: 1).toString(),
   );
 
   @override
   void initState() {
     super.initState();
-    promptOnEnable =
-        setting.get(SettingBoxKey.superResolutionWarn, defaultValue: false);
+    promptOnEnable = setting.get(SettingBoxKey.superResolutionWarn, defaultValue: false);
   }
 
   @override
@@ -39,8 +35,7 @@ class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
         maxWidth: 1000,
         sections: [
           SettingsSection(
-              title: Text(
-                  '超分辨率需要启用硬件解码, 若启用硬件解码后仍然不生效, 尝试切换视频渲染器为 gpu', style: TextStyle(fontFamily: fontFamily)),
+              title: Text('超分辨率需要启用硬件解码, 若启用硬件解码后仍然不生效, 尝试切换视频渲染器为 gpu', style: TextStyle(fontFamily: fontFamily)),
               tiles: [
                 SettingsTile<String>.radioTile(
                   title: Text("OFF", style: TextStyle(fontFamily: fontFamily)),
@@ -49,8 +44,7 @@ class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
                   groupValue: superResolutionType.value,
                   onChanged: (String? value) {
                     if (value != null) {
-                      setting.put(SettingBoxKey.defaultSuperResolutionType,
-                          int.tryParse(value) ?? 1);
+                      setting.put(SettingBoxKey.defaultSuperResolutionType, int.tryParse(value) ?? 1);
                       setState(() {
                         superResolutionType.value = value;
                       });
@@ -64,8 +58,7 @@ class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
                   groupValue: superResolutionType.value,
                   onChanged: (String? value) {
                     if (value != null) {
-                      setting.put(SettingBoxKey.defaultSuperResolutionType,
-                          int.tryParse(value) ?? 1);
+                      setting.put(SettingBoxKey.defaultSuperResolutionType, int.tryParse(value) ?? 1);
                       setState(() {
                         superResolutionType.value = value;
                       });
@@ -79,8 +72,7 @@ class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
                   groupValue: superResolutionType.value,
                   onChanged: (String? value) {
                     if (value != null) {
-                      setting.put(SettingBoxKey.defaultSuperResolutionType,
-                          int.tryParse(value) ?? 1);
+                      setting.put(SettingBoxKey.defaultSuperResolutionType, int.tryParse(value) ?? 1);
                       setState(() {
                         superResolutionType.value = value;
                       });
@@ -97,8 +89,7 @@ class _SuperResolutionSettingsState extends State<SuperResolutionSettings> {
                 initialValue: promptOnEnable,
                 onToggle: (value) async {
                   promptOnEnable = value ?? !promptOnEnable;
-                  await setting.put(
-                      SettingBoxKey.superResolutionWarn, promptOnEnable);
+                  await setting.put(SettingBoxKey.superResolutionWarn, promptOnEnable);
                   if (mounted) setState(() {});
                 },
               ),

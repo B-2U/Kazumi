@@ -49,8 +49,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
                 title: const Text('新建规则'),
                 onTap: () {
                   KazumiDialog.dismiss();
-                  Modular.to.pushNamed('/settings/plugin/editor',
-                      arguments: Plugin.fromTemplate());
+                  Modular.to.pushNamed('/settings/plugin/editor', arguments: Plugin.fromTemplate());
                 },
               ),
               const SizedBox(height: 10),
@@ -58,8 +57,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
                 title: const Text('从规则仓库导入'),
                 onTap: () {
                   KazumiDialog.dismiss();
-                  Modular.to.pushNamed('/settings/plugin/shop',
-                      arguments: Plugin.fromTemplate());
+                  Modular.to.pushNamed('/settings/plugin/shop', arguments: Plugin.fromTemplate());
                 },
               ),
               const SizedBox(height: 10),
@@ -82,8 +80,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
     KazumiDialog.show(builder: (context) {
       return AlertDialog(
         title: const Text('导入规则'),
-        content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
+        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
           return TextField(
             controller: textController,
           );
@@ -96,14 +93,12 @@ class _PluginViewPageState extends State<PluginViewPage> {
               style: TextStyle(color: Theme.of(context).colorScheme.outline),
             ),
           ),
-          StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
+          StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
             return TextButton(
               onPressed: () async {
                 final String msg = textController.text;
                 try {
-                  pluginsController.updatePlugin(Plugin.fromJson(
-                      json.decode(Utils.kazumiBase64ToJson(msg))));
+                  pluginsController.updatePlugin(Plugin.fromJson(json.decode(Utils.kazumiBase64ToJson(msg))));
                   KazumiDialog.showToast(message: '导入成功');
                 } catch (e) {
                   KazumiDialog.dismiss();
@@ -148,9 +143,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
       },
       child: Scaffold(
         appBar: SysAppBar(
-          title: isMultiSelectMode
-              ? Text('已选择 ${selectedNames.length} 项')
-              : const Text('规则管理'),
+          title: isMultiSelectMode ? Text('已选择 ${selectedNames.length} 项') : const Text('规则管理'),
           leading: isMultiSelectMode
               ? IconButton(
                   icon: const Icon(Icons.close),
@@ -171,23 +164,18 @@ class _PluginViewPageState extends State<PluginViewPage> {
                         KazumiDialog.show(
                           builder: (context) => AlertDialog(
                             title: const Text('删除规则'),
-                            content:
-                                Text('确定要删除选中的 ${selectedNames.length} 条规则吗？'),
+                            content: Text('确定要删除选中的 ${selectedNames.length} 条规则吗？'),
                             actions: [
                               TextButton(
                                 onPressed: () => KazumiDialog.dismiss(),
                                 child: Text(
                                   '取消',
-                                  style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .outline),
+                                  style: TextStyle(color: Theme.of(context).colorScheme.outline),
                                 ),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  pluginsController
-                                      .removePlugins(selectedNames);
+                                  pluginsController.removePlugins(selectedNames);
                                   setState(() {
                                     isMultiSelectMode = false;
                                     selectedNames.clear();
@@ -241,16 +229,13 @@ class _PluginViewPageState extends State<PluginViewPage> {
                       itemCount: pluginsController.pluginList.length,
                       itemBuilder: (context, index) {
                         var plugin = pluginsController.pluginList[index];
-                        bool canUpdate =
-                            pluginsController.pluginUpdateStatus(plugin) ==
-                                'updatable';
+                        bool canUpdate = pluginsController.pluginUpdateStatus(plugin) == 'updatable';
                         return Card(
                             key: ValueKey(index),
                             margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                             child: ListTile(
                               trailing: pluginCardTrailing(index),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12)),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               onLongPress: () {
                                 if (!isMultiSelectMode) {
                                   setState(() {
@@ -274,13 +259,10 @@ class _PluginViewPageState extends State<PluginViewPage> {
                                 }
                               },
                               selected: selectedNames.contains(plugin.name),
-                              selectedTileColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
+                              selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
                               title: Text(
                                 plugin.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,52 +271,38 @@ class _PluginViewPageState extends State<PluginViewPage> {
                                     children: [
                                       Text(
                                         'Version: ${plugin.version}',
-                                        style:
-                                            const TextStyle(color: Colors.grey),
+                                        style: const TextStyle(color: Colors.grey),
                                       ),
                                       if (canUpdate) ...[
                                         const SizedBox(width: 8),
                                         Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 6, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .errorContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(4),
+                                            color: Theme.of(context).colorScheme.errorContainer,
+                                            borderRadius: BorderRadius.circular(4),
                                           ),
                                           child: Text(
                                             '可更新',
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onErrorContainer,
+                                              color: Theme.of(context).colorScheme.onErrorContainer,
                                             ),
                                           ),
                                         ),
                                       ],
-                                      if (pluginsController.validityTracker
-                                          .isSearchValid(plugin.name)) ...[
+                                      if (pluginsController.validityTracker.isSearchValid(plugin.name)) ...[
                                         const SizedBox(width: 8),
                                         Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 6, vertical: 2),
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                           decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .tertiaryContainer,
-                                            borderRadius:
-                                                BorderRadius.circular(4),
+                                            color: Theme.of(context).colorScheme.tertiaryContainer,
+                                            borderRadius: BorderRadius.circular(4),
                                           ),
                                           child: Text(
                                             '搜索有效',
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onTertiaryContainer,
+                                              color: Theme.of(context).colorScheme.onTertiaryContainer,
                                             ),
                                           ),
                                         ),
@@ -382,8 +350,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
     final plugin = pluginsController.pluginList[index];
     return MenuAnchor(
       consumeOutsideTap: true,
-      builder:
-          (BuildContext context, MenuController controller, Widget? child) {
+      builder: (BuildContext context, MenuController controller, Widget? child) {
         return IconButton(
           onPressed: () {
             if (controller.isOpen) {
@@ -479,8 +446,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
               return AlertDialog(
                 title: const Text('规则链接'),
                 content: SelectableText(
-                  Utils.jsonToKazumiBase64(json
-                      .encode(pluginsController.pluginList[index].toJson())),
+                  Utils.jsonToKazumiBase64(json.encode(pluginsController.pluginList[index].toJson())),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
@@ -489,8 +455,7 @@ class _PluginViewPageState extends State<PluginViewPage> {
                     onPressed: () => KazumiDialog.dismiss(),
                     child: Text(
                       '取消',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.outline),
+                      style: TextStyle(color: Theme.of(context).colorScheme.outline),
                     ),
                   ),
                   TextButton(

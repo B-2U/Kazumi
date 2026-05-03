@@ -79,9 +79,7 @@ class GStorage {
 
     final currentSeconds = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     // Ensure ID is greater than any existing ID, or equal to current timestamp.
-    var nextId = _nextCollectChangeId < currentSeconds
-        ? currentSeconds
-        : _nextCollectChangeId + 1;
+    var nextId = _nextCollectChangeId < currentSeconds ? currentSeconds : _nextCollectChangeId + 1;
     while (collectChanges.containsKey(nextId)) {
       nextId++;
     }
@@ -225,10 +223,7 @@ class GStorage {
 
     for (var tempBoxItem in tempBoxItems) {
       if (histories.get(tempBoxItem.key) != null) {
-        if (histories
-            .get(tempBoxItem.key)!
-            .lastWatchTime
-            .isBefore(tempBoxItem.value.lastWatchTime)) {
+        if (histories.get(tempBoxItem.key)!.lastWatchTime.isBefore(tempBoxItem.value.lastWatchTime)) {
           await histories.delete(tempBoxItem.key);
           await histories.put(tempBoxItem.key, tempBoxItem.value);
         }
@@ -242,11 +237,9 @@ class GStorage {
   static Future<void> restoreCollectibles(String backupFilePath) async {
     final backupFile = File(backupFilePath);
     final backupContent = await backupFile.readAsBytes();
-    final tempBox =
-        await Hive.openBox('tempCollectiblesBox', bytes: backupContent);
+    final tempBox = await Hive.openBox('tempCollectiblesBox', bytes: backupContent);
     final tempBoxItems = tempBox.toMap().entries;
-    KazumiLogger().i(
-        'WebDav: restoring collectibles. tempCollectiblesBox length ${tempBoxItems.length}');
+    KazumiLogger().i('WebDav: restoring collectibles. tempCollectiblesBox length ${tempBoxItems.length}');
 
     await collectibles.clear();
     for (var tempBoxItem in tempBoxItems) {
@@ -255,15 +248,12 @@ class GStorage {
     await tempBox.close();
   }
 
-  static Future<List<CollectedBangumi>> getCollectiblesFromFile(
-      String backupFilePath) async {
+  static Future<List<CollectedBangumi>> getCollectiblesFromFile(String backupFilePath) async {
     final backupFile = File(backupFilePath);
     final backupContent = await backupFile.readAsBytes();
-    final tempBox =
-        await Hive.openBox('tempCollectiblesBox', bytes: backupContent);
+    final tempBox = await Hive.openBox('tempCollectiblesBox', bytes: backupContent);
     final tempBoxItems = tempBox.toMap().entries;
-    KazumiLogger().i(
-        'WebDav: get collectibles from file. tempCollectiblesBox length ${tempBoxItems.length}');
+    KazumiLogger().i('WebDav: get collectibles from file. tempCollectiblesBox length ${tempBoxItems.length}');
 
     final List<CollectedBangumi> collectibles = [];
     for (var tempBoxItem in tempBoxItems) {
@@ -273,15 +263,12 @@ class GStorage {
     return collectibles;
   }
 
-  static Future<List<CollectedBangumiChange>> getCollectChangesFromFile(
-      String backupFilePath) async {
+  static Future<List<CollectedBangumiChange>> getCollectChangesFromFile(String backupFilePath) async {
     final backupFile = File(backupFilePath);
     final backupContent = await backupFile.readAsBytes();
-    final tempBox =
-        await Hive.openBox('tempCollectChangesBox', bytes: backupContent);
+    final tempBox = await Hive.openBox('tempCollectChangesBox', bytes: backupContent);
     final tempBoxItems = tempBox.toMap().entries;
-    KazumiLogger().i(
-        'WebDav: get collectChanges from file. tempCollectChangesBox length ${tempBoxItems.length}');
+    KazumiLogger().i('WebDav: get collectChanges from file. tempCollectChangesBox length ${tempBoxItems.length}');
 
     final List<CollectedBangumiChange> collectChanges = [];
     for (var tempBoxItem in tempBoxItems) {
@@ -292,92 +279,84 @@ class GStorage {
   }
 
   static Future<void> patchCollectibles(
-      List<CollectedBangumi> remoteCollectibles,
-      List<CollectedBangumiChange> remoteChanges) async {
-  await _runCollectChangesWriteExclusive(() async {
-    final localCollectibles = collectibles.values.toList();
-    final localChanges = collectChanges.values.toList();
+      List<CollectedBangumi> remoteCollectibles, List<CollectedBangumiChange> remoteChanges) async {
+    await _runCollectChangesWriteExclusive(() async {
+      final localCollectibles = collectibles.values.toList();
+      final localChanges = collectChanges.values.toList();
 
-    final List<CollectedBangumiChange> newLocalChanges =
-        localChanges.where((localChange) {
-      return !remoteChanges
-          .any((remoteChange) => remoteChange.id == localChange.id);
-    }).toList();
+      final List<CollectedBangumiChange> newLocalChanges = localChanges.where((localChange) {
+        return !remoteChanges.any((remoteChange) => remoteChange.id == localChange.id);
+      }).toList();
 
-    newLocalChanges.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+      newLocalChanges.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
-    // Process local changes
-    for (var change in newLocalChanges) {
-      // For delete action, we don't need to look up the local collectible.
-      // We can directly remove the item from the remote list.
-      if (change.action == 3) {
-        // Action 3: delete
-        remoteCollectibles
-            .removeWhere((b) => b.bangumiItem.id == change.bangumiID);
-      } else {
-        // For add/update, we still need to look up the local collectible.
-        final changedBangumiID = change.bangumiID.toString();
-        for (var localCollect in localCollectibles) {
-          if (localCollect.bangumiItem.id.toString() == changedBangumiID) {
-            if (change.action == 1) {
-              // Action 1: add
-              final exists = remoteCollectibles
-                  .any((b) => b.bangumiItem.id == localCollect.bangumiItem.id);
-              if (!exists) {
-                remoteCollectibles.add(localCollect);
-              } else {
-                final index = remoteCollectibles.indexWhere(
-                    (b) => b.bangumiItem.id == localCollect.bangumiItem.id);
+      // Process local changes
+      for (var change in newLocalChanges) {
+        // For delete action, we don't need to look up the local collectible.
+        // We can directly remove the item from the remote list.
+        if (change.action == 3) {
+          // Action 3: delete
+          remoteCollectibles.removeWhere((b) => b.bangumiItem.id == change.bangumiID);
+        } else {
+          // For add/update, we still need to look up the local collectible.
+          final changedBangumiID = change.bangumiID.toString();
+          for (var localCollect in localCollectibles) {
+            if (localCollect.bangumiItem.id.toString() == changedBangumiID) {
+              if (change.action == 1) {
+                // Action 1: add
+                final exists = remoteCollectibles.any((b) => b.bangumiItem.id == localCollect.bangumiItem.id);
+                if (!exists) {
+                  remoteCollectibles.add(localCollect);
+                } else {
+                  final index = remoteCollectibles.indexWhere((b) => b.bangumiItem.id == localCollect.bangumiItem.id);
+                  localCollect.type = change.type;
+                  if (index != -1) {
+                    // Update the entry with local data.
+                    remoteCollectibles[index] = localCollect;
+                  }
+                }
+              } else if (change.action == 2) {
+                // Action 2: update
+                final index = remoteCollectibles.indexWhere((b) => b.bangumiItem.id == localCollect.bangumiItem.id);
                 localCollect.type = change.type;
                 if (index != -1) {
                   // Update the entry with local data.
                   remoteCollectibles[index] = localCollect;
                 }
               }
-            } else if (change.action == 2) {
-              // Action 2: update
-              final index = remoteCollectibles.indexWhere(
-                  (b) => b.bangumiItem.id == localCollect.bangumiItem.id);
-              localCollect.type = change.type;
-              if (index != -1) {
-                // Update the entry with local data.
-                remoteCollectibles[index] = localCollect;
-              }
+              break;
             }
-            break;
           }
         }
       }
-    }
 
-    // merge local changes with remote changes
-    final Map<int, CollectedBangumiChange> mergedMap = {};
-    for (var change in remoteChanges) {
-      mergedMap[change.id] = change;
-    }
-    for (var change in newLocalChanges) {
-      if (!mergedMap.containsKey(change.id)) {
+      // merge local changes with remote changes
+      final Map<int, CollectedBangumiChange> mergedMap = {};
+      for (var change in remoteChanges) {
         mergedMap[change.id] = change;
       }
-    }
-    final List<CollectedBangumiChange> mergedChanges =
-        mergedMap.values.toList();
+      for (var change in newLocalChanges) {
+        if (!mergedMap.containsKey(change.id)) {
+          mergedMap[change.id] = change;
+        }
+      }
+      final List<CollectedBangumiChange> mergedChanges = mergedMap.values.toList();
 
-    // Update local storage
-    await collectibles.clear();
-    for (var collect in remoteCollectibles) {
-      await collectibles.put(collect.bangumiItem.id, collect);
-    }
-    await collectibles.flush();
+      // Update local storage
+      await collectibles.clear();
+      for (var collect in remoteCollectibles) {
+        await collectibles.put(collect.bangumiItem.id, collect);
+      }
+      await collectibles.flush();
 
-    await collectChanges.clear();
-    for (var change in mergedChanges) {
-      await collectChanges.put(change.id, change);
-    }
-    await collectChanges.flush();
+      await collectChanges.clear();
+      for (var change in mergedChanges) {
+        await collectChanges.put(change.id, change);
+      }
+      await collectChanges.flush();
 
-    _collectChangeIdInitialized = false;
-    _initializeNextCollectChangeIdLocked();
+      _collectChangeIdInitialized = false;
+      _initializeNextCollectChangeIdLocked();
     });
   }
 

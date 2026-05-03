@@ -41,8 +41,7 @@ class SysAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.needTopOffset = true});
 
   bool showWindowButton() {
-    return GStorage.setting
-        .get(SettingBoxKey.showWindowButton, defaultValue: false);
+    return GStorage.setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
   }
 
   @override
@@ -59,8 +58,7 @@ class SysAppBar extends StatelessWidget implements PreferredSizeWidget {
       acs.add(const SizedBox(width: 8));
     }
     return GestureDetector(
-      onPanStart: (_) =>
-          (Utils.isDesktop()) ? windowManager.startDragging() : null,
+      onPanStart: (_) => (Utils.isDesktop()) ? windowManager.startDragging() : null,
       child: AppBar(
         toolbarHeight: preferredSize.height,
         scrolledUnderElevation: 0.0,
@@ -102,9 +100,7 @@ class SysAppBar extends StatelessWidget implements PreferredSizeWidget {
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness:
-              Theme.of(context).brightness == Brightness.light
-                  ? Brightness.dark
-                  : Brightness.light,
+              Theme.of(context).brightness == Brightness.light ? Brightness.dark : Brightness.light,
           systemNavigationBarColor: Colors.transparent,
           systemNavigationBarDividerColor: Colors.transparent,
         ),

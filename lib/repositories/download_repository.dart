@@ -219,9 +219,7 @@ class DownloadRepository implements IDownloadRepository {
     final record = getRecordByBangumiId(bangumiId, pluginName);
     if (record == null) return [];
 
-    return record.episodes.values
-        .where((e) => e.status == DownloadStatus.completed)
-        .toList()
+    return record.episodes.values.where((e) => e.status == DownloadStatus.completed).toList()
       ..sort((a, b) => a.episodeNumber.compareTo(b.episodeNumber));
   }
 

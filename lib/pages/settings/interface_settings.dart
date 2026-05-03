@@ -30,8 +30,7 @@ class _InterfaceSettingsPageState extends State<InterfaceSettingsPage> {
   void initState() {
     super.initState();
     showRating = setting.get(SettingBoxKey.showRating, defaultValue: true);
-    defaultPage = setting.get(SettingBoxKey.defaultStartupPage,
-        defaultValue: '/tab/popular/');
+    defaultPage = setting.get(SettingBoxKey.defaultStartupPage, defaultValue: '/tab/popular/');
   }
 
   void updateDefaultPage(String page) {
@@ -61,8 +60,7 @@ class _InterfaceSettingsPageState extends State<InterfaceSettingsPage> {
                 }
               },
               title: Text('启动界面设置', style: TextStyle(fontFamily: fontFamily)),
-              description: Text('设置应用开启时的默认页面',
-                  style: TextStyle(fontFamily: fontFamily)),
+              description: Text('设置应用开启时的默认页面', style: TextStyle(fontFamily: fontFamily)),
               value: MenuAnchor(
                 consumeOutsideTap: true,
                 controller: defaultPageMenuController,
@@ -85,9 +83,7 @@ class _InterfaceSettingsPageState extends State<InterfaceSettingsPage> {
                           child: Text(
                             entry.value,
                             style: TextStyle(
-                              color: entry.key == defaultPage
-                                  ? Theme.of(context).colorScheme.primary
-                                  : null,
+                              color: entry.key == defaultPage ? Theme.of(context).colorScheme.primary : null,
                               fontFamily: fontFamily,
                             ),
                           ),
@@ -106,8 +102,7 @@ class _InterfaceSettingsPageState extends State<InterfaceSettingsPage> {
                 setState(() {});
               },
               title: Text('显示评分', style: TextStyle(fontFamily: fontFamily)),
-              description: Text('关闭后将在概览中隐藏评分信息',
-                  style: TextStyle(fontFamily: fontFamily)),
+              description: Text('关闭后将在概览中隐藏评分信息', style: TextStyle(fontFamily: fontFamily)),
               initialValue: showRating,
             ),
           ]),

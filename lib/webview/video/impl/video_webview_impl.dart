@@ -6,11 +6,9 @@ import 'package:kazumi/utils/proxy_utils.dart';
 import 'package:kazumi/utils/logger.dart';
 import 'package:kazumi/webview/video/video_webview_controller.dart';
 import 'package:flutter_inappwebview_platform_interface/flutter_inappwebview_platform_interface.dart';
-import 'package:flutter_inappwebview_android/flutter_inappwebview_android.dart'
-    as android_webview;
+import 'package:flutter_inappwebview_android/flutter_inappwebview_android.dart' as android_webview;
 
-class VideoWebviewImpl
-    extends VideoWebviewController<PlatformInAppWebViewController> {
+class VideoWebviewImpl extends VideoWebviewController<PlatformInAppWebViewController> {
   PlatformHeadlessInAppWebView? headlessWebView;
   bool hasRegisteredHandlers = false;
   bool useLegacyParser = false;
@@ -38,10 +36,8 @@ class VideoWebviewImpl
           final url = request.url.toString();
           final lower = url.toLowerCase();
           if (_isAdUrl(lower)) return null;
-          if (_isM3U8Url(lower) ||
-              _isRangeVideoRequest(lower, request.headers)) {
-            logEventController
-                .add('Native intercepted video URL: $url');
+          if (_isM3U8Url(lower) || _isRangeVideoRequest(lower, request.headers)) {
+            logEventController.add('Native intercepted video URL: $url');
             isIframeLoaded = true;
             isVideoSourceLoaded = true;
             videoLoadingEventController.add(false);
@@ -63,12 +59,10 @@ class VideoWebviewImpl
           }
         },
         onConsoleMessage: (controller, consoleMessage) {
-          logEventController.add(
-              'Console [${consoleMessage.messageLevel}]: ${consoleMessage.message}');
+          logEventController.add('Console [${consoleMessage.messageLevel}]: ${consoleMessage.message}');
         },
         onReceivedError: (controller, request, error) {
-          logEventController.add(
-              'Error: ${error.description} - ${request.url}');
+          logEventController.add('Error: ${error.description} - ${request.url}');
         },
       ),
     );
@@ -76,8 +70,7 @@ class VideoWebviewImpl
   }
 
   @override
-  Future<void> loadUrl(String url, bool useLegacyParser,
-      {int offset = 0}) async {
+  Future<void> loadUrl(String url, bool useLegacyParser, {int offset = 0}) async {
     await unloadPage();
     if (!hasRegisteredHandlers) {
       _addJavaScriptHandlers(useLegacyParser);
@@ -112,8 +105,7 @@ class VideoWebviewImpl
           callback: (args) {
             String message = args[0].toString();
             logEventController.add('Callback received: $message');
-            logEventController.add(
-                'If there is audio but no video, please report it to the rule developer.');
+            logEventController.add('If there is audio but no video, please report it to the rule developer.');
             if ((message.contains('http') || message.startsWith('//')) &&
                 !message.contains('googleads') &&
                 !message.contains('googlesyndication.com') &&
@@ -126,11 +118,9 @@ class VideoWebviewImpl
                 isIframeLoaded = true;
                 isVideoSourceLoaded = true;
                 videoLoadingEventController.add(false);
-                logEventController.add(
-                    'Loading video source ${Utils.decodeVideoSource(encodedUrl)}');
+                logEventController.add('Loading video source ${Utils.decodeVideoSource(encodedUrl)}');
                 unloadPage();
-                videoParserEventController
-                    .add((Utils.decodeVideoSource(encodedUrl), offset));
+                videoParserEventController.add((Utils.decodeVideoSource(encodedUrl), offset));
               }
             }
           });
@@ -427,8 +417,7 @@ class VideoWebviewImpl
   Future<void> unloadPage() async {
     videoParserTimer?.cancel();
     videoParserTimer = null;
-    await webviewController
-        ?.loadUrl(urlRequest: URLRequest(url: WebUri("about:blank")));
+    await webviewController?.loadUrl(urlRequest: URLRequest(url: WebUri("about:blank")));
   }
 
   @override
@@ -475,14 +464,12 @@ class VideoWebviewImpl
 
   Future<void> _setupProxy() async {
     final setting = GStorage.setting;
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (!proxyEnable) {
       return;
     }
 
-    final String proxyUrl =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    final String proxyUrl = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
     final formattedProxy = ProxyUtils.getFormattedProxyUrl(proxyUrl);
     if (formattedProxy == null) {
       return;
@@ -490,8 +477,7 @@ class VideoWebviewImpl
 
     try {
       final proxyAvailable =
-          await android_webview.AndroidWebViewFeature.instance()
-              .isFeatureSupported(WebViewFeature.PROXY_OVERRIDE);
+          await android_webview.AndroidWebViewFeature.instance().isFeatureSupported(WebViewFeature.PROXY_OVERRIDE);
       if (!proxyAvailable) {
         KazumiLogger().w('WebView: 当前 Android 版本不支持代理');
         return;

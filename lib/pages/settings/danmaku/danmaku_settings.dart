@@ -40,40 +40,25 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
   @override
   void initState() {
     super.initState();
-    defaultDanmakuArea =
-        setting.get(SettingBoxKey.danmakuArea, defaultValue: 1.0);
-    defaultDanmakuOpacity =
-        setting.get(SettingBoxKey.danmakuOpacity, defaultValue: 1.0);
-    defaultDanmakuFontSize = setting.get(SettingBoxKey.danmakuFontSize,
-        defaultValue: (Utils.isCompact()) ? 16.0 : 25.0);
-    defaultDanmakuFontWeight =
-        setting.get(SettingBoxKey.danmakuFontWeight, defaultValue: 4);
-    defaultDanmakuDuration =
-        setting.get(SettingBoxKey.danmakuDuration, defaultValue: 8.0);
-    defaultDanmakuLineHeight =
-        setting.get(SettingBoxKey.danmakuLineHeight, defaultValue: 1.6);
-    danmakuBorder =
-        setting.get(SettingBoxKey.danmakuBorder, defaultValue: true);
-    defaultdanmakuBorderSize = 
-        setting.get(SettingBoxKey.danmakuBorderSize, defaultValue: 1.5);
+    defaultDanmakuArea = setting.get(SettingBoxKey.danmakuArea, defaultValue: 1.0);
+    defaultDanmakuOpacity = setting.get(SettingBoxKey.danmakuOpacity, defaultValue: 1.0);
+    defaultDanmakuFontSize =
+        setting.get(SettingBoxKey.danmakuFontSize, defaultValue: (Utils.isCompact()) ? 16.0 : 25.0);
+    defaultDanmakuFontWeight = setting.get(SettingBoxKey.danmakuFontWeight, defaultValue: 4);
+    defaultDanmakuDuration = setting.get(SettingBoxKey.danmakuDuration, defaultValue: 8.0);
+    defaultDanmakuLineHeight = setting.get(SettingBoxKey.danmakuLineHeight, defaultValue: 1.6);
+    danmakuBorder = setting.get(SettingBoxKey.danmakuBorder, defaultValue: true);
+    defaultdanmakuBorderSize = setting.get(SettingBoxKey.danmakuBorderSize, defaultValue: 1.5);
     danmakuTop = setting.get(SettingBoxKey.danmakuTop, defaultValue: true);
-    danmakuBottom =
-        setting.get(SettingBoxKey.danmakuBottom, defaultValue: false);
-    danmakuScroll =
-        setting.get(SettingBoxKey.danmakuScroll, defaultValue: true);
+    danmakuBottom = setting.get(SettingBoxKey.danmakuBottom, defaultValue: false);
+    danmakuScroll = setting.get(SettingBoxKey.danmakuScroll, defaultValue: true);
     danmakuColor = setting.get(SettingBoxKey.danmakuColor, defaultValue: true);
-    danmakuMassive =
-        setting.get(SettingBoxKey.danmakuMassive, defaultValue: false);
-    danmakuDeduplication = 
-        setting.get(SettingBoxKey.danmakuDeduplication, defaultValue: false);
-    danmakuBiliBiliSource =
-        setting.get(SettingBoxKey.danmakuBiliBiliSource, defaultValue: true);
-    danmakuGamerSource =
-        setting.get(SettingBoxKey.danmakuGamerSource, defaultValue: true);
-    danmakuDanDanSource =
-        setting.get(SettingBoxKey.danmakuDanDanSource, defaultValue: true);
-    danmakuFollowSpeed =
-        setting.get(SettingBoxKey.danmakuFollowSpeed, defaultValue: true);
+    danmakuMassive = setting.get(SettingBoxKey.danmakuMassive, defaultValue: false);
+    danmakuDeduplication = setting.get(SettingBoxKey.danmakuDeduplication, defaultValue: false);
+    danmakuBiliBiliSource = setting.get(SettingBoxKey.danmakuBiliBiliSource, defaultValue: true);
+    danmakuGamerSource = setting.get(SettingBoxKey.danmakuGamerSource, defaultValue: true);
+    danmakuDanDanSource = setting.get(SettingBoxKey.danmakuDanDanSource, defaultValue: true);
+    danmakuFollowSpeed = setting.get(SettingBoxKey.danmakuFollowSpeed, defaultValue: true);
   }
 
   void onBackPressed(BuildContext context) {
@@ -151,8 +136,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuBiliBiliSource = value ?? !danmakuBiliBiliSource;
-                    await setting.put(SettingBoxKey.danmakuBiliBiliSource,
-                        danmakuBiliBiliSource);
+                    await setting.put(SettingBoxKey.danmakuBiliBiliSource, danmakuBiliBiliSource);
                     setState(() {});
                   },
                   title: Text('BiliBili', style: TextStyle(fontFamily: fontFamily)),
@@ -161,8 +145,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuGamerSource = value ?? !danmakuGamerSource;
-                    await setting.put(
-                        SettingBoxKey.danmakuGamerSource, danmakuGamerSource);
+                    await setting.put(SettingBoxKey.danmakuGamerSource, danmakuGamerSource);
                     setState(() {});
                   },
                   title: Text('Gamer', style: TextStyle(fontFamily: fontFamily)),
@@ -171,8 +154,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuDanDanSource = value ?? !danmakuDanDanSource;
-                    await setting.put(
-                        SettingBoxKey.danmakuDanDanSource, danmakuDanDanSource);
+                    await setting.put(SettingBoxKey.danmakuDanDanSource, danmakuDanDanSource);
                     setState(() {});
                   },
                   title: Text('DanDan', style: TextStyle(fontFamily: fontFamily)),
@@ -236,8 +218,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuFollowSpeed = value ?? !danmakuFollowSpeed;
-                    await setting.put(
-                        SettingBoxKey.danmakuFollowSpeed, danmakuFollowSpeed);
+                    await setting.put(SettingBoxKey.danmakuFollowSpeed, danmakuFollowSpeed);
                     setState(() {});
                   },
                   title: Text('弹幕跟随视频倍速', style: TextStyle(fontFamily: fontFamily)),
@@ -256,8 +237,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuBottom = value ?? !danmakuBottom;
-                    await setting.put(
-                        SettingBoxKey.danmakuBottom, danmakuBottom);
+                    await setting.put(SettingBoxKey.danmakuBottom, danmakuBottom);
                     setState(() {});
                   },
                   title: Text('底部弹幕', style: TextStyle(fontFamily: fontFamily)),
@@ -266,8 +246,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuScroll = value ?? !danmakuScroll;
-                    await setting.put(
-                        SettingBoxKey.danmakuScroll, danmakuScroll);
+                    await setting.put(SettingBoxKey.danmakuScroll, danmakuScroll);
                     setState(() {});
                   },
                   title: Text('滚动弹幕', style: TextStyle(fontFamily: fontFamily)),
@@ -276,8 +255,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuMassive = value ?? !danmakuMassive;
-                    await setting.put(
-                        SettingBoxKey.danmakuMassive, danmakuMassive);
+                    await setting.put(SettingBoxKey.danmakuMassive, danmakuMassive);
                     setState(() {});
                   },
                   title: Text('海量弹幕', style: TextStyle(fontFamily: fontFamily)),
@@ -287,8 +265,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuDeduplication = value ?? !danmakuDeduplication;
-                    await setting.put(
-                        SettingBoxKey.danmakuDeduplication, danmakuDeduplication);
+                    await setting.put(SettingBoxKey.danmakuDeduplication, danmakuDeduplication);
                     setState(() {});
                   },
                   title: Text('弹幕去重', style: TextStyle(fontFamily: fontFamily)),
@@ -303,8 +280,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     danmakuBorder = value ?? !danmakuBorder;
-                    await setting.put(
-                        SettingBoxKey.danmakuBorder, danmakuBorder);
+                    await setting.put(SettingBoxKey.danmakuBorder, danmakuBorder);
                     setState(() {});
                   },
                   title: Text('弹幕描边', style: TextStyle(fontFamily: fontFamily)),
@@ -365,8 +341,7 @@ class _DanmakuSettingsPageState extends State<DanmakuSettingsPage> {
                     max: 1,
                     label: '${(defaultDanmakuOpacity * 100).round()}%',
                     onChanged: (value) {
-                      updateDanmakuOpacity(
-                          double.parse(value.toStringAsFixed(2)));
+                      updateDanmakuOpacity(double.parse(value.toStringAsFixed(2)));
                     },
                   ),
                 ),

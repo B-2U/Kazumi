@@ -20,8 +20,7 @@ class ScrollableWrapper extends StatelessWidget {
       child: Listener(
         onPointerSignal: (pointerSignal) {
           // 鼠标滚轮滚动
-          if (pointerSignal is PointerScrollEvent &&
-              scrollController.hasClients) {
+          if (pointerSignal is PointerScrollEvent && scrollController.hasClients) {
             scrollController.position.moveTo(
               scrollController.offset + pointerSignal.scrollDelta.dy,
               curve: Curves.linear,

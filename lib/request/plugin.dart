@@ -29,7 +29,7 @@ class PluginHTTP {
       var res = await Request().get('${Api.pluginShop}$name.json');
       final jsonData = json.decode(res.data);
       plugin = Plugin.fromJson(jsonData);
-    } catch(e) {
+    } catch (e) {
       KazumiLogger().e('Plugin: getPlugin error: ${e.toString()}');
     }
     return plugin;

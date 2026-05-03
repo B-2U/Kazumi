@@ -9,9 +9,7 @@ class StaffFullItem {
 
   factory StaffFullItem.fromJson(Map<String, dynamic> json) {
     return StaffFullItem(
-      staff: json['staff'] != null
-          ? Staff.fromJson(json['staff'] as Map<String, dynamic>)
-          : Staff.fromTemplate(),
+      staff: json['staff'] != null ? Staff.fromJson(json['staff'] as Map<String, dynamic>) : Staff.fromTemplate(),
       positions: (json['positions'] as List<dynamic>? ?? [])
           .map((item) => Position.fromJson(item as Map<String, dynamic>))
           .toList(),
@@ -59,9 +57,7 @@ class Staff {
       comment: json['comment'] is int ? json['comment'] as int : 0,
       lock: json['lock'] as bool? ?? false,
       nsfw: json['nsfw'] as bool? ?? false,
-      images: json['images'] != null
-          ? Images.fromJson(json['images'] as Map<String, dynamic>)
-          : null,
+      images: json['images'] != null ? Images.fromJson(json['images'] as Map<String, dynamic>) : null,
     );
   }
 

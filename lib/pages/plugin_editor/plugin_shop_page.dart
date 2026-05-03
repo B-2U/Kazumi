@@ -35,8 +35,7 @@ class _PluginShopPageState extends State<PluginShopPage> {
   @override
   void initState() {
     super.initState();
-    enableGitProxy =
-        setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
+    enableGitProxy = setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
   }
 
   // 刷新规则列表
@@ -46,8 +45,7 @@ class _PluginShopPageState extends State<PluginShopPage> {
         loading = true;
         timeout = false;
       });
-      enableGitProxy =
-          setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
+      enableGitProxy = setting.get(SettingBoxKey.enableGitProxy, defaultValue: false);
       pluginsController.queryPluginHTTPList().then((_) {
         setState(() {
           loading = false;
@@ -77,8 +75,7 @@ class _PluginShopPageState extends State<PluginShopPage> {
       // 1. 按名称排序：忽略大小写的字母顺序
       // 2. 按时间排序：更新时间降序（最新的在前面）
       if (sortByName) {
-        sortedList.sort(
-            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+        sortedList.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
       } else {
         sortedList.sort((a, b) => b.lastUpdate.compareTo(a.lastUpdate));
       }
@@ -103,49 +100,39 @@ class _PluginShopPageState extends State<PluginShopPage> {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 1.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Text(
                             sortedList[index].version,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.surface),
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface),
                           ),
                         ),
                         const SizedBox(width: 5),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 1.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primary,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Text(
-                            sortedList[index].useNativePlayer
-                                ? "native"
-                                : "webview",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.surface),
+                            sortedList[index].useNativePlayer ? "native" : "webview",
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface),
                           ),
                         ),
-                        if (sortedList[index].antiCrawlerEnabled) ...[  
+                        if (sortedList[index].antiCrawlerEnabled) ...[
                           const SizedBox(width: 5),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 1.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
                             decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.tertiary,
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             child: Text(
                               'captcha',
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onTertiary),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onTertiary),
                             ),
                           ),
                         ],
@@ -162,43 +149,34 @@ class _PluginShopPageState extends State<PluginShopPage> {
                 ),
                 trailing: TextButton(
                   onPressed: () async {
-                    if (pluginsController.pluginStatus(sortedList[index]) ==
-                        'install') {
+                    if (pluginsController.pluginStatus(sortedList[index]) == 'install') {
                       KazumiDialog.showToast(message: '导入中');
-                      int res = await pluginsController
-                          .tryUpdatePluginByName(sortedList[index].name);
+                      int res = await pluginsController.tryUpdatePluginByName(sortedList[index].name);
                       if (res == 0) {
                         KazumiDialog.showToast(message: '导入成功');
                         setState(() {});
                       } else if (res == 1) {
-                        KazumiDialog.showToast(
-                            message: 'kazumi版本过低, 此规则不兼容当前版本');
+                        KazumiDialog.showToast(message: 'kazumi版本过低, 此规则不兼容当前版本');
                       } else if (res == 2) {
                         KazumiDialog.showToast(message: '导入规则失败');
                       }
                     }
-                    if (pluginsController.pluginStatus(sortedList[index]) ==
-                        'update') {
+                    if (pluginsController.pluginStatus(sortedList[index]) == 'update') {
                       KazumiDialog.showToast(message: '更新中');
-                      int res = await pluginsController
-                          .tryUpdatePluginByName(sortedList[index].name);
+                      int res = await pluginsController.tryUpdatePluginByName(sortedList[index].name);
                       if (res == 0) {
                         KazumiDialog.showToast(message: '更新成功');
                         setState(() {});
                       } else if (res == 1) {
-                        KazumiDialog.showToast(
-                            message: 'kazumi版本过低, 此规则不兼容当前版本');
+                        KazumiDialog.showToast(message: 'kazumi版本过低, 此规则不兼容当前版本');
                       } else if (res == 2) {
                         KazumiDialog.showToast(message: '更新规则失败');
                       }
                     }
                   },
-                  child: Text(pluginsController
-                              .pluginStatus(sortedList[index]) ==
-                          'install'
+                  child: Text(pluginsController.pluginStatus(sortedList[index]) == 'install'
                       ? '安装'
-                      : (pluginsController.pluginStatus(sortedList[index]) ==
-                              'installed')
+                      : (pluginsController.pluginStatus(sortedList[index]) == 'installed')
                           ? '已安装'
                           : '更新'),
                 )),
@@ -248,8 +226,7 @@ class _PluginShopPageState extends State<PluginShopPage> {
             IconButton(
                 onPressed: _toggleSort,
                 tooltip: sortByName ? '按名称排序' : '按更新时间排序',
-                icon:
-                    Icon(sortByName ? Icons.sort_by_alpha : Icons.access_time)),
+                icon: Icon(sortByName ? Icons.sort_by_alpha : Icons.access_time)),
             IconButton(
                 onPressed: () {
                   _handleRefresh();
@@ -260,9 +237,7 @@ class _PluginShopPageState extends State<PluginShopPage> {
         ),
         body: loading
             ? (const Center(child: CircularProgressIndicator()))
-            : (pluginsController.pluginHTTPList.isEmpty
-                ? timeoutWidget
-                : pluginHTTPListBody),
+            : (pluginsController.pluginHTTPList.isEmpty ? timeoutWidget : pluginHTTPListBody),
       ),
     );
   }

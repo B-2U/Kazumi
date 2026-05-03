@@ -138,8 +138,7 @@ class AutoUpdater {
 
   /// 自动检查更新（仅在启用自动更新时）
   Future<void> autoCheckForUpdates() async {
-    final autoUpdate =
-        setting.get(SettingBoxKey.autoUpdate, defaultValue: true);
+    final autoUpdate = setting.get(SettingBoxKey.autoUpdate, defaultValue: true);
     if (!autoUpdate) return;
 
     try {
@@ -191,8 +190,7 @@ class AutoUpdater {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color:
-                          Theme.of(context).colorScheme.surfaceContainerHighest,
+                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Column(
@@ -215,14 +213,10 @@ class AutoUpdater {
                                   _downloadUpdateWithType(updateInfo, type);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 8),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .outline
-                                          .withValues(alpha: 0.3),
+                                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
                                     ),
                                     borderRadius: BorderRadius.circular(4),
                                   ),
@@ -231,25 +225,19 @@ class AutoUpdater {
                                       Icon(
                                         Icons.download,
                                         size: 16,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: Theme.of(context).colorScheme.primary,
                                       ),
                                       const SizedBox(width: 8),
                                       Expanded(
                                         child: Text(
                                           _getInstallationTypeDescription(type),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
+                                          style: Theme.of(context).textTheme.bodySmall,
                                         ),
                                       ),
                                       Icon(
                                         Icons.arrow_forward_ios,
                                         size: 12,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outline,
+                                        color: Theme.of(context).colorScheme.outline,
                                       ),
                                     ],
                                   ),
@@ -275,8 +263,7 @@ class AutoUpdater {
                 },
                 child: Text(
                   '关闭自动更新',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                  style: TextStyle(color: Theme.of(context).colorScheme.outline),
                 ),
               ),
             TextButton(
@@ -289,8 +276,7 @@ class AutoUpdater {
             if (updateInfo.releaseNotes.isNotEmpty)
               TextButton(
                 onPressed: () {
-                  launchUrl(Uri.parse(updateInfo.releaseNotes),
-                      mode: LaunchMode.externalApplication);
+                  launchUrl(Uri.parse(updateInfo.releaseNotes), mode: LaunchMode.externalApplication);
                 },
                 child: const Text('查看详情'),
               ),
@@ -299,8 +285,7 @@ class AutoUpdater {
                 KazumiDialog.dismiss();
                 // 直接使用第一个可用的安装类型
                 if (updateInfo.availableInstallationTypes.isNotEmpty) {
-                  _downloadUpdateWithType(
-                      updateInfo, updateInfo.availableInstallationTypes.first);
+                  _downloadUpdateWithType(updateInfo, updateInfo.availableInstallationTypes.first);
                 }
               },
               child: const Text('立即更新'),
@@ -334,8 +319,7 @@ class AutoUpdater {
   }
 
   /// 根据选择的类型下载更新
-  Future<void> _downloadUpdateWithType(
-      UpdateInfo updateInfo, InstallationType selectedType) async {
+  Future<void> _downloadUpdateWithType(UpdateInfo updateInfo, InstallationType selectedType) async {
     try {
       // iOS 和 Linux 直接跳转到 Release 页面
       if (selectedType == InstallationType.ios ||
@@ -349,18 +333,14 @@ class AutoUpdater {
         return;
       }
 
-      final downloadUrl =
-          await _getDownloadUrlForType(updateInfo.assets, selectedType);
+      final downloadUrl = await _getDownloadUrlForType(updateInfo.assets, selectedType);
       if (downloadUrl.isEmpty) {
-        KazumiDialog.showToast(
-            message:
-                '没有找到 ${_getInstallationTypeDescription(selectedType)} 的下载链接');
+        KazumiDialog.showToast(message: '没有找到 ${_getInstallationTypeDescription(selectedType)} 的下载链接');
         return;
       }
 
       // 获取文件的 SHA256 哈希值用于验证
-      final expectedHash =
-          _getFileHashFromAssets(updateInfo.assets, downloadUrl);
+      final expectedHash = _getFileHashFromAssets(updateInfo.assets, downloadUrl);
 
       // 创建一个临时的 UpdateInfo 对象用于下载
       final downloadInfo = UpdateInfo(
@@ -382,8 +362,7 @@ class AutoUpdater {
   }
 
   /// 下载更新
-  Future<void> _downloadUpdate(
-      UpdateInfo updateInfo, String expectedHash) async {
+  Future<void> _downloadUpdate(UpdateInfo updateInfo, String expectedHash) async {
     if (updateInfo.downloadUrl.isEmpty) {
       KazumiDialog.showToast(message: '没有找到合适的下载链接');
       return;
@@ -426,8 +405,7 @@ class AutoUpdater {
     );
 
     try {
-      final downloadPath = await _downloadFile(
-          updateInfo.downloadUrl, updateInfo.version, expectedHash);
+      final downloadPath = await _downloadFile(updateInfo.downloadUrl, updateInfo.version, expectedHash);
 
       // 不自动关闭对话框，而是显示下载完成状态
       _showDownloadCompleteDialog(downloadPath, updateInfo);
@@ -436,8 +414,7 @@ class AutoUpdater {
 
       // 显示详细的错误信息
       String errorMessage = '下载失败';
-      if (e.toString().contains('Permission denied') ||
-          e.toString().contains('Operation not permitted')) {
+      if (e.toString().contains('Permission denied') || e.toString().contains('Operation not permitted')) {
         errorMessage = '权限不足，文件已保存到应用临时目录';
       } else if (e.toString().contains('No space left')) {
         errorMessage = '磁盘空间不足';
@@ -571,8 +548,7 @@ class AutoUpdater {
             TextButton(
               onPressed: () {
                 KazumiDialog.dismiss();
-                _installUpdate(
-                    filePath, updateInfo.recommendedInstallationType);
+                _installUpdate(filePath, updateInfo.recommendedInstallationType);
               },
               child: const Text('立即安装'),
             ),
@@ -583,8 +559,7 @@ class AutoUpdater {
   }
 
   /// 下载文件
-  Future<String> _downloadFile(
-      String url, String version, String expectedHash) async {
+  Future<String> _downloadFile(String url, String version, String expectedHash) async {
     final fileName = _getFileNameFromUrl(url, version);
 
     // 统一使用临时目录
@@ -643,8 +618,7 @@ class AutoUpdater {
   }
 
   /// 安装更新
-  void _installUpdate(
-      String filePath, InstallationType installationType) async {
+  void _installUpdate(String filePath, InstallationType installationType) async {
     try {
       // 显示准备退出的提示
       KazumiDialog.showToast(message: '准备安装更新，应用即将退出...');
@@ -730,17 +704,14 @@ class AutoUpdater {
   }
 
   /// 根据安装类型获取下载链接
-  Future<String> _getDownloadUrlForType(
-      List<dynamic> assets, InstallationType type) async {
-    final patterns =
-        _getFilePatterns(type).map((p) => p.toLowerCase()).toList();
+  Future<String> _getDownloadUrlForType(List<dynamic> assets, InstallationType type) async {
+    final patterns = _getFilePatterns(type).map((p) => p.toLowerCase()).toList();
 
     try {
       final asset = assets.cast<Map<String, dynamic>>().firstWhere((asset) {
         final name = (asset['name'] as String?)?.toLowerCase() ?? '';
         final downloadUrl = (asset['browser_download_url'] as String?) ?? '';
-        return downloadUrl.isNotEmpty &&
-            patterns.every((pattern) => name.contains(pattern));
+        return downloadUrl.isNotEmpty && patterns.every((pattern) => name.contains(pattern));
       });
       return (asset['browser_download_url'] as String?) ?? '';
     } catch (e) {

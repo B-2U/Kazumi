@@ -32,8 +32,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   /// Don't use modular singleton here. We may have multiple info pages.
   /// Use a new instance of InfoController for each info page.
   final InfoController infoController = InfoController();
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final PluginsController pluginsController = Modular.get<PluginsController>();
   late TabController sourceTabController;
   late TabController infoTabController;
@@ -53,9 +52,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
 
   bool _needsBangumiInfoRefresh(BangumiItem bangumiItem) {
     final votesCount = bangumiItem.votesCount;
-    final missingVoteDistribution = votesCount.isEmpty ||
-        bangumiItem.votes <= 0 ||
-        votesCount.length < 10;
+    final missingVoteDistribution = votesCount.isEmpty || bangumiItem.votes <= 0 || votesCount.length < 10;
     return bangumiItem.summary == '' || missingVoteDistribution;
   }
 
@@ -67,8 +64,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
       charactersIsEmpty = false;
     });
     try {
-      await infoController
-          .queryBangumiCharactersByID(infoController.bangumiItem.id);
+      await infoController.queryBangumiCharactersByID(infoController.bangumiItem.id);
       if (mounted) {
         setState(() {
           charactersIsLoading = false;
@@ -124,9 +120,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
       commentsIsEmpty = false;
     });
     try {
-      await infoController.queryBangumiCommentsByID(
-          infoController.bangumiItem.id,
-          offset: offset);
+      await infoController.queryBangumiCommentsByID(infoController.bangumiItem.id, offset: offset);
       if (mounted) {
         setState(() {
           commentsIsLoading = false;
@@ -161,8 +155,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
     if (_needsBangumiInfoRefresh(infoController.bangumiItem)) {
       queryBangumiInfoByID(infoController.bangumiItem.id, type: 'attach');
     }
-    sourceTabController =
-        TabController(length: pluginsController.pluginList.length, vsync: this);
+    sourceTabController = TabController(length: pluginsController.pluginList.length, vsync: this);
     infoTabController = TabController(length: 5, vsync: this);
     showRating = GStorage.setting.get(SettingBoxKey.showRating, defaultValue: true);
     infoTabController.addListener(() {
@@ -181,11 +174,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
           !charactersQueryTimeout) {
         loadCharacters();
       }
-      if (index == 4 &&
-          infoController.staffList.isEmpty &&
-          !staffIsLoading &&
-          !staffIsEmpty &&
-          !staffQueryTimeout) {
+      if (index == 4 && infoController.staffList.isEmpty && !staffIsLoading && !staffIsEmpty && !staffQueryTimeout) {
         loadStaff();
       }
     });
@@ -215,20 +204,17 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final List<String> tabs = <String>['概览', '吐槽', '角色', '评论', '制作人员'];
-    final bool showWindowButton = GStorage.setting
-        .get(SettingBoxKey.showWindowButton, defaultValue: false);
+    final bool showWindowButton = GStorage.setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
     return PopScope(
       canPop: true,
       child: DefaultTabController(
         length: tabs.length,
         child: Scaffold(
           body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverOverlapAbsorber(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: SliverAppBar.medium(
                     title: EmbeddedNativeControlArea(
                       child: dtb.DragToMoveArea(
@@ -258,42 +244,32 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                         EmbeddedNativeControlArea(
                           child: CollectButton(
                             bangumiItem: infoController.bangumiItem,
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
                         ),
                       EmbeddedNativeControlArea(
                         child: IconButton(
                           onPressed: () {
                             launchUrl(
-                              Uri.parse(
-                                  'https://bangumi.tv/subject/${infoController.bangumiItem.id}'),
+                              Uri.parse('https://bangumi.tv/subject/${infoController.bangumiItem.id}'),
                               mode: LaunchMode.externalApplication,
                             );
                           },
                           icon: const Icon(Icons.open_in_browser_rounded),
                         ),
                       ),
-                      if (!showWindowButton && Utils.isDesktop())
-                        CloseButton(onPressed: () => windowManager.close()),
+                      if (!showWindowButton && Utils.isDesktop()) CloseButton(onPressed: () => windowManager.close()),
                       SizedBox(width: 8),
                     ],
-                    toolbarHeight: (Platform.isMacOS && showWindowButton)
-                        ? kToolbarHeight + 22
-                        : kToolbarHeight,
+                    toolbarHeight: (Platform.isMacOS && showWindowButton) ? kToolbarHeight + 22 : kToolbarHeight,
                     stretch: true,
                     centerTitle: false,
                     expandedHeight: (Platform.isMacOS && showWindowButton)
                         ? 308 + kTextTabBarHeight + kToolbarHeight + 22
                         : 308 + kTextTabBarHeight + kToolbarHeight,
                     collapsedHeight: (Platform.isMacOS && showWindowButton)
-                        ? kTextTabBarHeight +
-                            kToolbarHeight +
-                            MediaQuery.paddingOf(context).top +
-                            22
-                        : kTextTabBarHeight +
-                            kToolbarHeight +
-                            MediaQuery.paddingOf(context).top,
+                        ? kTextTabBarHeight + kToolbarHeight + MediaQuery.paddingOf(context).top + 22
+                        : kTextTabBarHeight + kToolbarHeight + MediaQuery.paddingOf(context).top,
                     flexibleSpace: FlexibleSpaceBar(
                       collapseMode: CollapseMode.pin,
                       background: Observer(builder: (context) {
@@ -309,8 +285,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                                     child: LayoutBuilder(
                                       builder: (context, boxConstraints) {
                                         return ImageFiltered(
-                                          imageFilter: ImageFilter.blur(
-                                              sigmaX: 15.0, sigmaY: 15.0),
+                                          imageFilter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
                                           child: ShaderMask(
                                             shaderCallback: (Rect bounds) {
                                               return const LinearGradient(
@@ -324,15 +299,11 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                                               ).createShader(bounds);
                                             },
                                             child: NetworkImgLayer(
-                                              src: infoController.bangumiItem
-                                                      .images['large'] ??
-                                                  '',
+                                              src: infoController.bangumiItem.images['large'] ?? '',
                                               width: boxConstraints.maxWidth,
                                               height: boxConstraints.maxHeight,
-                                              fadeInDuration: const Duration(
-                                                  milliseconds: 0),
-                                              fadeOutDuration: const Duration(
-                                                  milliseconds: 0),
+                                              fadeInDuration: const Duration(milliseconds: 0),
+                                              fadeOutDuration: const Duration(milliseconds: 0),
                                             ),
                                           ),
                                         );
@@ -347,8 +318,7 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                                 child: Align(
                                   alignment: Alignment.topCenter,
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        16, kToolbarHeight, 16, 0),
+                                    padding: const EdgeInsets.fromLTRB(16, kToolbarHeight, 16, 0),
                                     child: BangumiInfoCardV(
                                       bangumiItem: infoController.bangumiItem,
                                       isLoading: infoController.isLoading,
@@ -401,12 +371,10 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
               showModalBottomSheet(
                 isScrollControlled: true,
                 constraints: BoxConstraints(
-                  maxHeight: (MediaQuery.sizeOf(context).height >=
-                          LayoutBreakpoint.compact['height']!)
+                  maxHeight: (MediaQuery.sizeOf(context).height >= LayoutBreakpoint.compact['height']!)
                       ? MediaQuery.of(context).size.height * 3 / 4
                       : MediaQuery.of(context).size.height,
-                  maxWidth: (MediaQuery.sizeOf(context).width >=
-                          LayoutBreakpoint.medium['width']!)
+                  maxWidth: (MediaQuery.sizeOf(context).width >= LayoutBreakpoint.medium['width']!)
                       ? MediaQuery.of(context).size.width * 9 / 16
                       : MediaQuery.of(context).size.width,
                 ),

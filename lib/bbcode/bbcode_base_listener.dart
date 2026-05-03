@@ -61,8 +61,8 @@ class BBCodeBaseListener implements BBCodeListener {
         bbCodeTag.color = bbcode.length;
         break;
       default:
-        KazumiLogger()
-            .e('BBCode: unrecognized Tag: ${ctx.text}, please submit an issue with logs, bangumi, and episode information');
+        KazumiLogger().e(
+            'BBCode: unrecognized Tag: ${ctx.text}, please submit an issue with logs, bangumi, and episode information');
         break;
     }
   }
@@ -84,11 +84,8 @@ class BBCodeBaseListener implements BBCodeListener {
         break;
       case 'USER':
       case 'user':
-        if (bbcode.isNotEmpty &&
-            ctx.attr != null &&
-            bbcode[bbCodeTag.link!] is BBCodeText) {
-          bbcode[bbCodeTag.link!].link =
-              'https://bangumi.tv/user/${ctx.attr!.text}';
+        if (bbcode.isNotEmpty && ctx.attr != null && bbcode[bbCodeTag.link!] is BBCodeText) {
+          bbcode[bbCodeTag.link!].link = 'https://bangumi.tv/user/${ctx.attr!.text}';
           bbcode[bbCodeTag.link!].text = '@${bbcode[bbCodeTag.link!].text}';
         }
         break;
@@ -138,11 +135,8 @@ class BBCodeBaseListener implements BBCodeListener {
       case 'photo':
       case 'IMG':
       case 'img':
-        if (bbCodeTag.img! < bbcode.length &&
-            bbcode.isNotEmpty &&
-            bbcode[bbCodeTag.img!] is BBCodeText) {
-          bbcode[bbCodeTag.img!] =
-              BBCodeImg(imageUrl: bbcode[bbCodeTag.img!].text);
+        if (bbCodeTag.img! < bbcode.length && bbcode.isNotEmpty && bbcode[bbCodeTag.img!] is BBCodeText) {
+          bbcode[bbCodeTag.img!] = BBCodeImg(imageUrl: bbcode[bbCodeTag.img!].text);
         }
         break;
       case 'MASK':
@@ -170,8 +164,8 @@ class BBCodeBaseListener implements BBCodeListener {
         }
         break;
       default:
-        KazumiLogger()
-            .e('BBCode: unrecognized Tag: ${ctx.text}, please submit an issue with logs, bangumi, and episode information');
+        KazumiLogger().e(
+            'BBCode: unrecognized Tag: ${ctx.text}, please submit an issue with logs, bangumi, and episode information');
         break;
     }
   }

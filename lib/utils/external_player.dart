@@ -9,24 +9,20 @@ class ExternalPlayer {
 
   static Future<bool> launchURLWithMIME(String url, String mimeType) async {
     try {
-      await platform.invokeMethod(
-          'openWithMime', <String, String>{'url': url, 'mimeType': mimeType});
+      await platform.invokeMethod('openWithMime', <String, String>{'url': url, 'mimeType': mimeType});
       return true;
     } on PlatformException catch (e) {
-      KazumiLogger()
-          .e("ExternalPlayer: failed to open with mime", error: e);
+      KazumiLogger().e("ExternalPlayer: failed to open with mime", error: e);
       return false;
     }
   }
 
   static Future<bool> launchURLWithReferer(String url, String referer) async {
     try {
-      await platform.invokeMethod(
-          'openWithReferer', <String, String>{'url': url, 'referer': referer});
+      await platform.invokeMethod('openWithReferer', <String, String>{'url': url, 'referer': referer});
       return true;
     } on PlatformException catch (e) {
-      KazumiLogger()
-          .e("ExternalPlayer: failed to open with referer", error: e);
+      KazumiLogger().e("ExternalPlayer: failed to open with referer", error: e);
       return false;
     }
   }

@@ -12,8 +12,7 @@ class CharactersResponse {
   });
 
   factory CharactersResponse.fromJson(List list) {
-    List<CharacterItem> resCharactersList =
-        list.map((i) => CharacterItem.fromJson(i)).toList();
+    List<CharacterItem> resCharactersList = list.map((i) => CharacterItem.fromJson(i)).toList();
     return CharactersResponse(
       charactersList: resCharactersList,
     );

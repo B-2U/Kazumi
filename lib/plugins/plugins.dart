@@ -46,6 +46,7 @@ class Plugin {
   String version;
   bool muliSources;
   bool useWebview;
+
   /// Deprecated (always true)
   bool useNativePlayer;
   bool usePost;
@@ -107,8 +108,7 @@ class Plugin {
         chapterResult: json['chapterResult'],
         referer: json['referer'] ?? '',
         antiCrawlerConfig: json['antiCrawlerConfig'] != null
-            ? AntiCrawlerConfig.fromJson(
-                Map<String, dynamic>.from(json['antiCrawlerConfig']))
+            ? AntiCrawlerConfig.fromJson(Map<String, dynamic>.from(json['antiCrawlerConfig']))
             : AntiCrawlerConfig.empty());
   }
 
@@ -161,78 +161,74 @@ class Plugin {
     return data;
   }
 
-  Future<PluginSearchResponse> queryBangumi(String keyword,
-      {bool shouldRethrow = false}) async {
+  Future<PluginSearchResponse> queryBangumi(String keyword, {bool shouldRethrow = false}) async {
     try {
-    String queryURL = searchURL.replaceAll('@keyword', Uri.encodeQueryComponent(keyword));
-    dynamic resp;
-    List<SearchItem> searchItems = [];
-    final String cookieHeader = await _cookieHeaderFor(queryURL);
-    if (usePost) {
-      Uri uri = Uri.parse(queryURL);
-      Map<String, String> queryParams = uri.queryParameters;
-      Uri postUri = Uri(
-        scheme: uri.scheme,
-        host: uri.host,
-        path: uri.path,
-      );
-      var httpHeaders = {
-        'referer': '$baseUrl/',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept-Language': Utils.getRandomAcceptedLanguage(),
-        'Connection': 'keep-alive',
-        if (cookieHeader.isNotEmpty) 'Cookie': cookieHeader,
-      };
-      resp = await Request().post(postUri.toString(),
-          options: Options(headers: httpHeaders),
-          extra: {'customError': ''},
-          data: queryParams,
-          shouldRethrow: shouldRethrow);
-    } else {
-      var httpHeaders = {
-        'referer': '$baseUrl/',
-        'Accept-Language': Utils.getRandomAcceptedLanguage(),
-        'Connection': 'keep-alive',
-        if (cookieHeader.isNotEmpty) 'Cookie': cookieHeader,
-      };
-      resp = await Request().get(queryURL,
-          options: Options(headers: httpHeaders),
-          shouldRethrow: shouldRethrow,
-          extra: {'customError': ''});
-    }
-
-    var htmlString = resp.data.toString();
-    var htmlElement = parse(htmlString).documentElement!;
-
-    // Detect captcha challenge: if antiCrawlerConfig is enabled, check both
-    // captchaImage and captchaButton XPaths — if either matches, throw so
-    // callers can show the dedicated captcha UI instead of a generic error.
-    if (antiCrawlerConfig.enabled) {
-      final List<String> detectionXpaths = [
-        antiCrawlerConfig.captchaImage,
-        antiCrawlerConfig.captchaButton,
-      ].where((x) => x.isNotEmpty).toList();
-      final bool captchaDetected = detectionXpaths.any(
-          (xpath) => htmlElement.queryXPath(xpath).node != null);
-      if (captchaDetected) {
-        KazumiLogger().w('Plugin: $name detected captcha challenge in search response');
-        throw CaptchaRequiredException(name);
-      }
-    }
-
-    htmlElement.queryXPath(searchList).nodes.forEach((element) {
-      try {
-        SearchItem searchItem = SearchItem(
-          name: element.queryXPath(searchName).node!.text?.trim() ?? '',
-          src: element.queryXPath(searchResult).node!.attributes['href'] ?? '',
+      String queryURL = searchURL.replaceAll('@keyword', Uri.encodeQueryComponent(keyword));
+      dynamic resp;
+      List<SearchItem> searchItems = [];
+      final String cookieHeader = await _cookieHeaderFor(queryURL);
+      if (usePost) {
+        Uri uri = Uri.parse(queryURL);
+        Map<String, String> queryParams = uri.queryParameters;
+        Uri postUri = Uri(
+          scheme: uri.scheme,
+          host: uri.host,
+          path: uri.path,
         );
-        searchItems.add(searchItem);
-        KazumiLogger().i(
-            'Plugin: $name ${element.queryXPath(searchName).node!.text ?? ''} $baseUrl${element.queryXPath(searchResult).node!.attributes['href'] ?? ''}');
-      } catch (_) {}
-    });
-    if (searchItems.isEmpty) throw NoResultException(name);
-    return PluginSearchResponse(pluginName: name, data: searchItems);
+        var httpHeaders = {
+          'referer': '$baseUrl/',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept-Language': Utils.getRandomAcceptedLanguage(),
+          'Connection': 'keep-alive',
+          if (cookieHeader.isNotEmpty) 'Cookie': cookieHeader,
+        };
+        resp = await Request().post(postUri.toString(),
+            options: Options(headers: httpHeaders),
+            extra: {'customError': ''},
+            data: queryParams,
+            shouldRethrow: shouldRethrow);
+      } else {
+        var httpHeaders = {
+          'referer': '$baseUrl/',
+          'Accept-Language': Utils.getRandomAcceptedLanguage(),
+          'Connection': 'keep-alive',
+          if (cookieHeader.isNotEmpty) 'Cookie': cookieHeader,
+        };
+        resp = await Request().get(queryURL,
+            options: Options(headers: httpHeaders), shouldRethrow: shouldRethrow, extra: {'customError': ''});
+      }
+
+      var htmlString = resp.data.toString();
+      var htmlElement = parse(htmlString).documentElement!;
+
+      // Detect captcha challenge: if antiCrawlerConfig is enabled, check both
+      // captchaImage and captchaButton XPaths — if either matches, throw so
+      // callers can show the dedicated captcha UI instead of a generic error.
+      if (antiCrawlerConfig.enabled) {
+        final List<String> detectionXpaths = [
+          antiCrawlerConfig.captchaImage,
+          antiCrawlerConfig.captchaButton,
+        ].where((x) => x.isNotEmpty).toList();
+        final bool captchaDetected = detectionXpaths.any((xpath) => htmlElement.queryXPath(xpath).node != null);
+        if (captchaDetected) {
+          KazumiLogger().w('Plugin: $name detected captcha challenge in search response');
+          throw CaptchaRequiredException(name);
+        }
+      }
+
+      htmlElement.queryXPath(searchList).nodes.forEach((element) {
+        try {
+          SearchItem searchItem = SearchItem(
+            name: element.queryXPath(searchName).node!.text?.trim() ?? '',
+            src: element.queryXPath(searchResult).node!.attributes['href'] ?? '',
+          );
+          searchItems.add(searchItem);
+          KazumiLogger().i(
+              'Plugin: $name ${element.queryXPath(searchName).node!.text ?? ''} $baseUrl${element.queryXPath(searchResult).node!.attributes['href'] ?? ''}');
+        } catch (_) {}
+      });
+      if (searchItems.isEmpty) throw NoResultException(name);
+      return PluginSearchResponse(pluginName: name, data: searchItems);
     } on CaptchaRequiredException {
       rethrow;
     } on NoResultException {
@@ -261,8 +257,7 @@ class Plugin {
       'Connection': 'keep-alive',
     };
     try {
-      var resp =
-      await Request().get(queryURL, options: Options(headers: httpHeaders), cancelToken: cancelToken);
+      var resp = await Request().get(queryURL, options: Options(headers: httpHeaders), cancelToken: cancelToken);
       var htmlString = resp.data.toString();
       var htmlElement = parse(htmlString).documentElement!;
       int count = 1;
@@ -277,10 +272,7 @@ class Plugin {
             chapterNameList.add(itemName.replaceAll(RegExp(r'\s+'), ''));
           });
           if (chapterUrlList.isNotEmpty && chapterNameList.isNotEmpty) {
-            Road road = Road(
-                name: '播放列表$count',
-                data: chapterUrlList,
-                identifier: chapterNameList);
+            Road road = Road(name: '播放列表$count', data: chapterUrlList, identifier: chapterNameList);
             roadList.add(road);
             count++;
           }
@@ -290,8 +282,7 @@ class Plugin {
     return roadList;
   }
 
-  Future<String> testSearchRequest(String keyword,
-      {bool shouldRethrow = false, CancelToken? cancelToken}) async {
+  Future<String> testSearchRequest(String keyword, {bool shouldRethrow = false, CancelToken? cancelToken}) async {
     String queryURL = searchURL.replaceAll('@keyword', Uri.encodeQueryComponent(keyword));
     dynamic resp;
     if (usePost) {
@@ -335,8 +326,7 @@ class Plugin {
     final uri = Uri.tryParse(url);
     if (uri == null) return '';
     try {
-      final cookies =
-          await PluginCookieManager.instance.getJar(name).loadForRequest(uri);
+      final cookies = await PluginCookieManager.instance.getJar(name).loadForRequest(uri);
       if (cookies.isEmpty) return '';
       return cookies.map((c) => '${c.name}=${c.value}').join('; ');
     } catch (_) {
@@ -345,8 +335,7 @@ class Plugin {
   }
 
   String buildFullUrl(String urlItem) {
-    if (urlItem.contains(baseUrl) ||
-        urlItem.contains(baseUrl.replaceAll('https', 'http'))) {
+    if (urlItem.contains(baseUrl) || urlItem.contains(baseUrl.replaceAll('https', 'http'))) {
       return urlItem;
     }
     return baseUrl + urlItem;
@@ -373,8 +362,7 @@ class Plugin {
             'Plugin: $name ${element.queryXPath(searchName).node!.text ?? ''} $baseUrl${element.queryXPath(searchResult).node!.attributes['href'] ?? ''}');
       } catch (_) {}
     });
-    PluginSearchResponse pluginSearchResponse =
-    PluginSearchResponse(pluginName: name, data: searchItems);
+    PluginSearchResponse pluginSearchResponse = PluginSearchResponse(pluginName: name, data: searchItems);
     return pluginSearchResponse;
   }
 }

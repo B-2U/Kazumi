@@ -23,8 +23,7 @@ class PopularPage extends StatefulWidget {
   State<PopularPage> createState() => _PopularPageState();
 }
 
-class _PopularPageState extends State<PopularPage>
-    with AutomaticKeepAliveClientMixin {
+class _PopularPageState extends State<PopularPage> with AutomaticKeepAliveClientMixin {
   DateTime? _lastPressedAt;
   late NavigationBarState navigationBarState;
   final FocusNode _focusNode = FocusNode();
@@ -60,8 +59,7 @@ class _PopularPageState extends State<PopularPage>
 
   void scrollListener() {
     popularController.scrollOffset = scrollController.offset;
-    if (scrollController.position.pixels >=
-            scrollController.position.maxScrollExtent - 200 &&
+    if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200 &&
         !popularController.isLoadingMore) {
       KazumiLogger().i('PopularPageController: Fetching next recommendation batch');
       if (popularController.currentTag != '') {
@@ -73,8 +71,7 @@ class _PopularPageState extends State<PopularPage>
   }
 
   bool showWindowButton() {
-    return GStorage.setting
-        .get(SettingBoxKey.showWindowButton, defaultValue: false);
+    return GStorage.setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
   }
 
   void onBackPressed(BuildContext context) {
@@ -82,9 +79,7 @@ class _PopularPageState extends State<PopularPage>
       KazumiDialog.dismiss();
       return;
     }
-    if (_lastPressedAt == null ||
-        DateTime.now().difference(_lastPressedAt!) >
-            const Duration(seconds: 2)) {
+    if (_lastPressedAt == null || DateTime.now().difference(_lastPressedAt!) > const Duration(seconds: 2)) {
       _lastPressedAt = DateTime.now();
       KazumiDialog.showToast(message: "再按一次退出应用", context: context);
       return;
@@ -120,8 +115,7 @@ class _PopularPageState extends State<PopularPage>
               ),
             ),
             SliverPadding(
-                padding: const EdgeInsets.fromLTRB(
-                    StyleString.cardSpace, 0, StyleString.cardSpace, 0),
+                padding: const EdgeInsets.fromLTRB(StyleString.cardSpace, 0, StyleString.cardSpace, 0),
                 sliver: Observer(builder: (_) {
                   if (popularController.isTimeOut) {
                     return SliverToBoxAdapter(
@@ -146,17 +140,14 @@ class _PopularPageState extends State<PopularPage>
                     );
                   }
                   return contentGrid(
-                    (popularController.currentTag == '')
-                        ? popularController.trendList
-                        : popularController.bangumiList,
+                    (popularController.currentTag == '') ? popularController.trendList : popularController.bangumiList,
                   );
                 })),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => scrollController.animateTo(0,
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeOut),
+          onPressed: () =>
+              scrollController.animateTo(0, duration: const Duration(milliseconds: 350), curve: Curves.easeOut),
           child: const Icon(Icons.arrow_upward),
         ),
       ),
@@ -182,14 +173,11 @@ class _PopularPageState extends State<PopularPage>
           // 列数
           crossAxisCount: crossCount,
           mainAxisExtent:
-              MediaQuery.of(context).size.width / crossCount / 0.65 +
-                  MediaQuery.textScalerOf(context).scale(32.0),
+              MediaQuery.of(context).size.width / crossCount / 0.65 + MediaQuery.textScalerOf(context).scale(32.0),
         ),
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return bangumiList!.isNotEmpty
-                ? BangumiCardV(bangumiItem: bangumiList[index])
-                : null;
+            return bangumiList!.isNotEmpty ? BangumiCardV(bangumiItem: bangumiList[index]) : null;
           },
           childCount: bangumiList!.isNotEmpty ? bangumiList!.length : 10,
         ),
@@ -214,18 +202,14 @@ class _PopularPageState extends State<PopularPage>
           child: LayoutBuilder(
             builder: (context, constraints) {
               final double maxExtent = 120 - MediaQuery.of(context).padding.top;
-              final t = (1 -
-                  ((constraints.maxHeight - kToolbarHeight) /
-                          (maxExtent - kToolbarHeight))
-                      .clamp(0.0, 1.0));
+              final t = (1 - ((constraints.maxHeight - kToolbarHeight) / (maxExtent - kToolbarHeight)).clamp(0.0, 1.0));
               // 字重收缩后为 w500，展开时为 w700
               final fontWeight = t < 0.5 ? FontWeight.w700 : FontWeight.w500;
               final fontSize = lerpDouble(28, 20, t)!;
               return Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, top: 8, bottom: 8, right: 60),
+                  padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8, right: 60),
                   child: SizedBox(
                     height: 44,
                     child: Observer(
@@ -246,8 +230,7 @@ class _PopularPageState extends State<PopularPage>
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              Icon(Icons.keyboard_arrow_down,
-                                  size: fontSize, color: theme.iconTheme.color),
+                              Icon(Icons.keyboard_arrow_down, size: fontSize, color: theme.iconTheme.color),
                             ],
                           ),
                         );
@@ -297,8 +280,7 @@ class _PopularPageState extends State<PopularPage>
     // Calculate the position of the button manually to position the dropdown menu.
     // Using CustomDropdownMenu instead of PopupMenuButton to avoid flickering issues
     // and to support different font sizes in the button and menu items.
-    final RenderBox renderBox =
-        selectorKey.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox renderBox = selectorKey.currentContext!.findRenderObject() as RenderBox;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
     final Size size = renderBox.size;
 
@@ -328,16 +310,14 @@ class _PopularPageState extends State<PopularPage>
 
     if (selected == null) return;
     if (selected == '' && popularController.currentTag != '') {
-      scrollController.animateTo(0,
-          duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+      scrollController.animateTo(0, duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
       popularController.setCurrentTag('');
       popularController.clearBangumiList();
       if (popularController.trendList.isEmpty) {
         await popularController.queryBangumiByTrend();
       }
     } else if (selected != '' && selected != popularController.currentTag) {
-      scrollController.animateTo(0,
-          duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+      scrollController.animateTo(0, duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
       popularController.setCurrentTag(selected);
       await popularController.queryBangumiByTag(type: 'init');
     }

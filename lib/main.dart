@@ -53,19 +53,14 @@ void main() async {
     runApp(MaterialApp(
         title: '初始化失败',
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        supportedLocales: const [
-          Locale.fromSubtags(
-              languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN")
-        ],
-        locale: const Locale.fromSubtags(
-            languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN"),
+        supportedLocales: const [Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN")],
+        locale: const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN"),
         builder: (context, child) {
           return const StorageErrorPage();
         }));
     return;
   }
-  bool showWindowButton = await GStorage.setting
-      .get(SettingBoxKey.showWindowButton, defaultValue: false);
+  bool showWindowButton = await GStorage.setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
   if (Utils.isDesktop()) {
     await windowManager.ensureInitialized();
     bool isLowResolution = await Utils.isLowResolution();
@@ -74,9 +69,7 @@ void main() async {
       center: true,
       skipTaskbar: false,
       // macOS always hide title bar regardless of showWindowButton setting
-      titleBarStyle: (Platform.isMacOS || !showWindowButton)
-          ? TitleBarStyle.hidden
-          : TitleBarStyle.normal,
+      titleBarStyle: (Platform.isMacOS || !showWindowButton) ? TitleBarStyle.hidden : TitleBarStyle.normal,
       windowButtonVisibility: showWindowButton,
       title: 'Kazumi',
     );

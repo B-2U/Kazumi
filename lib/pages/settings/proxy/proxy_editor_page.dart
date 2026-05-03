@@ -24,10 +24,8 @@ class _ProxyEditorPageState extends State<ProxyEditorPage> {
   @override
   void initState() {
     super.initState();
-    urlController.text =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
-    testUrlController.text =
-        setting.get(SettingBoxKey.proxyTestUrl, defaultValue: 'https://www.google.com');
+    urlController.text = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    testUrlController.text = setting.get(SettingBoxKey.proxyTestUrl, defaultValue: 'https://www.google.com');
   }
 
   @override
@@ -48,9 +46,7 @@ class _ProxyEditorPageState extends State<ProxyEditorPage> {
       return;
     }
 
-    final testUrl = testUrlController.text.trim().isEmpty
-        ? 'https://www.google.com'
-        : testUrlController.text.trim();
+    final testUrl = testUrlController.text.trim().isEmpty ? 'https://www.google.com' : testUrlController.text.trim();
 
     await setting.put(SettingBoxKey.proxyUrl, url);
     await setting.put(SettingBoxKey.proxyTestUrl, testUrl);
@@ -62,15 +58,17 @@ class _ProxyEditorPageState extends State<ProxyEditorPage> {
     ProxyManager.applyProxy();
 
     try {
-      await Request().get(
-        testUrl,
-        options: Options(
-          sendTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 10),
-          validateStatus: (status) => true,
-        ),
-        shouldRethrow: true,
-      ).timeout(const Duration(seconds: 15));
+      await Request()
+          .get(
+            testUrl,
+            options: Options(
+              sendTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 10),
+              validateStatus: (status) => true,
+            ),
+            shouldRethrow: true,
+          )
+          .timeout(const Duration(seconds: 15));
       await setting.put(SettingBoxKey.proxyConfigured, true);
       KazumiDialog.showToast(message: '测试成功');
     } catch (e) {

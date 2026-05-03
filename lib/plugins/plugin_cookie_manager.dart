@@ -17,8 +17,7 @@ class PluginCookieManager {
     return _jars.putIfAbsent(pluginName, () => CookieJar());
   }
 
-  Future<void> saveFromWebView(
-      String pluginName, String pageUrl, String cookieString) async {
+  Future<void> saveFromWebView(String pluginName, String pageUrl, String cookieString) async {
     if (cookieString.trim().isEmpty) return;
     final uri = Uri.tryParse(pageUrl);
     if (uri == null) return;
@@ -28,8 +27,7 @@ class PluginCookieManager {
     if (cookies.isEmpty) return;
 
     await jar.saveFromResponse(uri, cookies);
-    KazumiLogger().i(
-        '[PluginCookieManager] Saved ${cookies.length} cookies for $pluginName');
+    KazumiLogger().i('[PluginCookieManager] Saved ${cookies.length} cookies for $pluginName');
   }
 
   /// 解析字符串为 [Cookie] 列表

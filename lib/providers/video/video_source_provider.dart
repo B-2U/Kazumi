@@ -4,6 +4,7 @@ import 'dart:async';
 enum VideoSourceType {
   /// 在线解析（WebView）
   online,
+
   /// 本地缓存
   cached,
 }

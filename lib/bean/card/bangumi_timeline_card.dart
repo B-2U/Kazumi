@@ -33,9 +33,7 @@ class BangumiTimelineCard extends StatelessWidget {
     const double borderRadius = 16;
     const double horizontalPadding = 12;
     const double verticalPadding = 10;
-    final double contentHeight = cardHeight > verticalPadding * 2
-        ? cardHeight - (verticalPadding * 2)
-        : cardHeight;
+    final double contentHeight = cardHeight > verticalPadding * 2 ? cardHeight - (verticalPadding * 2) : cardHeight;
     final double imageWidth = contentHeight * 0.7;
 
     return Card(
@@ -81,8 +79,7 @@ class BangumiTimelineCard extends StatelessWidget {
     );
   }
 
-  Widget buildImage(
-      BuildContext context, String imageUrl, double width, double height) {
+  Widget buildImage(BuildContext context, String imageUrl, double width, double height) {
     final borderRadius = BorderRadius.circular(12);
     Widget img = NetworkImgLayer(
       src: imageUrl,
@@ -107,15 +104,11 @@ class BangumiTimelineCard extends StatelessWidget {
     return img;
   }
 
-  Widget buildInfo(BuildContext context, TextScaler textScaler, bool isDesktop,
-      bool isTablet) {
+  Widget buildInfo(BuildContext context, TextScaler textScaler, bool isDesktop, bool isTablet) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final title =
-        bangumiItem.nameCn.isNotEmpty ? bangumiItem.nameCn : bangumiItem.name;
-    final supportingText = bangumiItem.info.trim().isNotEmpty
-        ? bangumiItem.info.trim()
-        : bangumiItem.summary.trim();
+    final title = bangumiItem.nameCn.isNotEmpty ? bangumiItem.nameCn : bangumiItem.name;
+    final supportingText = bangumiItem.info.trim().isNotEmpty ? bangumiItem.info.trim() : bangumiItem.summary.trim();
     final bool useWideLayout = isDesktop || isTablet;
     final int supportingLines = useWideLayout ? 3 : 2;
     final nameStyle = theme.textTheme.titleSmall?.copyWith(
@@ -135,8 +128,7 @@ class BangumiTimelineCard extends StatelessWidget {
           style: nameStyle,
           maxLines: useWideLayout ? 2 : 1,
           overflow: TextOverflow.ellipsis,
-          textScaler:
-              textScaler.clamp(maxScaleFactor: useWideLayout ? 1.2 : 1.1),
+          textScaler: textScaler.clamp(maxScaleFactor: useWideLayout ? 1.2 : 1.1),
         ),
         Expanded(
           child: Padding(
@@ -180,8 +172,7 @@ class BangumiTimelineCard extends StatelessWidget {
             context,
             icon: Icons.star_rounded,
             iconColor: colorScheme.primary,
-            label:
-                showRating ? bangumiItem.ratingScore.toStringAsFixed(1) : '***',
+            label: showRating ? bangumiItem.ratingScore.toStringAsFixed(1) : '***',
             textStyle: metricStyle,
           ),
         if (showRank)

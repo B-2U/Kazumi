@@ -62,10 +62,8 @@ class _DanmakuShieldSettingsState extends State<DanmakuShieldSettings> {
               children: myController.shieldList
                   .map(
                     (item) => Chip(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      backgroundColor:
-                          Theme.of(context).colorScheme.secondaryContainer,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       side: BorderSide.none,
                       label: Text(

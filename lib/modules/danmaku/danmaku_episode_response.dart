@@ -39,8 +39,7 @@ class DanmakuEpisodeResponse {
 
   factory DanmakuEpisodeResponse.fromJson(Map<String, dynamic> json) {
     var list = json['bangumi']['episodes'] as List;
-    List<DanmakuEpisode> episodeList =
-        list.map((i) => DanmakuEpisode.fromJson(i)).toList();
+    List<DanmakuEpisode> episodeList = list.map((i) => DanmakuEpisode.fromJson(i)).toList();
 
     return DanmakuEpisodeResponse(
       bangumiId: json['bangumi']['animeId'],

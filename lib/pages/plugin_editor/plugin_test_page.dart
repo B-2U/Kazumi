@@ -41,8 +41,7 @@ class PluginTestPage extends StatefulWidget {
 
 class _PluginTestPageState extends State<PluginTestPage> {
   late final Plugin plugin;
-  final VideoPageController videoPageController =
-      Modular.get<VideoPageController>();
+  final VideoPageController videoPageController = Modular.get<VideoPageController>();
   final testKeywordController = TextEditingController();
   final htmlScrollController = ScrollController();
   final chapterScrollController = ScrollController();
@@ -71,8 +70,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
   void initState() {
     super.initState();
     plugin = Modular.args.data as Plugin;
-    testKeywordController.addListener(
-        () => errorMsg.isNotEmpty ? setState(() => errorMsg = "") : null);
+    testKeywordController.addListener(() => errorMsg.isNotEmpty ? setState(() => errorMsg = "") : null);
   }
 
   @override
@@ -86,8 +84,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
     super.dispose();
   }
 
-  void onBackPressed() =>
-      KazumiDialog.observer.hasKazumiDialog ? KazumiDialog.dismiss() : null;
+  void onBackPressed() => KazumiDialog.observer.hasKazumiDialog ? KazumiDialog.dismiss() : null;
 
   void resetState() => setState(() {
         _testSearchRequestCancelToken?.cancel();
@@ -105,11 +102,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
   String _parseItemHtml(int index) {
     if (_itemHtmlMap.containsKey(index)) return _itemHtmlMap[index]!;
     try {
-      final node = (parse(searchHtml)
-          .documentElement!
-          .queryXPath(plugin.searchList)
-          .nodes[index]
-          .node as Element);
+      final node = (parse(searchHtml).documentElement!.queryXPath(plugin.searchList).nodes[index].node as Element);
       return _itemHtmlMap[index] = node.outerHtml;
     } catch (e) {
       KazumiLogger().e('PluginTest: failed to parse HTML item ${index + 1}', error: e);
@@ -118,8 +111,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
   }
 
   void _toggleItemHtml(int index) {
-    if (_showItemHtmlIdx == index)
-      return setState(() => _showItemHtmlIdx = null);
+    if (_showItemHtmlIdx == index) return setState(() => _showItemHtmlIdx = null);
     setState(() => isTesting = true);
     _parseItemHtml(index);
     setState(() {
@@ -135,16 +127,15 @@ class _PluginTestPageState extends State<PluginTestPage> {
     try {
       _testSearchRequestCancelToken?.cancel();
       _testSearchRequestCancelToken = CancelToken();
-      searchHtml = await plugin.testSearchRequest(keyword,
-          shouldRethrow: true, cancelToken: _testSearchRequestCancelToken);
+      searchHtml =
+          await plugin.testSearchRequest(keyword, shouldRethrow: true, cancelToken: _testSearchRequestCancelToken);
       searchRes = plugin.testQueryBangumi(searchHtml);
       if (_hasSearchData && _needChapterParse) {
         final firstItem = searchRes!.data.first;
         if (firstItem.src.isNotEmpty) {
           _testRoadsCancelToken?.cancel();
           _testRoadsCancelToken = CancelToken();
-          chapters = await plugin.querychapterRoads(firstItem.src,
-              cancelToken: _testRoadsCancelToken);
+          chapters = await plugin.querychapterRoads(firstItem.src, cancelToken: _testRoadsCancelToken);
         }
       }
     } catch (e, stack) {
@@ -181,36 +172,34 @@ class _PluginTestPageState extends State<PluginTestPage> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1000),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildKeywordInput(theme),
-                    _h12,
-                    _buildErrorWidget(theme),
-                    _buildExpansionTile(
-                      theme: theme,
-                      title: '1. 搜索请求测试',
-                      subtitle: _getSearchSubtitle(),
-                      expanded: false,
-                      child: _buildSearchContent(theme),
-                    ),
-                    _h12,
-                    _buildExpansionTile(
-                      theme: theme,
-                      title: '2. 搜索解析测试',
-                      subtitle: _getParseSubtitle(),
-                      expanded: false,
-                      child: _buildParseContent(theme),
-                    ),
-                    _h12,
-                    _buildExpansionTile(
-                      theme: theme,
-                      title: '3. 章节列表测试',
-                      subtitle: _getChapterSubtitle(),
-                      expanded: _hasSearchData,
-                      child: _buildChapterContent(theme),
-                    ),
-                  ]),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                _buildKeywordInput(theme),
+                _h12,
+                _buildErrorWidget(theme),
+                _buildExpansionTile(
+                  theme: theme,
+                  title: '1. 搜索请求测试',
+                  subtitle: _getSearchSubtitle(),
+                  expanded: false,
+                  child: _buildSearchContent(theme),
+                ),
+                _h12,
+                _buildExpansionTile(
+                  theme: theme,
+                  title: '2. 搜索解析测试',
+                  subtitle: _getParseSubtitle(),
+                  expanded: false,
+                  child: _buildParseContent(theme),
+                ),
+                _h12,
+                _buildExpansionTile(
+                  theme: theme,
+                  title: '3. 章节列表测试',
+                  subtitle: _getChapterSubtitle(),
+                  expanded: _hasSearchData,
+                  child: _buildChapterContent(theme),
+                ),
+              ]),
             ),
           ),
         ),
@@ -227,9 +216,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
   }) {
     return ExpansionTile(
       title: Text(title, style: theme.textTheme.titleMedium),
-      subtitle: Text(subtitle,
-          style: TextStyle(
-              fontSize: 12.0, color: _getSubtitleColor(subtitle, theme))),
+      subtitle: Text(subtitle, style: TextStyle(fontSize: 12.0, color: _getSubtitleColor(subtitle, theme))),
       initiallyExpanded: expanded,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       iconColor: theme.getCoreColor(CoreColorType.success),
@@ -242,14 +229,9 @@ class _PluginTestPageState extends State<PluginTestPage> {
         controller: testKeywordController,
         decoration: InputDecoration(
           labelText: '测试关键词',
-          border: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: theme.getCoreColor(CoreColorType.waiting))),
-          focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: theme.getCoreColor(CoreColorType.success))),
-          labelStyle:
-              TextStyle(color: theme.getCoreColor(CoreColorType.waiting)),
+          border: OutlineInputBorder(borderSide: BorderSide(color: theme.getCoreColor(CoreColorType.waiting))),
+          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: theme.getCoreColor(CoreColorType.success))),
+          labelStyle: TextStyle(color: theme.getCoreColor(CoreColorType.waiting)),
         ),
         enabled: !isTesting,
         onSubmitted: (_) => startTest(),
@@ -266,49 +248,36 @@ class _PluginTestPageState extends State<PluginTestPage> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Icon(Icons.error_outline,
-                color: theme.getCoreColor(CoreColorType.error), size: 20),
+            Icon(Icons.error_outline, color: theme.getCoreColor(CoreColorType.error), size: 20),
             _h8,
             Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(errorMsg,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onErrorContainer)),
-                    _h8,
-                    TextButton(
-                      onPressed: startTest,
-                      style: TextButton.styleFrom(
-                          backgroundColor: theme
-                              .getCoreColor(CoreColorType.error)
-                              .withOpacity(0.1)),
-                      child: Text('重试测试',
-                          style: TextStyle(
-                              color: theme.colorScheme.onErrorContainer)),
-                    ),
-                  ]),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(errorMsg, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onErrorContainer)),
+                _h8,
+                TextButton(
+                  onPressed: startTest,
+                  style:
+                      TextButton.styleFrom(backgroundColor: theme.getCoreColor(CoreColorType.error).withOpacity(0.1)),
+                  child: Text('重试测试', style: TextStyle(color: theme.colorScheme.onErrorContainer)),
+                ),
+              ]),
             ),
           ]),
         );
 
   Widget _buildLoading(ThemeData theme) => Center(
         child: CircularProgressIndicator.adaptive(
-          valueColor: AlwaysStoppedAnimation<Color>(
-              theme.getCoreColor(CoreColorType.success)),
+          valueColor: AlwaysStoppedAnimation<Color>(theme.getCoreColor(CoreColorType.success)),
         ),
       );
 
-  Widget _buildEmpty(String text, ThemeData theme, {bool isError = false}) =>
-      Center(
+  Widget _buildEmpty(String text, ThemeData theme, {bool isError = false}) => Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
             text,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: isError
-                  ? theme.getCoreColor(CoreColorType.error)
-                  : theme.getCoreColor(CoreColorType.waiting),
+              color: isError ? theme.getCoreColor(CoreColorType.error) : theme.getCoreColor(CoreColorType.waiting),
             ),
           ),
         ),
@@ -322,14 +291,10 @@ class _PluginTestPageState extends State<PluginTestPage> {
 
   // 简化副标题颜色逻辑：仅三类
   Color _getSubtitleColor(String subtitle, ThemeData theme) {
-    if (subtitle.contains('测试中') ||
-        subtitle.contains('获取中') ||
-        subtitle.contains('解析中')) {
+    if (subtitle.contains('测试中') || subtitle.contains('获取中') || subtitle.contains('解析中')) {
       return theme.getCoreColor(CoreColorType.waiting);
     }
-    if (subtitle.contains('失败') ||
-        subtitle.contains('无可用') ||
-        subtitle.contains('无有效')) {
+    if (subtitle.contains('失败') || subtitle.contains('无可用') || subtitle.contains('无有效')) {
       return theme.getCoreColor(CoreColorType.error);
     }
     return theme.getCoreColor(CoreColorType.success);
@@ -375,8 +340,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: searchRes!.data.length,
-        itemBuilder: (_, i) =>
-            _buildSearchItemCard(searchRes!.data[i], i, theme),
+        itemBuilder: (_, i) => _buildSearchItemCard(searchRes!.data[i], i, theme),
       ),
       _h8,
     ]);
@@ -392,14 +356,12 @@ class _PluginTestPageState extends State<PluginTestPage> {
         elevation: 1,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Expanded(
                 child: Text(
                   '${i + 1}：${item.name}',
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
+                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -416,8 +378,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
             ]),
             _h8,
             Text('链接：${item.src}',
-                style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.getCoreColor(CoreColorType.waiting))),
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.getCoreColor(CoreColorType.waiting))),
           ]),
         ),
       ),
@@ -427,8 +388,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border:
-                Border.all(color: theme.getCoreColor(CoreColorType.waiting)),
+            border: Border.all(color: theme.getCoreColor(CoreColorType.waiting)),
             color: theme.colorScheme.surface,
           ),
           height: 250,
@@ -437,8 +397,7 @@ class _PluginTestPageState extends State<PluginTestPage> {
             physics: const ClampingScrollPhysics(),
             child: SelectableText(
               itemHtml,
-              style:
-                  theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
+              style: theme.textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
             ),
           ),
         ),
@@ -476,35 +435,28 @@ class _PluginTestPageState extends State<PluginTestPage> {
         elevation: 1,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  '播放列表 ${i + 1}：${road.name}',
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
-                ),
-                _h8,
-                Text('章节数量：${road.data.length}',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.getCoreColor(CoreColorType.waiting))),
-                _h8,
-                SizedBox(
-                  width: double.infinity,
-                  height: 120,
-                  child: SingleChildScrollView(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...road.identifier.asMap().entries.map((e) => Text(
-                                '${e.key + 1}. ${e.value}',
-                                style: theme.textTheme.bodySmall,
-                              )),
-                        ]),
-                  ),
-                ),
-              ]),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              '播放列表 ${i + 1}：${road.name}',
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+            ),
+            _h8,
+            Text('章节数量：${road.data.length}',
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.getCoreColor(CoreColorType.waiting))),
+            _h8,
+            SizedBox(
+              width: double.infinity,
+              height: 120,
+              child: SingleChildScrollView(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  ...road.identifier.asMap().entries.map((e) => Text(
+                        '${e.key + 1}. ${e.value}',
+                        style: theme.textTheme.bodySmall,
+                      )),
+                ]),
+              ),
+            ),
+          ]),
         ),
       );
 }

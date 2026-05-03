@@ -9,8 +9,7 @@ part of 'timeline_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$TimelineController on _TimelineController, Store {
-  late final _$bangumiCalendarAtom =
-      Atom(name: '_TimelineController.bangumiCalendar', context: context);
+  late final _$bangumiCalendarAtom = Atom(name: '_TimelineController.bangumiCalendar', context: context);
 
   @override
   ObservableList<List<BangumiItem>> get bangumiCalendar {
@@ -25,8 +24,7 @@ mixin _$TimelineController on _TimelineController, Store {
     });
   }
 
-  late final _$seasonStringAtom =
-      Atom(name: '_TimelineController.seasonString', context: context);
+  late final _$seasonStringAtom = Atom(name: '_TimelineController.seasonString', context: context);
 
   @override
   String get seasonString {
@@ -41,8 +39,7 @@ mixin _$TimelineController on _TimelineController, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: '_TimelineController.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(name: '_TimelineController.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -57,8 +54,7 @@ mixin _$TimelineController on _TimelineController, Store {
     });
   }
 
-  late final _$isTimeOutAtom =
-      Atom(name: '_TimelineController.isTimeOut', context: context);
+  late final _$isTimeOutAtom = Atom(name: '_TimelineController.isTimeOut', context: context);
 
   @override
   bool get isTimeOut {
@@ -73,8 +69,8 @@ mixin _$TimelineController on _TimelineController, Store {
     });
   }
 
-  late final _$notShowAbandonedBangumisAtom = Atom(
-      name: '_TimelineController.notShowAbandonedBangumis', context: context);
+  late final _$notShowAbandonedBangumisAtom =
+      Atom(name: '_TimelineController.notShowAbandonedBangumis', context: context);
 
   @override
   bool get notShowAbandonedBangumis {
@@ -86,18 +82,14 @@ mixin _$TimelineController on _TimelineController, Store {
 
   @override
   set notShowAbandonedBangumis(bool value) {
-    _$notShowAbandonedBangumisAtom.reportWrite(
-        value,
-        _notShowAbandonedBangumisIsInitialized
-            ? super.notShowAbandonedBangumis
-            : null, () {
+    _$notShowAbandonedBangumisAtom
+        .reportWrite(value, _notShowAbandonedBangumisIsInitialized ? super.notShowAbandonedBangumis : null, () {
       super.notShowAbandonedBangumis = value;
       _notShowAbandonedBangumisIsInitialized = true;
     });
   }
 
-  late final _$notShowWatchedBangumisAtom = Atom(
-      name: '_TimelineController.notShowWatchedBangumis', context: context);
+  late final _$notShowWatchedBangumisAtom = Atom(name: '_TimelineController.notShowWatchedBangumis', context: context);
 
   @override
   bool get notShowWatchedBangumis {
@@ -109,18 +101,15 @@ mixin _$TimelineController on _TimelineController, Store {
 
   @override
   set notShowWatchedBangumis(bool value) {
-    _$notShowWatchedBangumisAtom.reportWrite(
-        value,
-        _notShowWatchedBangumisIsInitialized
-            ? super.notShowWatchedBangumis
-            : null, () {
+    _$notShowWatchedBangumisAtom
+        .reportWrite(value, _notShowWatchedBangumisIsInitialized ? super.notShowWatchedBangumis : null, () {
       super.notShowWatchedBangumis = value;
       _notShowWatchedBangumisIsInitialized = true;
     });
   }
 
-  late final _$onlyShowWatchingBangumisAtom = Atom(
-      name: '_TimelineController.onlyShowWatchingBangumis', context: context);
+  late final _$onlyShowWatchingBangumisAtom =
+      Atom(name: '_TimelineController.onlyShowWatchingBangumis', context: context);
 
   @override
   bool get onlyShowWatchingBangumis {
@@ -132,44 +121,35 @@ mixin _$TimelineController on _TimelineController, Store {
 
   @override
   set onlyShowWatchingBangumis(bool value) {
-    _$onlyShowWatchingBangumisAtom.reportWrite(
-        value,
-        _onlyShowWatchingBangumisIsInitialized
-            ? super.onlyShowWatchingBangumis
-            : null, () {
+    _$onlyShowWatchingBangumisAtom
+        .reportWrite(value, _onlyShowWatchingBangumisIsInitialized ? super.onlyShowWatchingBangumis : null, () {
       super.onlyShowWatchingBangumis = value;
       _onlyShowWatchingBangumisIsInitialized = true;
     });
   }
 
-  late final _$setNotShowAbandonedBangumisAsyncAction = AsyncAction(
-      '_TimelineController.setNotShowAbandonedBangumis',
-      context: context);
+  late final _$setNotShowAbandonedBangumisAsyncAction =
+      AsyncAction('_TimelineController.setNotShowAbandonedBangumis', context: context);
 
   @override
   Future<void> setNotShowAbandonedBangumis(bool value) {
-    return _$setNotShowAbandonedBangumisAsyncAction
-        .run(() => super.setNotShowAbandonedBangumis(value));
+    return _$setNotShowAbandonedBangumisAsyncAction.run(() => super.setNotShowAbandonedBangumis(value));
   }
 
-  late final _$setNotShowWatchedBangumisAsyncAction = AsyncAction(
-      '_TimelineController.setNotShowWatchedBangumis',
-      context: context);
+  late final _$setNotShowWatchedBangumisAsyncAction =
+      AsyncAction('_TimelineController.setNotShowWatchedBangumis', context: context);
 
   @override
   Future<void> setNotShowWatchedBangumis(bool value) {
-    return _$setNotShowWatchedBangumisAsyncAction
-        .run(() => super.setNotShowWatchedBangumis(value));
+    return _$setNotShowWatchedBangumisAsyncAction.run(() => super.setNotShowWatchedBangumis(value));
   }
 
-  late final _$setOnlyShowWatchingBangumisAsyncAction = AsyncAction(
-      '_TimelineController.setOnlyShowWatchingBangumis',
-      context: context);
+  late final _$setOnlyShowWatchingBangumisAsyncAction =
+      AsyncAction('_TimelineController.setOnlyShowWatchingBangumis', context: context);
 
   @override
   Future<void> setOnlyShowWatchingBangumis(bool value) {
-    return _$setOnlyShowWatchingBangumisAsyncAction
-        .run(() => super.setOnlyShowWatchingBangumis(value));
+    return _$setOnlyShowWatchingBangumisAsyncAction.run(() => super.setOnlyShowWatchingBangumis(value));
   }
 
   @override

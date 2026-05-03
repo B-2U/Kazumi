@@ -36,7 +36,7 @@ class _DanmakuSettingsSheetState extends State<DanmakuSettingsSheet> {
         builder: (context) {
           return SafeArea(
             bottom: false,
-            child:  DanmakuShieldSettingsSheet(),
+            child: DanmakuShieldSettingsSheet(),
           );
         });
   }
@@ -68,16 +68,14 @@ class _DanmakuSettingsSheetState extends State<DanmakuSettingsSheet> {
                   value: widget.danmakuController.option.fontSize,
                   min: 10,
                   max: Utils.isCompact() ? 32 : 48,
-                  label:
-                      '${widget.danmakuController.option.fontSize.floorToDouble()}',
+                  label: '${widget.danmakuController.option.fontSize.floorToDouble()}',
                   onChanged: (value) {
                     setState(() => widget.danmakuController.updateOption(
                           widget.danmakuController.option.copyWith(
                             fontSize: value.floorToDouble(),
                           ),
                         ));
-                    setting.put(
-                        SettingBoxKey.danmakuFontSize, value.floorToDouble());
+                    setting.put(SettingBoxKey.danmakuFontSize, value.floorToDouble());
                   },
                 ),
               ),
@@ -87,16 +85,14 @@ class _DanmakuSettingsSheetState extends State<DanmakuSettingsSheet> {
                   value: widget.danmakuController.option.opacity,
                   min: 0.1,
                   max: 1,
-                  label:
-                      '${(widget.danmakuController.option.opacity * 100).round()}%',
+                  label: '${(widget.danmakuController.option.opacity * 100).round()}%',
                   onChanged: (value) {
                     setState(() => widget.danmakuController.updateOption(
                           widget.danmakuController.option.copyWith(
                             opacity: value,
                           ),
                         ));
-                    setting.put(SettingBoxKey.danmakuOpacity,
-                        double.parse(value.toStringAsFixed(2)));
+                    setting.put(SettingBoxKey.danmakuOpacity, double.parse(value.toStringAsFixed(2)));
                   },
                 ),
               ),
@@ -112,8 +108,7 @@ class _DanmakuSettingsSheetState extends State<DanmakuSettingsSheet> {
                   min: 0,
                   max: 1,
                   divisions: 8,
-                  label:
-                      '${(widget.danmakuController.option.area * 100).round()}%',
+                  label: '${(widget.danmakuController.option.area * 100).round()}%',
                   onChanged: (value) {
                     setState(() => widget.danmakuController.updateOption(
                           widget.danmakuController.option.copyWith(
@@ -124,14 +119,14 @@ class _DanmakuSettingsSheetState extends State<DanmakuSettingsSheet> {
                   },
                 ),
               ),
-              SettingsTile(title: Text('持续时间', style: TextStyle(fontFamily: fontFamily)),
+              SettingsTile(
+                title: Text('持续时间', style: TextStyle(fontFamily: fontFamily)),
                 description: Slider(
                   value: widget.danmakuController.option.duration.toDouble(),
                   min: 2,
                   max: 16,
                   divisions: 14,
-                  label:
-                      '${widget.danmakuController.option.duration.round()}',
+                  label: '${widget.danmakuController.option.duration.round()}',
                   onChanged: (value) {
                     setState(() => widget.danmakuController.updateOption(
                           widget.danmakuController.option.copyWith(

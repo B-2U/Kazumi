@@ -50,9 +50,7 @@ class DownloadRecordAdapter extends TypeAdapter<DownloadRecord> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DownloadRecordAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DownloadRecordAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
 
 class DownloadEpisodeAdapter extends TypeAdapter<DownloadEpisode> {
@@ -129,7 +127,5 @@ class DownloadEpisodeAdapter extends TypeAdapter<DownloadEpisode> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DownloadEpisodeAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is DownloadEpisodeAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

@@ -26,13 +26,12 @@ class Utils {
   /// 检查 Android WebView 是否支持 DOCUMENT_START_SCRIPT 特性
   static Future<void> checkWebViewFeatureSupport() async {
     if (Platform.isAndroid) {
-      _isDocumentStartScriptSupported = await PlatformWebViewFeature.static()
-          .isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT);
+      _isDocumentStartScriptSupported =
+          await PlatformWebViewFeature.static().isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT);
     }
   }
 
-  static bool get isDocumentStartScriptSupported =>
-      _isDocumentStartScriptSupported ?? false;
+  static bool get isDocumentStartScriptSupported => _isDocumentStartScriptSupported ?? false;
 
   static Future<bool> isLowResolution() async {
     if (Platform.isMacOS) {
@@ -47,38 +46,29 @@ class Utils {
 
   static String getRandomUA() {
     final random = Random();
-    String randomElement =
-        userAgentsList[random.nextInt(userAgentsList.length)];
+    String randomElement = userAgentsList[random.nextInt(userAgentsList.length)];
     return randomElement;
   }
 
   static String getRandomAcceptedLanguage() {
     final random = Random();
-    String randomElement =
-        acceptLanguageList[random.nextInt(acceptLanguageList.length)];
+    String randomElement = acceptLanguageList[random.nextInt(acceptLanguageList.length)];
     return randomElement;
   }
 
   static Future<Map<String, double>> getScreenInfo() async {
-    final MediaQueryData mediaQuery = MediaQueryData.fromView(
-        WidgetsBinding.instance.platformDispatcher.views.first);
-    final Size screenSize =
-        WidgetsBinding.instance.platformDispatcher.displays.first.size;
+    final MediaQueryData mediaQuery = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first);
+    final Size screenSize = WidgetsBinding.instance.platformDispatcher.displays.first.size;
     final double screenRatio = mediaQuery.devicePixelRatio;
     Map<String, double>? screenInfo = {};
-    screenInfo = {
-      'width': screenSize.width,
-      'height': screenSize.height,
-      'ratio': screenRatio
-    };
+    screenInfo = {'width': screenSize.width, 'height': screenSize.height, 'ratio': screenRatio};
     return screenInfo;
   }
 
   // 从URL参数中解析 m3u8/mp4
   static String decodeVideoSource(String iframeUrl) {
     var decodedUrl = Uri.decodeFull(iframeUrl);
-    RegExp regExp = RegExp(r'(http[s]?://.*?\.m3u8)|(http[s]?://.*?\.mp4)',
-        caseSensitive: false);
+    RegExp regExp = RegExp(r'(http[s]?://.*?\.m3u8)|(http[s]?://.*?\.mp4)', caseSensitive: false);
 
     Uri uri = Uri.parse(decodedUrl);
     Map<String, String> params = uri.queryParameters;
@@ -96,8 +86,7 @@ class Utils {
 
   // 完全相对时间显示
   static String formatTimestampToRelativeTime(timeStamp) {
-    var difference = DateTime.now()
-        .difference(DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000));
+    var difference = DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000));
 
     if (difference.inDays > 365) {
       return '${difference.inDays ~/ 365}年前';
@@ -126,11 +115,7 @@ class Utils {
     if (formatType == 'detail') {
       currentYearStr = 'MM-DD hh:mm';
       lastYearStr = 'YY-MM-DD hh:mm';
-      return CustomStamp_str(
-          timestamp: timeStamp,
-          date: lastYearStr,
-          toInt: false,
-          formatType: formatType);
+      return CustomStamp_str(timestamp: timeStamp, date: lastYearStr, toInt: false, formatType: formatType);
     }
     if (distance <= 60) {
       return '刚刚';
@@ -140,17 +125,9 @@ class Utils {
       return '${(distance / 60 / 60).floor()}小时前';
     } else if (DateTime.fromMillisecondsSinceEpoch(time * 1000).year ==
         DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000).year) {
-      return CustomStamp_str(
-          timestamp: timeStamp,
-          date: currentYearStr,
-          toInt: false,
-          formatType: formatType);
+      return CustomStamp_str(timestamp: timeStamp, date: currentYearStr, toInt: false, formatType: formatType);
     } else {
-      return CustomStamp_str(
-          timestamp: timeStamp,
-          date: lastYearStr,
-          toInt: false,
-          formatType: formatType);
+      return CustomStamp_str(timestamp: timeStamp, date: lastYearStr, toInt: false, formatType: formatType);
     }
   }
 
@@ -161,8 +138,7 @@ class Utils {
       bool toInt = true, // 去除0开头
       String? formatType}) {
     timestamp ??= (DateTime.now().millisecondsSinceEpoch / 1000).round();
-    String timeStr =
-        (DateTime.fromMillisecondsSinceEpoch(timestamp * 1000)).toString();
+    String timeStr = (DateTime.fromMillisecondsSinceEpoch(timestamp * 1000)).toString();
 
     dynamic dateArr = timeStr.split(' ')[0];
     dynamic timeArr = timeStr.split(' ')[1];
@@ -200,8 +176,7 @@ class Utils {
         .replaceAll('hh', hh)
         .replaceAll('mm', mm)
         .replaceAll('ss', ss);
-    if (int.parse(YY) == DateTime.now().year &&
-        int.parse(MM) == DateTime.now().month) {
+    if (int.parse(YY) == DateTime.now().year && int.parse(MM) == DateTime.now().month) {
       // 当天
       if (int.parse(DD) == DateTime.now().day) {
         return '今天';
@@ -220,10 +195,8 @@ class Utils {
     List<String> remoteVersionList = remoteVersion.split('.');
     final maxLength = max(localVersionList.length, remoteVersionList.length);
     for (int i = 0; i < maxLength; i++) {
-      final int localSegment =
-          i < localVersionList.length ? int.parse(localVersionList[i]) : 0;
-      final int remoteSegment =
-          i < remoteVersionList.length ? int.parse(remoteVersionList[i]) : 0;
+      final int localSegment = i < localVersionList.length ? int.parse(localVersionList[i]) : 0;
+      final int remoteSegment = i < remoteVersionList.length ? int.parse(remoteVersionList[i]) : 0;
       if (remoteSegment > localSegment) {
         return true;
       } else if (remoteSegment < localSegment) {
@@ -270,14 +243,12 @@ class Utils {
   }
 
   /// 格式化相似度为百分比字符串，默认为1位小数，空值时返回 `--`
-  static String formatTraceSimilarity(double? similarity,
-      {int fractionDigits = 1, String empty = '--'}) {
+  static String formatTraceSimilarity(double? similarity, {int fractionDigits = 1, String empty = '--'}) {
     if (similarity == null) {
       return empty;
     }
     return '${(similarity * 100).toStringAsFixed(fractionDigits)}%';
   }
-
 
   static Future<String> latest() async {
     try {
@@ -318,8 +289,8 @@ class Utils {
 
   static List<Danmaku> mergeDuplicateDanmakus(
     List<Danmaku> danmakus, {
-      double timeWindowSeconds = 0,
-    }) {
+    double timeWindowSeconds = 0,
+  }) {
     final Map<String, List<Danmaku>> grouped = {};
 
     // 弹幕规范化处理
@@ -344,10 +315,12 @@ class Utils {
 
       text = text.replaceAll(RegExp(r'\s+'), '');
 
-      text = text.replaceAll(RegExp(
-        r'[^\w\u4e00-\u9fff\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\uFF65-\uFF9F]',
-        unicode: true,
-      ),'');
+      text = text.replaceAll(
+          RegExp(
+            r'[^\w\u4e00-\u9fff\u3040-\u309F\u30A0-\u30FF\u31F0-\u31FF\uFF65-\uFF9F]',
+            unicode: true,
+          ),
+          '');
 
       text = text.replaceAllMapped(RegExp(r'(.)\1{2,}'), (match) {
         final char = match.group(1)!;
@@ -447,10 +420,9 @@ class Utils {
 
   /// 判断设备是否为宽屏
   static bool isWideScreen() {
-    final MediaQueryData mediaQuery = MediaQueryData.fromView(
-        WidgetsBinding.instance.platformDispatcher.views.first);
-    final bool isWideScreen = mediaQuery.size.shortestSide >= 600 &&
-        mediaQuery.size.shortestSide / mediaQuery.size.longestSide >= 9 / 16;
+    final MediaQueryData mediaQuery = MediaQueryData.fromView(WidgetsBinding.instance.platformDispatcher.views.first);
+    final bool isWideScreen =
+        mediaQuery.size.shortestSide >= 600 && mediaQuery.size.shortestSide / mediaQuery.size.longestSide >= 9 / 16;
     return isWideScreen;
   }
 
@@ -469,8 +441,7 @@ class Utils {
     if (Platform.isAndroid) {
       const platform = MethodChannel('com.predidit.kazumi/intent');
       try {
-        final bool result =
-            await platform.invokeMethod('checkIfInMultiWindowMode');
+        final bool result = await platform.invokeMethod('checkIfInMultiWindowMode');
         return result;
       } on PlatformException catch (e) {
         print("Failed to check multi window mode: '${e.message}'.");
@@ -548,8 +519,7 @@ class Utils {
     if (Platform.isAndroid) {
       const platform = MethodChannel('com.predidit.kazumi/intent');
       try {
-        final int sdkVersion =
-            await platform.invokeMethod('getAndroidSdkVersion');
+        final int sdkVersion = await platform.invokeMethod('getAndroidSdkVersion');
         return sdkVersion;
       } on PlatformException catch (e) {
         KazumiLogger().e("Failed to get Android SDK version: '${e.message}'.");
@@ -573,14 +543,12 @@ class Utils {
         if (Platform.isAndroid) {
           const platform = MethodChannel('com.predidit.kazumi/intent');
           try {
-            final int sdkVersion =
-                await platform.invokeMethod('getAndroidSdkVersion');
+            final int sdkVersion = await platform.invokeMethod('getAndroidSdkVersion');
             if (sdkVersion < 29) {
               mode = SystemUiMode.manual;
             }
           } on PlatformException catch (e) {
-            KazumiLogger()
-                .e("Failed to get Android SDK version: '${e.message}'.");
+            KazumiLogger().e("Failed to get Android SDK version: '${e.message}'.");
           }
         }
         await SystemChrome.setEnabledSystemUIMode(
@@ -598,8 +566,7 @@ class Utils {
         }
       }
     } catch (exception, stacktrace) {
-      KazumiLogger().e('DisPlay: failed to exit full screen',
-          error: exception, stackTrace: stacktrace);
+      KazumiLogger().e('DisPlay: failed to exit full screen', error: exception, stackTrace: stacktrace);
     }
   }
 
@@ -618,8 +585,7 @@ class Utils {
         );
       }
     } catch (exception, stacktrace) {
-      KazumiLogger().e('Display: failed to enter landscape mode',
-          error: exception, stackTrace: stacktrace);
+      KazumiLogger().e('Display: failed to enter landscape mode', error: exception, stackTrace: stacktrace);
     }
   }
 
@@ -651,8 +617,7 @@ class Utils {
     return directory.path;
   }
 
-  static String buildShadersAbsolutePath(
-      String baseDirectory, List<String> shaders) {
+  static String buildShadersAbsolutePath(String baseDirectory, List<String> shaders) {
     List<String> absolutePaths = shaders.map((shader) {
       return path.join(baseDirectory, shader);
     }).toList();
@@ -700,8 +665,7 @@ class Utils {
   }
 
   /// 初始化播放器菜单
-  static Future<void> initPlayerMenu(
-      Map<String, void Function()> actions) async {
+  static Future<void> initPlayerMenu(Map<String, void Function()> actions) async {
     if (!Platform.isMacOS) return; //暂时只适配macOS
     const MethodChannel appmenu = MethodChannel("com.predidit.kazumi/appmenu");
     await appmenu.invokeMethod("setMenuEnabled", {

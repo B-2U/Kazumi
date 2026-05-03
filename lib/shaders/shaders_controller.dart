@@ -20,12 +20,10 @@ abstract class _ShadersController with Store {
 
     if (!await shadersDirectory.exists()) {
       await shadersDirectory.create(recursive: true);
-      KazumiLogger()
-          .i('ShaderManager: Create GLSL Shader: ${shadersDirectory.path}');
+      KazumiLogger().i('ShaderManager: Create GLSL Shader: ${shadersDirectory.path}');
     }
 
-    final shaderFiles = assets.where((String asset) =>
-        asset.startsWith('assets/shaders/') && asset.endsWith('.glsl'));
+    final shaderFiles = assets.where((String asset) => asset.startsWith('assets/shaders/') && asset.endsWith('.glsl'));
 
     int copiedFilesCount = 0;
 
@@ -33,8 +31,7 @@ abstract class _ShadersController with Store {
       final fileName = filePath.split('/').last;
       final targetFile = File(path.join(shadersDirectory.path, fileName));
       if (await targetFile.exists()) {
-        KazumiLogger()
-            .i('ShaderManager: GLSL Shader exists, skip: ${targetFile.path}');
+        KazumiLogger().i('ShaderManager: GLSL Shader exists, skip: ${targetFile.path}');
         continue;
       }
 
@@ -49,7 +46,6 @@ abstract class _ShadersController with Store {
       }
     }
 
-    KazumiLogger().i(
-        'ShaderManager: $copiedFilesCount GLSL files copied to ${shadersDirectory.path}');
+    KazumiLogger().i('ShaderManager: $copiedFilesCount GLSL files copied to ${shadersDirectory.path}');
   }
 }

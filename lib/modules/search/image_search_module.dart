@@ -13,9 +13,7 @@ class ImageSearchItem {
       error: json['error'] as String?,
       result: json['result'] == null
           ? null
-          : (json['result'] as List)
-              .map((e) => ResultItem.fromJson(e as Map<String, dynamic>))
-              .toList(),
+          : (json['result'] as List).map((e) => ResultItem.fromJson(e as Map<String, dynamic>)).toList(),
     );
   }
 
@@ -63,9 +61,7 @@ class ResultItem {
     }
 
     return ResultItem(
-      anilist: json['anilist'] == null
-          ? null
-          : Anilist.fromJson(json['anilist'] as Map<String, dynamic>),
+      anilist: json['anilist'] == null ? null : Anilist.fromJson(json['anilist'] as Map<String, dynamic>),
       filename: json['filename'] as String?,
       episode: ep,
       from: (json['from'] as num?)?.toDouble(),
@@ -154,51 +150,31 @@ class Anilist {
       id: json['id'] as int?,
       type: json['type'] as String?,
       idMal: json['idMal'] as int?,
-      title: json['title'] == null
-          ? null
-          : AnilistTitle.fromJson(json['title'] as Map<String, dynamic>),
+      title: json['title'] == null ? null : AnilistTitle.fromJson(json['title'] as Map<String, dynamic>),
       format: json['format'] as String?,
-      genres: json['genres'] == null
-          ? null
-          : List<String>.from(json['genres'] as List),
+      genres: json['genres'] == null ? null : List<String>.from(json['genres'] as List),
       season: json['season'] as String?,
       source: json['source'] as String?,
       status: json['status'] as String?,
-      endDate: json['endDate'] == null
-          ? null
-          : DateInfo.fromJson(json['endDate'] as Map<String, dynamic>),
-      startDate: json['startDate'] == null
-          ? null
-          : DateInfo.fromJson(json['startDate'] as Map<String, dynamic>),
+      endDate: json['endDate'] == null ? null : DateInfo.fromJson(json['endDate'] as Map<String, dynamic>),
+      startDate: json['startDate'] == null ? null : DateInfo.fromJson(json['startDate'] as Map<String, dynamic>),
       isAdult: json['isAdult'] as bool?,
       siteUrl: json['siteUrl'] as String?,
-      studios: json['studios'] == null
-          ? null
-          : Studios.fromJson(json['studios'] as Map<String, dynamic>),
+      studios: json['studios'] == null ? null : Studios.fromJson(json['studios'] as Map<String, dynamic>),
       duration: json['duration'] as int?,
       episodes: json['episodes'] as int?,
-      synonyms: json['synonyms'] == null
-          ? null
-          : List<String>.from(json['synonyms'] as List),
-      relations: json['relations'] == null
-          ? null
-          : Relations.fromJson(json['relations'] as Map<String, dynamic>),
+      synonyms: json['synonyms'] == null ? null : List<String>.from(json['synonyms'] as List),
+      relations: json['relations'] == null ? null : Relations.fromJson(json['relations'] as Map<String, dynamic>),
       seasonInt: json['seasonInt'] as int?,
-      coverImage: json['coverImage'] == null
-          ? null
-          : CoverImage.fromJson(json['coverImage'] as Map<String, dynamic>),
+      coverImage: json['coverImage'] == null ? null : CoverImage.fromJson(json['coverImage'] as Map<String, dynamic>),
       popularity: json['popularity'] as int?,
       seasonYear: json['seasonYear'] as int?,
       bannerImage: json['bannerImage'] as String?,
       externalLinks: json['externalLinks'] == null
           ? null
-          : (json['externalLinks'] as List)
-              .map((e) => ExternalLink.fromJson(e as Map<String, dynamic>))
-              .toList(),
+          : (json['externalLinks'] as List).map((e) => ExternalLink.fromJson(e as Map<String, dynamic>)).toList(),
       countryOfOrigin: json['countryOfOrigin'] as String?,
-      synonymsChinese: json['synonyms_chinese'] == null
-          ? null
-          : List<String>.from(json['synonyms_chinese'] as List),
+      synonymsChinese: json['synonyms_chinese'] == null ? null : List<String>.from(json['synonyms_chinese'] as List),
     );
   }
 
@@ -286,12 +262,7 @@ class CoverImage {
         extraLarge: json['extraLarge'] as String?,
       );
 
-  Map<String, dynamic> toJson() => {
-        'color': color,
-        'large': large,
-        'medium': medium,
-        'extraLarge': extraLarge
-      };
+  Map<String, dynamic> toJson() => {'color': color, 'large': large, 'medium': medium, 'extraLarge': extraLarge};
 }
 
 class Studios {
@@ -302,13 +273,10 @@ class Studios {
   factory Studios.fromJson(Map<String, dynamic> json) => Studios(
         edges: json['edges'] == null
             ? null
-            : (json['edges'] as List)
-                .map((e) => StudioEdge.fromJson(e as Map<String, dynamic>))
-                .toList(),
+            : (json['edges'] as List).map((e) => StudioEdge.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
-  Map<String, dynamic> toJson() =>
-      {'edges': edges?.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson() => {'edges': edges?.map((e) => e.toJson()).toList()};
 }
 
 class StudioEdge {
@@ -318,9 +286,7 @@ class StudioEdge {
   StudioEdge({this.node, this.isMain});
 
   factory StudioEdge.fromJson(Map<String, dynamic> json) => StudioEdge(
-        node: json['node'] == null
-            ? null
-            : StudioNode.fromJson(json['node'] as Map<String, dynamic>),
+        node: json['node'] == null ? null : StudioNode.fromJson(json['node'] as Map<String, dynamic>),
         isMain: json['isMain'] as bool?,
       );
 
@@ -351,13 +317,10 @@ class Relations {
   factory Relations.fromJson(Map<String, dynamic> json) => Relations(
         edges: json['edges'] == null
             ? null
-            : (json['edges'] as List)
-                .map((e) => RelationEdge.fromJson(e as Map<String, dynamic>))
-                .toList(),
+            : (json['edges'] as List).map((e) => RelationEdge.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
-  Map<String, dynamic> toJson() =>
-      {'edges': edges?.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson() => {'edges': edges?.map((e) => e.toJson()).toList()};
 }
 
 class RelationEdge {
@@ -367,14 +330,11 @@ class RelationEdge {
   RelationEdge({this.node, this.relationType});
 
   factory RelationEdge.fromJson(Map<String, dynamic> json) => RelationEdge(
-        node: json['node'] == null
-            ? null
-            : RelationNode.fromJson(json['node'] as Map<String, dynamic>),
+        node: json['node'] == null ? null : RelationNode.fromJson(json['node'] as Map<String, dynamic>),
         relationType: json['relationType'] as String?,
       );
 
-  Map<String, dynamic> toJson() =>
-      {'node': node?.toJson(), 'relationType': relationType};
+  Map<String, dynamic> toJson() => {'node': node?.toJson(), 'relationType': relationType};
 }
 
 class RelationNode {
@@ -385,9 +345,7 @@ class RelationNode {
 
   factory RelationNode.fromJson(Map<String, dynamic> json) => RelationNode(
         id: json['id'] as int?,
-        title: json['title'] == null
-            ? null
-            : AnilistTitle.fromJson(json['title'] as Map<String, dynamic>),
+        title: json['title'] == null ? null : AnilistTitle.fromJson(json['title'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {'id': id, 'title': title?.toJson()};

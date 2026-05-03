@@ -7,8 +7,7 @@ import 'package:kazumi/utils/storage.dart';
 import 'package:kazumi/utils/proxy_utils.dart';
 import 'package:kazumi/webview/captcha/captcha_webview_controller.dart';
 
-class CaptchaWebviewLinuxImpl
-    extends CaptchaWebviewController<Webview> {
+class CaptchaWebviewLinuxImpl extends CaptchaWebviewController<Webview> {
   VoidCallback? _navigationListener;
   String _currentCaptchaImageXpath = '';
   String _buttonXpath = '';
@@ -29,12 +28,10 @@ class CaptchaWebviewLinuxImpl
 
   ProxyConfiguration? _getProxyConfiguration() {
     final setting = GStorage.setting;
-    final bool proxyEnable =
-        setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
+    final bool proxyEnable = setting.get(SettingBoxKey.proxyEnable, defaultValue: false);
     if (!proxyEnable) return null;
 
-    final String proxyUrl =
-        setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
+    final String proxyUrl = setting.get(SettingBoxKey.proxyUrl, defaultValue: '');
     final parsed = ProxyUtils.parseProxyUrl(proxyUrl);
     if (parsed == null) return null;
 
@@ -62,8 +59,7 @@ class CaptchaWebviewLinuxImpl
           captchaDisappearedController.add(null);
         }
       } else if (msg.startsWith('captchaLog:')) {
-        logEventController.add(
-            '[Captcha WebView JS] ${msg.replaceFirst('captchaLog:', '')}');
+        logEventController.add('[Captcha WebView JS] ${msg.replaceFirst('captchaLog:', '')}');
       }
     });
   }
@@ -93,16 +89,14 @@ class CaptchaWebviewLinuxImpl
       if (captchaWasFound) {
         final present = await _isCaptchaPresent();
         if (!present && !captchaDisappearedController.isClosed) {
-          logEventController
-              .add('[Captcha WebView] Captcha gone after navigation');
+          logEventController.add('[Captcha WebView] Captcha gone after navigation');
           captchaWasFound = false;
           captchaDisappearedController.add(null);
         }
       }
       // Type-2: button was clicked; page navigation confirms verification.
       if (buttonWasClicked && !captchaDisappearedController.isClosed) {
-        logEventController.add(
-            '[Captcha WebView] Button click and page navigated, verification done');
+        logEventController.add('[Captcha WebView] Button click and page navigated, verification done');
         buttonWasClicked = false;
         captchaDisappearedController.add(null);
       }
@@ -111,8 +105,7 @@ class CaptchaWebviewLinuxImpl
 
   Future<bool> _isCaptchaPresent() async {
     if (_currentCaptchaImageXpath.isEmpty || webviewController == null) return false;
-    final escaped =
-        _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escaped = _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     try {
       final result = await webviewController!.evaluateJavaScript('''
 (function() {
@@ -132,8 +125,7 @@ class CaptchaWebviewLinuxImpl
 
   Future<void> _injectCaptchaScript() async {
     if (_currentCaptchaImageXpath.isEmpty) return;
-    final escapedXpath =
-        _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedXpath = _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
 
     final script = '''
 (function() {
@@ -241,8 +233,7 @@ class CaptchaWebviewLinuxImpl
   }
 
   Future<void> _injectButtonClickScript(String buttonXpath) async {
-    final escaped =
-        buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escaped = buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     final script = '''
 (function() {
   window.webkit.messageHandlers.msgToNative.postMessage(
@@ -301,16 +292,11 @@ class CaptchaWebviewLinuxImpl
   }
 
   @override
-  Future<void> submitCaptchaInteract(
-      String captchaCode, String inputXpath, String buttonXpath) async {
-    logEventController
-        .add('[Captcha WebView] Filling input and clicking button');
-    final escapedCode =
-        captchaCode.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
-    final escapedInput =
-        inputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
-    final escapedButton =
-        buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+  Future<void> submitCaptchaInteract(String captchaCode, String inputXpath, String buttonXpath) async {
+    logEventController.add('[Captcha WebView] Filling input and clicking button');
+    final escapedCode = captchaCode.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedInput = inputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedButton = buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     final script = '''
 (function() {
   function evalXpath(xpath) {
@@ -352,10 +338,8 @@ class CaptchaWebviewLinuxImpl
   Future<String> getCookieString(String pageUrl) async {
     try {
       final cookies = await webviewController?.getAllCookies() ?? [];
-      final cookieString =
-          cookies.map((c) => '${c.name}=${c.value}').join('; ');
-      logEventController
-          .add('[Captcha WebView] Cookies: $cookieString');
+      final cookieString = cookies.map((c) => '${c.name}=${c.value}').join('; ');
+      logEventController.add('[Captcha WebView] Cookies: $cookieString');
       return cookieString;
     } catch (e) {
       KazumiLogger().e('[Captcha WebView] getCookieString error: $e');

@@ -40,19 +40,8 @@ class BangumiCollection {
   /// 标签列表，每个标签包含 name 和 count 字段
   List<Map<String, dynamic>> tags;
 
-  BangumiCollection(
-      this.bangumiId,
-      this.date,
-      this.updatedAt,
-      this.type,
-      this.name,
-      this.nameCn,
-      this.shortSummary,
-      this.score,
-      this.eps,
-      this.rank,
-      this.images,
-      this.tags);
+  BangumiCollection(this.bangumiId, this.date, this.updatedAt, this.type, this.name, this.nameCn, this.shortSummary,
+      this.score, this.eps, this.rank, this.images, this.tags);
 
   BangumiItem toBangumiItem() {
     return BangumiItem.fromJson({

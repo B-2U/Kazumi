@@ -22,8 +22,7 @@ class AppWidget extends StatefulWidget {
   State<AppWidget> createState() => _AppWidgetState();
 }
 
-class _AppWidgetState extends State<AppWidget>
-    with TrayListener, WidgetsBindingObserver, WindowListener {
+class _AppWidgetState extends State<AppWidget> with TrayListener, WidgetsBindingObserver, WindowListener {
   Box setting = GStorage.setting;
 
   final TrayManager trayManager = TrayManager.instance;
@@ -78,8 +77,7 @@ class _AppWidgetState extends State<AppWidget>
   @override
   void onWindowClose() {
     final setting = GStorage.setting;
-    final exitBehavior =
-        setting.get(SettingBoxKey.exitBehavior, defaultValue: 2);
+    final exitBehavior = setting.get(SettingBoxKey.exitBehavior, defaultValue: 2);
 
     switch (exitBehavior) {
       case 0:
@@ -139,8 +137,7 @@ class _AppWidgetState extends State<AppWidget>
                     windowManager.hide();
                   },
                   child: const Text('最小化至托盘')),
-              const TextButton(
-                  onPressed: KazumiDialog.dismiss, child: Text('取消')),
+              const TextButton(onPressed: KazumiDialog.dismiss, child: Text('取消')),
             ],
           );
         });
@@ -154,11 +151,9 @@ class _AppWidgetState extends State<AppWidget>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused) {
-      KazumiLogger()
-          .i("AppLifecycleState.paused: Application moved to background");
+      KazumiLogger().i("AppLifecycleState.paused: Application moved to background");
     } else if (state == AppLifecycleState.resumed) {
-      KazumiLogger()
-          .i("AppLifecycleState.resumed: Application moved to foreground");
+      KazumiLogger().i("AppLifecycleState.resumed: Application moved to foreground");
     } else if (state == AppLifecycleState.inactive) {
       KazumiLogger().i("AppLifecycleState.inactive: Application is inactive");
     }
@@ -182,8 +177,7 @@ class _AppWidgetState extends State<AppWidget>
   Future<void> _handleTray() async {
     if (Platform.isWindows) {
       await trayManager.setIcon('assets/images/logo/logo_lanczos.ico');
-    } else if (Platform.environment.containsKey('FLATPAK_ID') ||
-        Platform.environment.containsKey('SNAP')) {
+    } else if (Platform.environment.containsKey('FLATPAK_ID') || Platform.environment.containsKey('SNAP')) {
       await trayManager.setIcon('io.github.Predidit.Kazumi');
     } else {
       await trayManager.setIcon('assets/images/logo/logo_rounded.png');
@@ -208,19 +202,15 @@ class _AppWidgetState extends State<AppWidget>
       _handleTray();
     }
     dynamic color;
-    dynamic defaultThemeColor =
-        setting.get(SettingBoxKey.themeColor, defaultValue: 'default');
+    dynamic defaultThemeColor = setting.get(SettingBoxKey.themeColor, defaultValue: 'default');
     if (defaultThemeColor == 'default') {
       color = Colors.green;
     } else {
       color = Color(int.parse(defaultThemeColor, radix: 16));
     }
-    bool oledEnhance =
-        setting.get(SettingBoxKey.oledEnhance, defaultValue: false);
-    bool useSystemFont =
-        setting.get(SettingBoxKey.useSystemFont, defaultValue: false);
-    final defaultThemeMode =
-        setting.get(SettingBoxKey.themeMode, defaultValue: 'system');
+    bool oledEnhance = setting.get(SettingBoxKey.oledEnhance, defaultValue: false);
+    bool useSystemFont = setting.get(SettingBoxKey.useSystemFont, defaultValue: false);
+    final defaultThemeMode = setting.get(SettingBoxKey.themeMode, defaultValue: 'system');
     if (defaultThemeMode == 'dark') {
       themeProvider.setThemeMode(ThemeMode.dark, notify: false);
     }
@@ -293,12 +283,8 @@ class _AppWidgetState extends State<AppWidget>
         return MaterialApp.router(
           title: "Kazumi",
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
-          supportedLocales: const [
-            Locale.fromSubtags(
-                languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN")
-          ],
-          locale: const Locale.fromSubtags(
-              languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN"),
+          supportedLocales: const [Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN")],
+          locale: const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: "CN"),
           theme: themeProvider.light,
           darkTheme: themeProvider.dark,
           themeMode: themeProvider.themeMode,

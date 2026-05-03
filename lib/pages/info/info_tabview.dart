@@ -52,8 +52,7 @@ class InfoTabView extends StatefulWidget {
   State<InfoTabView> createState() => _InfoTabViewState();
 }
 
-class _InfoTabViewState extends State<InfoTabView>
-    with SingleTickerProviderStateMixin {
+class _InfoTabViewState extends State<InfoTabView> with SingleTickerProviderStateMixin {
   final maxWidth = 950.0;
   bool fullIntro = false;
   bool fullTag = false;
@@ -63,9 +62,7 @@ class _InfoTabViewState extends State<InfoTabView>
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
-          width: MediaQuery.sizeOf(context).width > maxWidth
-              ? maxWidth
-              : MediaQuery.sizeOf(context).width - 32,
+          width: MediaQuery.sizeOf(context).width > maxWidth ? maxWidth : MediaQuery.sizeOf(context).width - 32,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,8 +72,7 @@ class _InfoTabViewState extends State<InfoTabView>
               // only show expand button when line > 7
               LayoutBuilder(builder: (context, constraints) {
                 final span = TextSpan(text: widget.bangumiItem.summary);
-                final tp =
-                    TextPainter(text: span, textDirection: TextDirection.ltr);
+                final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
                 tp.layout(maxWidth: constraints.maxWidth);
                 final numLines = tp.computeLineMetrics().length;
                 if (numLines > 7) {
@@ -125,16 +121,13 @@ class _InfoTabViewState extends State<InfoTabView>
                 spacing: 8.0,
                 runSpacing: Utils.isDesktop() ? 8 : 0,
                 children: List<Widget>.generate(
-                    fullTag || widget.bangumiItem.tags.length < 13
-                        ? widget.bangumiItem.tags.length
-                        : 13, (int index) {
+                    fullTag || widget.bangumiItem.tags.length < 13 ? widget.bangumiItem.tags.length : 13, (int index) {
                   if (!fullTag && index == 12) {
                     // make tag expandable
                     return ActionChip(
                       label: Text(
                         '更多 +',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary),
+                        style: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       onPressed: () {
                         setState(() {
@@ -150,14 +143,12 @@ class _InfoTabViewState extends State<InfoTabView>
                         Text('${widget.bangumiItem.tags[index].name} '),
                         Text(
                           '${widget.bangumiItem.tags[index].count}',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
                       ],
                     ),
                     onPressed: () {
-                      Modular.to.pushNamed(
-                          '/search/${widget.bangumiItem.tags[index].name}');
+                      Modular.to.pushNamed('/search/${widget.bangumiItem.tags[index].name}');
                     },
                   );
                 }).toList(),
@@ -175,9 +166,7 @@ class _InfoTabViewState extends State<InfoTabView>
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
-          width: MediaQuery.sizeOf(context).width > maxWidth
-              ? maxWidth
-              : MediaQuery.sizeOf(context).width - 32,
+          width: MediaQuery.sizeOf(context).width > maxWidth ? maxWidth : MediaQuery.sizeOf(context).width - 32,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -192,8 +181,7 @@ class _InfoTabViewState extends State<InfoTabView>
                   child: Wrap(
                     spacing: 8.0,
                     runSpacing: 8.0,
-                    children: List.generate(
-                        4, (_) => Bone.button(uniRadius: 8, height: 32)),
+                    children: List.generate(4, (_) => Bone.button(uniRadius: 8, height: 32)),
                   ),
                 ),
             ],
@@ -221,8 +209,7 @@ class _InfoTabViewState extends State<InfoTabView>
             key: PageStorageKey<String>('吐槽'),
             slivers: <Widget>[
               SliverOverlapInjector(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
               SliverLayoutBuilder(builder: (context, _) {
                 if (widget.commentsList.isNotEmpty) {
@@ -235,8 +222,7 @@ class _InfoTabViewState extends State<InfoTabView>
                         bottom: false,
                         child: Center(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: SizedBox(
                               width: MediaQuery.sizeOf(context).width > maxWidth
                                   ? maxWidth
@@ -255,14 +241,12 @@ class _InfoTabViewState extends State<InfoTabView>
                         bottom: false,
                         child: Center(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: SizedBox(
                               width: MediaQuery.sizeOf(context).width > maxWidth
                                   ? maxWidth
                                   : MediaQuery.sizeOf(context).width - 32,
-                              child: Divider(
-                                  thickness: 0.5, indent: 10, endIndent: 10),
+                              child: Divider(thickness: 0.5, indent: 10, endIndent: 10),
                             ),
                           ),
                         ),
@@ -277,8 +261,7 @@ class _InfoTabViewState extends State<InfoTabView>
                       actions: [
                         GeneralErrorButton(
                           onPressed: () {
-                            widget.loadMoreComments(
-                                offset: widget.commentsList.length);
+                            widget.loadMoreComments(offset: widget.commentsList.length);
                           },
                           text: '重试',
                         ),
@@ -506,8 +489,7 @@ class _InfoTabViewState extends State<InfoTabView>
               key: PageStorageKey<String>('概览'),
               slivers: <Widget>[
                 SliverOverlapInjector(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 ),
                 SliverToBoxAdapter(
                   child: SafeArea(
@@ -531,8 +513,7 @@ class _InfoTabViewState extends State<InfoTabView>
               key: PageStorageKey<String>('评论'),
               slivers: <Widget>[
                 SliverOverlapInjector(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 ),
                 // TODO: 评论区
                 SliverFillRemaining(

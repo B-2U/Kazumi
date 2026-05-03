@@ -6,8 +6,7 @@ part of 'collect_change_module.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CollectedBangumiChangeAdapter
-    extends TypeAdapter<CollectedBangumiChange> {
+class CollectedBangumiChangeAdapter extends TypeAdapter<CollectedBangumiChange> {
   @override
   final typeId = 5;
 
@@ -48,7 +47,5 @@ class CollectedBangumiChangeAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CollectedBangumiChangeAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is CollectedBangumiChangeAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

@@ -36,7 +36,6 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
     _urlController.addListener(_onUrlChanged);
   }
 
-
   @override
   void dispose() {
     _debounceTimer?.cancel();
@@ -59,7 +58,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
       setState(() {
         _searchPageController.clearImageSearchState();
         _previewUrl = text;
-      } );
+      });
     });
   }
 
@@ -107,8 +106,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
       return;
     }
 
-    if (_searchPageController.imageSearchError.isNotEmpty &&
-        _searchPageController.imageSearchResults.isEmpty) {
+    if (_searchPageController.imageSearchError.isNotEmpty && _searchPageController.imageSearchResults.isEmpty) {
       KazumiDialog.showToast(message: _searchPageController.imageSearchError);
     }
   }
@@ -121,14 +119,8 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
 
   static String _formatTraceResultTitle(ResultItem result) {
     final title = result.anilist?.title;
-    return title?.chinese ??
-        title?.native ??
-        title?.romaji ??
-        title?.english ??
-        result.filename ??
-        '未知番剧';
+    return title?.chinese ?? title?.native ?? title?.romaji ?? title?.english ?? result.filename ?? '未知番剧';
   }
-
 
   static String _formatTraceEpisode(dynamic episode) {
     String formatEpisodeValue(num value) {
@@ -181,9 +173,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
               children: [
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
-                  child: _isUrlMode
-                      ? _buildUrlInput(colorScheme, textTheme)
-                      : _buildUploadArea(colorScheme, textTheme),
+                  child: _isUrlMode ? _buildUrlInput(colorScheme, textTheme) : _buildUploadArea(colorScheme, textTheme),
                 ),
                 Center(
                   child: TextButton.icon(
@@ -200,9 +190,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
                     width: double.infinity,
                     height: 52,
                     child: FilledButton.icon(
-                      onPressed: _searchPageController.isImageSearching
-                          ? null
-                          : _startSearch,
+                      onPressed: _searchPageController.isImageSearching ? null : _startSearch,
                       icon: _searchPageController.isImageSearching
                           ? SizedBox(
                               width: 18,
@@ -214,9 +202,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
                             )
                           : const Icon(Icons.image_search_rounded),
                       label: Text(
-                        _searchPageController.isImageSearching
-                            ? '搜索中...'
-                            : '开始搜索',
+                        _searchPageController.isImageSearching ? '搜索中...' : '开始搜索',
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
@@ -373,8 +359,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
               tooltip: '清除',
             ),
             filled: true,
-            fillColor:
-                colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+            fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -383,8 +368,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           ),
           keyboardType: TextInputType.url,
           textInputAction: TextInputAction.search,
@@ -427,8 +411,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
                   Text(
                     '输入图片链接后预览',
                     style: textTheme.bodySmall?.copyWith(
-                      color:
-                          colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+                      color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                     ),
                   ),
                 ],
@@ -517,17 +500,12 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
             colorScheme: colorScheme,
             textTheme: textTheme,
             icon: Icon(
-              errorMessage.isEmpty
-                  ? Icons.grid_view_rounded
-                  : Icons.error_outline,
+              errorMessage.isEmpty ? Icons.grid_view_rounded : Icons.error_outline,
               size: 30,
-              color: errorMessage.isEmpty
-                  ? colorScheme.primary
-                  : colorScheme.error,
+              color: errorMessage.isEmpty ? colorScheme.primary : colorScheme.error,
             ),
             title: errorMessage.isEmpty ? '搜索结果将在这里展示' : '未获取到搜索结果',
-            description:
-                errorMessage.isEmpty ? '选择图片文件或输入图片链接后开始搜索' : errorMessage,
+            description: errorMessage.isEmpty ? '选择图片文件或输入图片链接后开始搜索' : errorMessage,
           );
         }
 
@@ -624,9 +602,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
     TextTheme textTheme,
     ResultItem result,
   ) {
-    final coverUrl = result.image ??
-        result.anilist?.coverImage?.large ??
-        result.anilist?.coverImage?.medium;
+    final coverUrl = result.image ?? result.anilist?.coverImage?.large ?? result.anilist?.coverImage?.medium;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -672,7 +648,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
                       _buildInfoLine(
                         textTheme,
                         colorScheme,
-                       _formatTraceEpisode(result.episode),
+                        _formatTraceEpisode(result.episode),
                       ),
                       _buildInfoLine(
                         textTheme,
@@ -711,7 +687,6 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
     );
   }
 
-
   Widget _buildTips(ColorScheme colorScheme, TextTheme textTheme) {
     final baseStyle = textTheme.bodySmall?.copyWith(
       color: colorScheme.onSurfaceVariant,
@@ -749,51 +724,51 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
       ),
     ];
 
-    return  Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.info_outline,
-                size: 16,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.info_outline,
+              size: 16,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              '以图搜番',
+              style: textTheme.labelLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                '以图搜番',
-                style: textTheme.labelLarge?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          ...tips.map(
-            (tipWidget) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Container(
-                      width: 4,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: dotColor,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(child: tipWidget),
-                ],
+                fontWeight: FontWeight.w600,
               ),
             ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        ...tips.map(
+          (tipWidget) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Container(
+                    width: 4,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: dotColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(child: tipWidget),
+              ],
+            ),
           ),
-        ],
+        ),
+      ],
     );
   }
 }

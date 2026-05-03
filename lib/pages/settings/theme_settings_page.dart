@@ -38,17 +38,12 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
   @override
   void initState() {
     super.initState();
-    defaultThemeMode =
-        setting.get(SettingBoxKey.themeMode, defaultValue: 'system');
-    defaultThemeColor =
-        setting.get(SettingBoxKey.themeColor, defaultValue: 'default');
+    defaultThemeMode = setting.get(SettingBoxKey.themeMode, defaultValue: 'system');
+    defaultThemeColor = setting.get(SettingBoxKey.themeColor, defaultValue: 'default');
     oledEnhance = setting.get(SettingBoxKey.oledEnhance, defaultValue: false);
-    useDynamicColor =
-        setting.get(SettingBoxKey.useDynamicColor, defaultValue: false);
-    showWindowButton =
-        setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
-    useSystemFont =
-        setting.get(SettingBoxKey.useSystemFont, defaultValue: false);
+    useDynamicColor = setting.get(SettingBoxKey.useDynamicColor, defaultValue: false);
+    showWindowButton = setting.get(SettingBoxKey.showWindowButton, defaultValue: false);
+    useSystemFont = setting.get(SettingBoxKey.useSystemFont, defaultValue: false);
     themeProvider = Provider.of<ThemeProvider>(context, listen: false);
   }
 
@@ -171,9 +166,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                     controller: menuController,
                     builder: (_, __, ___) {
                       return Text(
-                        defaultThemeMode == 'light'
-                            ? '浅色'
-                            : (defaultThemeMode == 'dark' ? '深色' : '跟随系统'),
+                        defaultThemeMode == 'light' ? '浅色' : (defaultThemeMode == 'dark' ? '深色' : '跟随系统'),
                         style: TextStyle(fontFamily: fontFamily),
                       );
                     },
@@ -190,17 +183,13 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                               children: [
                                 Icon(
                                   Icons.brightness_auto_rounded,
-                                  color: defaultThemeMode == 'system'
-                                      ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                  color: defaultThemeMode == 'system' ? Theme.of(context).colorScheme.primary : null,
                                 ),
                                 SizedBox(width: 8),
                                 Text(
                                   '跟随系统',
                                   style: TextStyle(
-                                    color: defaultThemeMode == 'system'
-                                        ? Theme.of(context).colorScheme.primary
-                                        : null,
+                                    color: defaultThemeMode == 'system' ? Theme.of(context).colorScheme.primary : null,
                                     fontFamily: fontFamily,
                                   ),
                                 ),
@@ -221,19 +210,13 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                               children: [
                                 Icon(
                                   Icons.light_mode_rounded,
-                                  color: defaultThemeMode == 'light'
-                                      ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                  color: defaultThemeMode == 'light' ? Theme.of(context).colorScheme.primary : null,
                                 ),
                                 SizedBox(width: 8),
                                 Text(
                                   '浅色',
                                   style: TextStyle(
-                                      color: defaultThemeMode == 'light'
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                          : null,
+                                      color: defaultThemeMode == 'light' ? Theme.of(context).colorScheme.primary : null,
                                       fontFamily: fontFamily),
                                 ),
                               ],
@@ -253,17 +236,13 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                               children: [
                                 Icon(
                                   Icons.dark_mode_rounded,
-                                  color: defaultThemeMode == 'dark'
-                                      ? Theme.of(context).colorScheme.primary
-                                      : null,
+                                  color: defaultThemeMode == 'dark' ? Theme.of(context).colorScheme.primary : null,
                                 ),
                                 SizedBox(width: 8),
                                 Text(
                                   '深色',
                                   style: TextStyle(
-                                    color: defaultThemeMode == 'dark'
-                                        ? Theme.of(context).colorScheme.primary
-                                        : null,
+                                    color: defaultThemeMode == 'dark' ? Theme.of(context).colorScheme.primary : null,
                                     fontFamily: fontFamily,
                                   ),
                                 ),
@@ -280,12 +259,9 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                   onPressed: (_) async {
                     KazumiDialog.show(builder: (context) {
                       return AlertDialog(
-                        title: Text('配色方案',
-                            style: TextStyle(fontFamily: fontFamily)),
-                        content: StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          final List<Map<String, dynamic>> colorThemes =
-                              colorThemeTypes;
+                        title: Text('配色方案', style: TextStyle(fontFamily: fontFamily)),
+                        content: StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+                          final List<Map<String, dynamic>> colorThemes = colorThemeTypes;
                           return Wrap(
                             alignment: WrapAlignment.center,
                             spacing: 8,
@@ -296,21 +272,15 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                                   final index = colorThemes.indexOf(e);
                                   return GestureDetector(
                                     onTap: () {
-                                      index == 0
-                                          ? resetTheme()
-                                          : setTheme(e['color']);
+                                      index == 0 ? resetTheme() : setTheme(e['color']);
                                       KazumiDialog.dismiss();
                                     },
                                     child: Column(
                                       children: [
                                         PaletteCard(
                                           color: e['color'],
-                                          selected: (e['color']
-                                                      .value
-                                                      .toRadixString(16) ==
-                                                  defaultThemeColor ||
-                                              (defaultThemeColor == 'default' &&
-                                                  index == 0)),
+                                          selected: (e['color'].value.toRadixString(16) == defaultThemeColor ||
+                                              (defaultThemeColor == 'default' && index == 0)),
                                         ),
                                         Text(e['label']),
                                       ],
@@ -330,8 +300,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                   enabled: !Platform.isIOS,
                   onToggle: (value) async {
                     useDynamicColor = value ?? !useDynamicColor;
-                    await setting.put(
-                        SettingBoxKey.useDynamicColor, useDynamicColor);
+                    await setting.put(SettingBoxKey.useDynamicColor, useDynamicColor);
                     themeProvider.setDynamic(useDynamicColor);
                     setState(() {});
                   },
@@ -341,8 +310,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                 SettingsTile.switchTile(
                   onToggle: (value) async {
                     useSystemFont = value ?? !useSystemFont;
-                    await setting.put(
-                        SettingBoxKey.useSystemFont, useSystemFont);
+                    await setting.put(SettingBoxKey.useSystemFont, useSystemFont);
                     themeProvider.setFontFamily(useSystemFont);
                     dynamic color;
                     if (defaultThemeColor == 'default') {
@@ -353,15 +321,12 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                     setTheme(color);
                     setState(() {});
                   },
-                  title:
-                      Text('使用系统字体', style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('关闭后使用 MI Sans 字体',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('使用系统字体', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('关闭后使用 MI Sans 字体', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: useSystemFont,
                 ),
               ],
-              bottomInfo: Text('动态配色仅支持安卓12及以上和桌面平台',
-                  style: TextStyle(fontFamily: fontFamily)),
+              bottomInfo: Text('动态配色仅支持安卓12及以上和桌面平台', style: TextStyle(fontFamily: fontFamily)),
             ),
             SettingsSection(
               tiles: [
@@ -372,10 +337,8 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                     updateOledEnhance();
                     setState(() {});
                   },
-                  title:
-                      Text('OLED优化', style: TextStyle(fontFamily: fontFamily)),
-                  description: Text('深色模式下使用纯黑背景',
-                      style: TextStyle(fontFamily: fontFamily)),
+                  title: Text('OLED优化', style: TextStyle(fontFamily: fontFamily)),
+                  description: Text('深色模式下使用纯黑背景', style: TextStyle(fontFamily: fontFamily)),
                   initialValue: oledEnhance,
                 ),
               ],
@@ -386,14 +349,11 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                   SettingsTile.switchTile(
                     onToggle: (value) async {
                       showWindowButton = value ?? !showWindowButton;
-                      await setting.put(
-                          SettingBoxKey.showWindowButton, showWindowButton);
+                      await setting.put(SettingBoxKey.showWindowButton, showWindowButton);
                       setState(() {});
                     },
-                    title: Text('使用系统标题栏',
-                        style: TextStyle(fontFamily: fontFamily)),
-                    description: Text('重启应用生效',
-                        style: TextStyle(fontFamily: fontFamily)),
+                    title: Text('使用系统标题栏', style: TextStyle(fontFamily: fontFamily)),
+                    description: Text('重启应用生效', style: TextStyle(fontFamily: fontFamily)),
                     initialValue: showWindowButton,
                   ),
                 ],
@@ -405,8 +365,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
                     onPressed: (_) async {
                       Modular.to.pushNamed('/settings/theme/display');
                     },
-                    title:
-                        Text('屏幕帧率', style: TextStyle(fontFamily: fontFamily)),
+                    title: Text('屏幕帧率', style: TextStyle(fontFamily: fontFamily)),
                   ),
                 ],
               ),

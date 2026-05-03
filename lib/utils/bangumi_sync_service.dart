@@ -33,10 +33,7 @@ class BangumiSyncService {
   /// Whether any Bangumi operation is active or already queued.
   bool get isUsing => _queuedOperationCount > 0 || _activeOperationCount > 0;
 
-  String get _configuredToken => setting
-      .get(SettingBoxKey.bangumiAccessToken, defaultValue: '')
-      .toString()
-      .trim();
+  String get _configuredToken => setting.get(SettingBoxKey.bangumiAccessToken, defaultValue: '').toString().trim();
 
   BangumiSyncService._internal();
   static final BangumiSyncService _instance = BangumiSyncService._internal();
@@ -135,8 +132,7 @@ class BangumiSyncService {
   Future<bool> syncCollectibles({
     void Function(String message, int current, int total)? onProgress,
   }) async {
-    final syncEnable =
-        setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
+    final syncEnable = setting.get(SettingBoxKey.bangumiSyncEnable, defaultValue: false);
     if (!syncEnable) {
       KazumiDialog.showToast(message: '同步已关闭');
       KazumiLogger().i('Bangumi: sync disabled');
@@ -179,12 +175,9 @@ class BangumiSyncService {
           remoteMap[item.bangumiId] = item;
         }
 
-        final localOnlyIds =
-            localMap.keys.toSet().difference(remoteMap.keys.toSet());
-        final remoteOnlyIds =
-            remoteMap.keys.toSet().difference(localMap.keys.toSet());
-        final sharedIds =
-            localMap.keys.toSet().intersection(remoteMap.keys.toSet());
+        final localOnlyIds = localMap.keys.toSet().difference(remoteMap.keys.toSet());
+        final remoteOnlyIds = remoteMap.keys.toSet().difference(localMap.keys.toSet());
+        final sharedIds = localMap.keys.toSet().intersection(remoteMap.keys.toSet());
         final mismatchIds = <int>[];
         for (final id in sharedIds) {
           if (localMap[id]!.type != remoteMap[id]!.type.toCollectType().value) {
@@ -192,8 +185,7 @@ class BangumiSyncService {
           }
         }
 
-        final totalOperations =
-            localOnlyIds.length + remoteOnlyIds.length + mismatchIds.length;
+        final totalOperations = localOnlyIds.length + remoteOnlyIds.length + mismatchIds.length;
 
         if (totalOperations == 0) {
           onProgress?.call('未发现状态差异，无需同步', 1, 1);
@@ -240,8 +232,7 @@ class BangumiSyncService {
         if (priority == BangumiSyncPriority.localFirst) {
           onProgress?.call('本地优先：正在处理冲突状态', syncedCount, totalOperations);
           for (final id in mismatchIds) {
-            final updated =
-                await BangumiHTTP.updateBangumiByType(id, localMap[id]!.type);
+            final updated = await BangumiHTTP.updateBangumiByType(id, localMap[id]!.type);
             if (updated != true) {
               throw Exception('同步失败：条目 $id 上传到 Bangumi 失败');
             }
@@ -259,8 +250,7 @@ class BangumiSyncService {
             await GStorage.putCollectible(local);
             await _recordCollectibleChange(id, 2, localType.value);
             syncedCount++;
-            onProgress?.call(
-                'Bangumi优先：正在处理冲突状态', syncedCount, totalOperations);
+            onProgress?.call('Bangumi优先：正在处理冲突状态', syncedCount, totalOperations);
           }
         }
         onProgress?.call('Bangumi 状态同步完成', 1, 1);

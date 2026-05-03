@@ -16,22 +16,17 @@ class WebDavEditorPage extends StatefulWidget {
 
 class _WebDavEditorPageState extends State<WebDavEditorPage> {
   final TextEditingController webDavURLController = TextEditingController();
-  final TextEditingController webDavUsernameController =
-      TextEditingController();
-  final TextEditingController webDavPasswordController =
-      TextEditingController();
+  final TextEditingController webDavUsernameController = TextEditingController();
+  final TextEditingController webDavPasswordController = TextEditingController();
   Box setting = GStorage.setting;
   bool passwordVisible = false;
 
   @override
   void initState() {
     super.initState();
-    webDavURLController.text =
-        setting.get(SettingBoxKey.webDavURL, defaultValue: '');
-    webDavUsernameController.text =
-        setting.get(SettingBoxKey.webDavUsername, defaultValue: '');
-    webDavPasswordController.text =
-        setting.get(SettingBoxKey.webDavPassword, defaultValue: '');
+    webDavURLController.text = setting.get(SettingBoxKey.webDavURL, defaultValue: '');
+    webDavUsernameController.text = setting.get(SettingBoxKey.webDavUsername, defaultValue: '');
+    webDavPasswordController.text = setting.get(SettingBoxKey.webDavPassword, defaultValue: '');
   }
 
   @override
@@ -49,14 +44,12 @@ class _WebDavEditorPageState extends State<WebDavEditorPage> {
               children: [
                 TextField(
                   controller: webDavURLController,
-                  decoration: const InputDecoration(
-                      labelText: 'URL', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'URL', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: webDavUsernameController,
-                  decoration: const InputDecoration(
-                      labelText: 'Username', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Username', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
@@ -71,9 +64,7 @@ class _WebDavEditorPageState extends State<WebDavEditorPage> {
                           passwordVisible = !passwordVisible;
                         });
                       },
-                      icon: Icon(passwordVisible
-                          ? Icons.visibility_rounded
-                          : Icons.visibility_off_rounded),
+                      icon: Icon(passwordVisible ? Icons.visibility_rounded : Icons.visibility_off_rounded),
                     ),
                   ),
                 ),
@@ -91,10 +82,8 @@ class _WebDavEditorPageState extends State<WebDavEditorPage> {
         child: const Icon(Icons.save),
         onPressed: () async {
           setting.put(SettingBoxKey.webDavURL, webDavURLController.text);
-          setting.put(
-              SettingBoxKey.webDavUsername, webDavUsernameController.text);
-          setting.put(
-              SettingBoxKey.webDavPassword, webDavPasswordController.text);
+          setting.put(SettingBoxKey.webDavUsername, webDavUsernameController.text);
+          setting.put(SettingBoxKey.webDavPassword, webDavPasswordController.text);
           var webDav = WebDav();
           try {
             await webDav.init();

@@ -72,16 +72,14 @@ class AudioController {
 
       if (Platform.isAndroid || Platform.isIOS) {
         _becomingNoisySubscription?.cancel();
-        _becomingNoisySubscription =
-            _audioSession!.becomingNoisyEventStream.listen((_) {
+        _becomingNoisySubscription = _audioSession!.becomingNoisyEventStream.listen((_) {
           if (_handler?.playbackState.value.playing ?? false) {
             unawaited(_safePause());
           }
         });
       }
     } catch (e) {
-      KazumiLogger()
-          .w('AudioController: audio_session init failed', error: e);
+      KazumiLogger().w('AudioController: audio_session init failed', error: e);
     }
   }
 
@@ -115,8 +113,7 @@ class AudioController {
         await _onPause!();
       }
     } catch (e) {
-      KazumiLogger()
-          .w('AudioController: interruption pause failed', error: e);
+      KazumiLogger().w('AudioController: interruption pause failed', error: e);
     }
   }
 
@@ -126,8 +123,7 @@ class AudioController {
         await _onPlay!();
       }
     } catch (e) {
-      KazumiLogger()
-          .w('AudioController: interruption resume failed', error: e);
+      KazumiLogger().w('AudioController: interruption resume failed', error: e);
     }
   }
 
@@ -137,8 +133,7 @@ class AudioController {
     try {
       await _audioSession?.setActive(active);
     } catch (e) {
-      KazumiLogger()
-          .w('AudioController: setActive($active) failed', error: e);
+      KazumiLogger().w('AudioController: setActive($active) failed', error: e);
     }
   }
 

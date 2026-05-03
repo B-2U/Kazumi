@@ -20,8 +20,7 @@ class ImageViewer extends StatefulWidget {
   const ImageViewer({super.key, required this.imageUrl, this.heroTag});
 
   /// 显示图片预览
-  static Future<void> show(BuildContext context,
-      {required String imageUrl, String? heroTag}) async {
+  static Future<void> show(BuildContext context, {required String imageUrl, String? heroTag}) async {
     final effectiveHeroTag = heroTag ?? imageUrl;
     await Modular.to.pushNamed(
       routePath,
@@ -71,8 +70,7 @@ class _ImageViewerState extends State<ImageViewer> {
     final currentScale = _photoViewController.scale ?? _initialScale ?? 1.0;
     _initialScale ??= currentScale;
 
-    final factor =
-        event.scrollDelta.dy < 0 ? _wheelScaleStep : 1 / _wheelScaleStep;
+    final factor = event.scrollDelta.dy < 0 ? _wheelScaleStep : 1 / _wheelScaleStep;
     final minScale = _initialScale! * _minScaleFactor;
     final maxScale = _initialScale! * _maxScaleFactor;
     final newScale = (currentScale * factor).clamp(minScale, maxScale);
@@ -104,9 +102,7 @@ class _ImageViewerState extends State<ImageViewer> {
                 minScale: PhotoViewComputedScale.contained,
                 maxScale: PhotoViewComputedScale.covered * 3,
                 backgroundDecoration: const BoxDecoration(color: Colors.black),
-                heroAttributes: widget.heroTag != null
-                    ? PhotoViewHeroAttributes(tag: widget.heroTag!)
-                    : null,
+                heroAttributes: widget.heroTag != null ? PhotoViewHeroAttributes(tag: widget.heroTag!) : null,
                 loadingBuilder: (context, event) => const Center(
                   child: CircularProgressIndicator(),
                 ),

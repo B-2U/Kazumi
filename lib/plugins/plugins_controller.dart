@@ -54,15 +54,13 @@ abstract class _PluginsController with Store {
   // Loads all plugins from the directory, populates the plugin list, and saves to plugins.json if needed
   Future<void> loadAllPlugins() async {
     pluginList.clear();
-    KazumiLogger()
-        .i('Plugins Directory: ${newPluginDirectory!.path}');
+    KazumiLogger().i('Plugins Directory: ${newPluginDirectory!.path}');
     if (await newPluginDirectory!.exists()) {
       final pluginsFile = File('${newPluginDirectory!.path}/$pluginsFileName');
       if (await pluginsFile.exists()) {
         final jsonString = await pluginsFile.readAsString();
         pluginList.addAll(getPluginListFromJson(jsonString));
-        KazumiLogger()
-            .i('Plugin: Current Plugin number: ${pluginList.length}');
+        KazumiLogger().i('Plugin: Current Plugin number: ${pluginList.length}');
       } else {
         // No plugins.json
         var jsonFiles = await getPluginFiles();
@@ -99,8 +97,7 @@ abstract class _PluginsController with Store {
   Future<void> copyPluginsToExternalDirectory() async {
     final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
     final assets = assetManifest.listAssets();
-    final jsonFiles = assets.where((String asset) =>
-        asset.startsWith('assets/plugins/') && asset.endsWith('.json'));
+    final jsonFiles = assets.where((String asset) => asset.startsWith('assets/plugins/') && asset.endsWith('.json'));
 
     for (var filePath in jsonFiles) {
       final jsonString = await rootBundle.loadString(filePath);
@@ -108,8 +105,7 @@ abstract class _PluginsController with Store {
       pluginList.add(plugin);
     }
     await savePlugins();
-    KazumiLogger().i(
-        'Plugin: ${jsonFiles.length} plugin files copied to ${newPluginDirectory!.path}');
+    KazumiLogger().i('Plugin: ${jsonFiles.length} plugin files copied to ${newPluginDirectory!.path}');
   }
 
   List<dynamic> pluginListToJson() {

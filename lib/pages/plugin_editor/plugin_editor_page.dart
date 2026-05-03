@@ -99,56 +99,47 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                      labelText: 'Name', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Name', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: versionController,
-                  decoration: const InputDecoration(
-                      labelText: 'Version', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'Version', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: baseURLController,
-                  decoration: const InputDecoration(
-                      labelText: 'BaseURL', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'BaseURL', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: searchURLController,
-                  decoration: const InputDecoration(
-                      labelText: 'SearchURL', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'SearchURL', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: searchListController,
-                  decoration: const InputDecoration(
-                      labelText: 'SearchList', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'SearchList', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: searchNameController,
-                  decoration: const InputDecoration(
-                      labelText: 'SearchName', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'SearchName', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: searchResultController,
-                  decoration: const InputDecoration(
-                      labelText: 'SearchResult', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'SearchResult', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: chapterRoadsController,
-                  decoration: const InputDecoration(
-                      labelText: 'ChapterRoads', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'ChapterRoads', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: chapterResultController,
-                  decoration: const InputDecoration(
-                      labelText: 'ChapterResult', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(labelText: 'ChapterResult', border: OutlineInputBorder()),
                 ),
                 const SizedBox(height: 20),
                 ExpansionTile(
@@ -189,14 +180,16 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
                       tiles: [
                         CustomSettingsTile(
                           child: (info) => _buildTextFieldTile(
-                            context, info,
+                            context,
+                            info,
                             controller: userAgentController,
                             label: 'UserAgent',
                           ),
                         ),
                         CustomSettingsTile(
                           child: (info) => _buildTextFieldTile(
-                            context, info,
+                            context,
+                            info,
                             controller: refererController,
                             label: 'Referer',
                           ),
@@ -248,9 +241,8 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
                                         child: Text(
                                           entry.value,
                                           style: TextStyle(
-                                            color: entry.key == captchaType
-                                                ? Theme.of(context).colorScheme.primary
-                                                : null,
+                                            color:
+                                                entry.key == captchaType ? Theme.of(context).colorScheme.primary : null,
                                             fontFamily: fontFamily,
                                           ),
                                         ),
@@ -263,7 +255,8 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
                           if (captchaType == CaptchaType.imageCaptcha) ...[
                             CustomSettingsTile(
                               child: (info) => _buildTextFieldTile(
-                                context, info,
+                                context,
+                                info,
                                 controller: captchaImageController,
                                 label: 'CaptchaImage (XPath)',
                                 hint: '//img[@class="captcha"]',
@@ -272,7 +265,8 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
                             ),
                             CustomSettingsTile(
                               child: (info) => _buildTextFieldTile(
-                                context, info,
+                                context,
+                                info,
                                 controller: captchaInputController,
                                 label: 'CaptchaInput (XPath)',
                                 hint: '//input[@name="captcha"]',
@@ -282,7 +276,8 @@ class _PluginEditorPageState extends State<PluginEditorPage> {
                           ],
                           CustomSettingsTile(
                             child: (info) => _buildTextFieldTile(
-                              context, info,
+                              context,
+                              info,
                               controller: captchaButtonController,
                               label: captchaType == CaptchaType.imageCaptcha
                                   ? 'CaptchaButton (XPath)'

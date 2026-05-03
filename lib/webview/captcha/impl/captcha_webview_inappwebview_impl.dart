@@ -5,8 +5,7 @@ import 'package:kazumi/utils/logger.dart';
 import 'package:kazumi/webview/captcha/captcha_webview_controller.dart';
 import 'package:flutter_inappwebview_platform_interface/flutter_inappwebview_platform_interface.dart';
 
-class CaptchaWebviewInAppWebviewImpl
-    extends CaptchaWebviewController<PlatformInAppWebViewController> {
+class CaptchaWebviewInAppWebviewImpl extends CaptchaWebviewController<PlatformInAppWebViewController> {
   PlatformHeadlessInAppWebView? _headlessWebView;
   bool _handlersRegistered = false;
   String _currentCaptchaImageXpath = '';
@@ -42,8 +41,7 @@ class CaptchaWebviewInAppWebviewImpl
           }
         },
         onReceivedError: (controller, request, error) {
-          logEventController
-              .add('[Captcha WebView] Error: ${error.description}');
+          logEventController.add('[Captcha WebView] Error: ${error.description}');
         },
       ),
     );
@@ -70,8 +68,7 @@ class CaptchaWebviewInAppWebviewImpl
       callback: (args) {
         final status = args.isNotEmpty ? args[0].toString() : '';
         logEventController.add('[Captcha WebView JS] Page captcha status: $status');
-        if (status == 'absent' && captchaWasFound &&
-            !captchaDisappearedController.isClosed) {
+        if (status == 'absent' && captchaWasFound && !captchaDisappearedController.isClosed) {
           KazumiLogger().i('[Captcha WebView] Captcha gone after navigation (StatusBridge)');
           captchaWasFound = false;
           captchaDisappearedController.add(null);
@@ -114,10 +111,8 @@ class CaptchaWebviewInAppWebviewImpl
   Future<void> _addCaptchaUserScript() async {
     if (_currentCaptchaImageXpath.isEmpty) return;
 
-    final escapedXpath =
-        _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
-    final escapedInputXpath =
-        _currentInputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedXpath = _currentCaptchaImageXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedInputXpath = _currentInputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
 
     // Remove any previously injected captcha script before adding a fresh one.
     await webviewController?.removeAllUserScripts();
@@ -237,9 +232,7 @@ if (!_checkForCaptcha()) {
 }
 """;
 
-    final script = scriptTemplate
-        .replaceAll('{XPATH}', escapedXpath)
-        .replaceAll('{INPUT_XPATH}', escapedInputXpath);
+    final script = scriptTemplate.replaceAll('{XPATH}', escapedXpath).replaceAll('{INPUT_XPATH}', escapedInputXpath);
     await webviewController?.addUserScripts(
       userScripts: [
         UserScript(
@@ -259,12 +252,10 @@ if (!_checkForCaptcha()) {
     _registerHandlers();
     await _addCaptchaUserScript();
     try {
-      await PlatformCookieManager(const PlatformCookieManagerCreationParams())
-          .deleteAllCookies();
+      await PlatformCookieManager(const PlatformCookieManagerCreationParams()).deleteAllCookies();
       logEventController.add('[Captcha WebView] Cookies cleared before load');
     } catch (_) {}
-    await webviewController
-        ?.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
+    await webviewController?.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
   }
 
   @override
@@ -275,17 +266,14 @@ if (!_checkForCaptcha()) {
     _registerHandlers();
     await _addButtonClickUserScript(buttonXpath);
     try {
-      await PlatformCookieManager(const PlatformCookieManagerCreationParams())
-          .deleteAllCookies();
+      await PlatformCookieManager(const PlatformCookieManagerCreationParams()).deleteAllCookies();
       logEventController.add('[Captcha WebView] Cookies cleared before load');
     } catch (_) {}
-    await webviewController
-        ?.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
+    await webviewController?.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
   }
 
   Future<void> _addButtonClickUserScript(String buttonXpath) async {
-    final escapedXpath =
-        buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedXpath = buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     await webviewController?.removeAllUserScripts();
 
     const String scriptTemplate = """
@@ -350,16 +338,11 @@ if (!_checkAndClick()) {
   }
 
   @override
-  Future<void> submitCaptchaInteract(
-      String captchaCode, String inputXpath, String buttonXpath) async {
-    logEventController
-        .add('[Captcha WebView] Filling input and clicking button');
-    final escapedCode =
-        captchaCode.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
-    final escapedInput =
-        inputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
-    final escapedButton =
-        buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+  Future<void> submitCaptchaInteract(String captchaCode, String inputXpath, String buttonXpath) async {
+    logEventController.add('[Captcha WebView] Filling input and clicking button');
+    final escapedCode = captchaCode.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedInput = inputXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
+    final escapedButton = buttonXpath.replaceAll('\\', '\\\\').replaceAll("'", "\\'");
     final script = '''
 (function() {
   function evalXpath(xpath) {
@@ -410,8 +393,7 @@ if (!_checkAndClick()) {
   @override
   Future<void> unloadPage() async {
     try {
-      await webviewController
-          ?.loadUrl(urlRequest: URLRequest(url: WebUri('about:blank')));
+      await webviewController?.loadUrl(urlRequest: URLRequest(url: WebUri('about:blank')));
     } catch (_) {}
   }
 
@@ -423,8 +405,7 @@ if (!_checkAndClick()) {
     buttonWasClicked = false;
     _handlersRegistered = false;
     try {
-      PlatformCookieManager(const PlatformCookieManagerCreationParams())
-          .deleteAllCookies();
+      PlatformCookieManager(const PlatformCookieManagerCreationParams()).deleteAllCookies();
     } catch (_) {}
     try {
       captchaImageFoundController.close();

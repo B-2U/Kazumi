@@ -7,11 +7,7 @@ class M3u8Key {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is M3u8Key &&
-          method == other.method &&
-          uri == other.uri &&
-          iv == other.iv;
+      identical(this, other) || other is M3u8Key && method == other.method && uri == other.uri && iv == other.iv;
 
   @override
   int get hashCode => Object.hash(method, uri, iv);
@@ -286,7 +282,9 @@ class M3u8Parser {
         final content = await fetcher(seg.uri);
         final nested = parseMediaPlaylist(content, seg.uri);
         final resolved = await resolveNestedSegments(
-          nested.segments, fetcher, maxDepth: maxDepth - 1,
+          nested.segments,
+          fetcher,
+          maxDepth: maxDepth - 1,
         );
 
         if (resolved.isEmpty) continue;
