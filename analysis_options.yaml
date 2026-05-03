@@ -31,3 +31,6 @@ analyzer:
   exclude:
     - build/**
     - fastlane/**
+
+formatter:
+  page_width: 120
